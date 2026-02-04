@@ -6,7 +6,7 @@ plugins {
 
 group = "com.hrms"
 version = "0.0.1-SNAPSHOT"
-description = "backend for hrms"
+description = "Demo project for Spring Boot"
 
 java {
 	toolchain {
