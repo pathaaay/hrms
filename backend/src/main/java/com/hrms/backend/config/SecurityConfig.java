@@ -1,6 +1,7 @@
 package com.hrms.backend.config;
 
 import com.hrms.backend.filters.auth.JWTFilter;
+import com.hrms.backend.utilities.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,14 +21,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/",
-                                "/health",
-                                "/auth/**",
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html"
-                        ).permitAll()
+                        .requestMatchers(Constants.PUBLIC_URLS)
+                        .permitAll()
                         .anyRequest()
                         .authenticated()
                 )

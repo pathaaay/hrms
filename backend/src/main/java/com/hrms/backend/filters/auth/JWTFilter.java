@@ -24,20 +24,13 @@ import java.util.List;
 public class JWTFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
-    private static final String[] PUBLIC_URLS = {
-            "/",
-            "/health",
-            "/auth/**",
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/swagger-ui.html"
-    };
+
 
     // This method will make sure the filter will not run for above URIs.
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String requestUri = request.getRequestURI();
-        for (String publicUrl : PUBLIC_URLS) {
+        for (String publicUrl : Constants.PUBLIC_URLS) {
             if (requestUri.startsWith(publicUrl.replace("/**", ""))) {
                 return true;
             }
