@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthService authService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<JsonNode> login(@Valid @RequestBody AuthRequestDTO authRequestDTO) {
         return ResponseEntity.ok(authService.login(authRequestDTO.getEmail(), authRequestDTO.getPassword()));
     }

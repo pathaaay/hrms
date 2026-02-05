@@ -16,6 +16,6 @@ public class NotFoundExceptionHandler {
     @ExceptionHandler({NoResourceFoundException.class})
     public ResponseEntity<ErrorResponse> handleNotFound(NoResourceFoundException exception) {
         log.error("Not Found exception occurred");
-        return new ResponseEntity<>(new ErrorResponse<>(false, exception.getMessage(), "route_not_found", null), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ErrorResponse(false, exception.getMessage(), "route_not_found", null), HttpStatus.NOT_FOUND);
     }
 }
