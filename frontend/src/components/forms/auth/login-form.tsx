@@ -26,7 +26,7 @@ export const LoginForm = () => {
   const onFormSubmit = (values: LoginSchemaType) => {
     login(values);
     const token = response?.data?.token;
-    if (response?.data?.token && response?.data?.token != null) {
+    if (token && token != null) {
       localStorage.setItem("access_token", token);
     }
   };
