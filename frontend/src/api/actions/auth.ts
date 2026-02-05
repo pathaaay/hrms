@@ -1,0 +1,9 @@
+import { apiService } from "@/lib/axios";
+import type { LoginSchemaType } from "@/lib/schemas/login-schema";
+
+export const login = async (data: LoginSchemaType) => {
+  const res = await apiService.get("/auth/login", {
+    data,
+  });
+  return res.data;
+};
