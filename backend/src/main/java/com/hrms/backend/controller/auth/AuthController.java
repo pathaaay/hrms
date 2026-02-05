@@ -3,6 +3,7 @@ package com.hrms.backend.controller.auth;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hrms.backend.dto.request.AuthRequestDTO;
 import com.hrms.backend.service.auth.AuthService;
+import com.hrms.backend.utilities.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -16,7 +17,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<JsonNode> login(@Valid @RequestBody AuthRequestDTO authRequestDTO) throws BadRequestException {
-        return ResponseEntity.ok(authService.login(authRequestDTO.getEmail(), authRequestDTO.getPassword()));
+    public ResponseEntity<ApiResponse<JsonNode>> login(@Valid @RequestBody AuthRequestDTO authRequestDTO) throws BadRequestException {
+        return authService.login(authRequestDTO.getEmail(), authRequestDTO.getPassword());
     }
 }
