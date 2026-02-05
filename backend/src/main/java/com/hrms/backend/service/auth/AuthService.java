@@ -1,13 +1,28 @@
 package com.hrms.backend.service.auth;
 
+import com.hrms.backend.entities.User;
 import com.hrms.backend.repository.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class AuthService {
+    private final UserRepo userRepo;
+    private final JwtService jwtService;
 
-    @Autowired
-    public UserRepo userRepo;
+    public String login(String email, String password) throws RuntimeException {
+        User employee = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!password.equals(employee.getPassword())) {
+            log.error("Invalid Credentials, email: {}", email);
+            throw new RuntimeException("Invalid credentials");
+        }
+
+        return jwtService.generateToken(employee.getId(), employee.getEmail());
+    }
 
 }
