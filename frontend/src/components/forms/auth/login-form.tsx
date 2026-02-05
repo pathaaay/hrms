@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldError,
@@ -63,6 +64,9 @@ export const LoginForm = () => {
               </Field>
             )}
           />
+          <Field>
+            <Button type="submit">Login</Button>
+          </Field>
         </FieldGroup>
       </FieldSet>
     </form>
