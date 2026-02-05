@@ -1,12 +1,11 @@
 package com.hrms.backend.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -14,9 +13,11 @@ import lombok.ToString;
 @ToString
 @Table(name = "roles")
 public class Role {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private UserProfile userProfile;
+    private List<UserProfile> userProfile;
 }

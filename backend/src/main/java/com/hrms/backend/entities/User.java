@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Setter
 @Getter
 @Entity
@@ -22,6 +24,6 @@ public class User {
     private UserProfile profile; // "mappedBy" indicates this side is the inverse (not the owner)
 
     @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
-    private UserProfile manager;
+    private List<UserProfile> manager;
 
 }
