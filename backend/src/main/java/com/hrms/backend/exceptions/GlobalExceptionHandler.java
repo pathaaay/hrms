@@ -9,7 +9,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
@@ -25,7 +24,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<ErrorResponse> handleInvalidArgument(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorResponse> handleInvalidArgumentException(MethodArgumentNotValidException ex) {
         Map<String, String> errorMap = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(error -> errorMap.put(error.getField(), error.getDefaultMessage()));
         log.error("Fields validation error occurred - Error: " + ex.getMessage());
@@ -52,16 +51,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({NoResourceFoundException.class})
-    public ResponseEntity<ErrorResponse> handleNotFound(NoResourceFoundException ex) {
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NoResourceFoundException ex) {
         log.error("Not Found ex occurred - Error: " + ex.getMessage());
         return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "route_not_found", null), HttpStatus.NOT_FOUND);
     }
 
-
-    @ExceptionHandler({HttpClientErrorException.Unauthorized.class})
-    public ResponseEntity<ErrorResponse> handleUnauthorized(HttpClientErrorException.Unauthorized ex) {
-        log.error("Unauthorized ex occurred - Error: " + ex.getMessage());
-        return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "unauthorized", null), HttpStatus.UNAUTHORIZED);
+    @ExceptionHandler({HttpClientErrorException.class})
+    public ResponseEntity<ErrorResponse> handleUnauthorizedException(HttpClientErrorException ex) {
+        log.error("HttpClientErrorException ex occurred - Error: " + ex.getMessage());
+        return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "http_client_error", null), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({Exception.class})
