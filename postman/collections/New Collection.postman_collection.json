@@ -27,6 +27,24 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Health",
+      "id": "07e87a42-fefb-443d-ac2c-53c0e126ac4b",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
