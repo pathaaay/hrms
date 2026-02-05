@@ -1,0 +1,32 @@
+{
+  "info": {
+    "_postman_id": "bfecd346-9901-45b2-84c3-cc02a78275ac",
+    "name": "HRMS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [],
+      "id": "a508123a-08b2-49d5-871e-e96a5148640d"
+    },
+    {
+      "name": "Home",
+      "id": "b49acb15-c9d6-4da1-b180-aeb41ebee4f4",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
