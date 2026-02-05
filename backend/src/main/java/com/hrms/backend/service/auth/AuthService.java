@@ -40,7 +40,8 @@ public class AuthService {
         ObjectNode node = mapper.createObjectNode();
         node.putPOJO("token", jwtService.generateToken(user.getId(), user.getEmail()));
 
-        log.error("User logged in - email: {}", email);
+        log.info("User logged in - email: {}", email);
+
         return ResponseEntity.ok(new ApiResponse<JsonNode>(true, "Login successfull", node));
     }
 

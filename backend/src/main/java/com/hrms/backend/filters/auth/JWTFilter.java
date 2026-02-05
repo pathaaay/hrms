@@ -9,11 +9,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.apache.coyote.BadRequestException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -25,8 +24,29 @@ import java.util.List;
 public class JWTFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
+    private static final String[] PUBLIC_URLS = {
+            "/",
+            "/health",
+            "/auth/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+    };
+
+    // This method will make sure the filter will not run for above URIs.
     @Override
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException, HttpClientErrorException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String requestUri = request.getRequestURI();
+        for (String publicUrl : PUBLIC_URLS) {
+            if (requestUri.startsWith(publicUrl.replace("/**", ""))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String authHeader = request.getHeader("Authorization");
         String token = null;
 
@@ -42,15 +62,19 @@ public class JWTFilter extends OncePerRequestFilter {
                 }
             }
         }
-        if (token != null) {
-            log.info("Coming after null in jwt auth filter");
-            Long userId = jwtService.extractUserId(token);
-            if (userId != null) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, null, List.of());
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                log.info("Authenticated user: " + userId);
-            }
+
+        log.error("Token before null check{}", token);
+        if (token == null) throw new BadRequestException("Auth Token missing");
+        log.error("Token after null check{}", token);
+
+        Long userId = jwtService.extractUserId(token);
+
+        if (userId != null) {
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, null, List.of());
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            log.info("Authenticated user: " + userId);
         }
+
         chain.doFilter(request, response);
     }
 }
