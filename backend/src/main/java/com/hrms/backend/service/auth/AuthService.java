@@ -8,6 +8,8 @@ import com.hrms.backend.repository.UserRepo;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -17,13 +19,19 @@ public class AuthService {
     private final UserRepo userRepo;
     private final JwtService jwtService;
     private final ObjectMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public JsonNode login(String email, String password) throws RuntimeException {
-        User employee = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+    public JsonNode login(String email, String password) throws BadRequestException {
+        User employee = userRepo.findByEmail(email).orElse(null);
 
-        if (!password.equals(employee.getPassword())) {
+        if (employee == null) {
+            log.error("User not found, email: {}", email);
+            throw new BadRequestException("User not found with this email: " + email);
+        }
+
+        if (!passwordEncoder.matches(password, employee.getPassword())) {
             log.error("Invalid Credentials, email: {}", email);
-            throw new RuntimeException("Invalid credentials");
+            throw new BadRequestException("Invalid credentials");
         }
 
         ObjectNode node = mapper.createObjectNode();
