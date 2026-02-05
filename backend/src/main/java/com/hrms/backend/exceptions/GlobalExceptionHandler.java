@@ -25,50 +25,48 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<ErrorResponse> handleInvalidArgument(MethodArgumentNotValidException exception) {
-
+    public ResponseEntity<ErrorResponse> handleInvalidArgument(MethodArgumentNotValidException ex) {
         Map<String, String> errorMap = new HashMap<>();
-        exception.getBindingResult().getFieldErrors()
-                .forEach(error -> errorMap.put(error.getField(), error.getDefaultMessage()));
+        ex.getBindingResult().getFieldErrors().forEach(error -> errorMap.put(error.getField(), error.getDefaultMessage()));
+        log.error("Fields validation error occurred - Error: " + ex.getMessage());
         return new ResponseEntity<>(new ErrorResponse(false, "Fields validation error occurred", "validation_error", errorMap), HttpStatus.BAD_REQUEST);
     }
 
 
     @ExceptionHandler({BadRequestException.class})
-    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException exception) {
-        return new ResponseEntity<>(new ErrorResponse(false, exception.getMessage(), "bad_request", null), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException ex) {
+        log.error("Bad Request - Error: " + ex.getMessage());
+        return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "bad_request", null), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(
-            HttpMessageNotReadableException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, WebRequest request) {
+        log.error("Required request body is missing or invalid JSON - Error: " + ex.getMessage());
         return new ResponseEntity<>(new ErrorResponse(false, "Required request body is missing or invalid JSON", "body_missing", null), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(
-            HttpRequestMethodNotSupportedException ex) {
-
-        String errorMessage = ex.getMessage();
-
-        return new ResponseEntity<>(new ErrorResponse(false, errorMessage, "method_not_supported", null), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
+        log.error("Method not supported error occurred - Error: " + ex.getMessage());
+        return new ResponseEntity<>(new ErrorResponse(false, "Method not supported", "method_not_supported", null), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({NoResourceFoundException.class})
-    public ResponseEntity<ErrorResponse> handleNotFound(NoResourceFoundException exception) {
-        log.error("Not Found exception occurred");
-        return new ResponseEntity<>(new ErrorResponse(false, exception.getMessage(), "route_not_found", null), HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorResponse> handleNotFound(NoResourceFoundException ex) {
+        log.error("Not Found ex occurred - Error: " + ex.getMessage());
+        return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "route_not_found", null), HttpStatus.NOT_FOUND);
     }
 
 
     @ExceptionHandler({HttpClientErrorException.Unauthorized.class})
-    public ResponseEntity<ErrorResponse> handleUnauthorized(HttpClientErrorException.Unauthorized exception) {
-        log.error("Unauthorized exception occurred");
-        return new ResponseEntity<>(new ErrorResponse(false, exception.getMessage(), "unauthorized", null), HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<ErrorResponse> handleUnauthorized(HttpClientErrorException.Unauthorized ex) {
+        log.error("Unauthorized ex occurred - Error: " + ex.getMessage());
+        return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "unauthorized", null), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<ErrorResponse> handleAllException(Exception exception) {
-        return new ResponseEntity<>(new ErrorResponse(false, exception.getMessage(), "unknown_error", null), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<ErrorResponse> handleAllException(Exception ex) {
+        log.error("An unknown error occurred - Error: " + ex.getMessage());
+        return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "unknown_error", null), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
