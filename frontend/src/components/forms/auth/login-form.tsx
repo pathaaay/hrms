@@ -1,3 +1,4 @@
+import { useLoginMutation } from "@/api/mutations/auth";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -12,6 +13,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
 export const LoginForm = () => {
+  const { mutate: login, data: response, isPending } = useLoginMutation();
+
   const form = useForm({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -21,7 +24,11 @@ export const LoginForm = () => {
   });
 
   const onFormSubmit = (values: LoginSchemaType) => {
-    console.log(values);
+    login(values);
+    const token = response?.data?.token;
+    if (response?.data?.token && response?.data?.token != null) {
+      localStorage.setItem("access_token", token);
+    }
   };
 
   return (
@@ -65,7 +72,9 @@ export const LoginForm = () => {
             )}
           />
           <Field>
-            <Button type="submit">Login</Button>
+            <Button type="submit" disabled={isPending}>
+              {isPending ? "Login" : "Please wait..."}
+            </Button>
           </Field>
         </FieldGroup>
       </FieldSet>
