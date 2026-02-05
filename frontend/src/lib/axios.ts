@@ -11,15 +11,10 @@ export const apiService = axios.create({
 
 apiService.interceptors.request.use(
   (req) => {
-    const accessToken = localStorage.getItem("localStorage");
+    const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       req.headers["Authorization"] = `Bearer ${accessToken}`;
     }
-    if (
-      req.url === "/products/add" &&
-      localStorage.getItem("role") !== "seller"
-    )
-      throw new Error("Only seller can add products");
 
     return req;
   },
