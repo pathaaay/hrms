@@ -1,5 +1,8 @@
 package com.hrms.backend.service.auth;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.hrms.backend.entities.User;
 import com.hrms.backend.repository.UserRepo;
 import lombok.NoArgsConstructor;
@@ -13,8 +16,9 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final UserRepo userRepo;
     private final JwtService jwtService;
+    private final ObjectMapper mapper;
 
-    public String login(String email, String password) throws RuntimeException {
+    public JsonNode login(String email, String password) throws RuntimeException {
         User employee = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!password.equals(employee.getPassword())) {
@@ -22,7 +26,12 @@ public class AuthService {
             throw new RuntimeException("Invalid credentials");
         }
 
-        return jwtService.generateToken(employee.getId(), employee.getEmail());
+        ObjectNode node = mapper.createObjectNode();
+        node.put("success", true);
+        node.put("message", "Login success");
+        node.putPOJO("token", jwtService.generateToken(employee.getId(), employee.getEmail()));
+
+        return node;
     }
 
 }

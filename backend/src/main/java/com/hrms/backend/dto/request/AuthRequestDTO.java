@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRequestDTO {
+public class AuthRequestDTO {
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid Email")
     private String email;
@@ -16,7 +16,4 @@ public class UserRequestDTO {
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
-
-    @NotBlank(message = "Name is required")
-    private String name;
 }
