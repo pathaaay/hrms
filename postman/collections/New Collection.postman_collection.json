@@ -7,7 +7,116 @@
   "item": [
     {
       "name": "Auth",
-      "item": [],
+      "item": [
+        {
+          "name": "Login",
+          "id": "9e61abdf-4b27-475f-8f43-2c6d5438db18",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"aayush.pathak@roimaint.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "316bc02e-4089-47fd-a00c-66b6a7ed8cdc",
+              "name": "Login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"aayush.pathak@roimaint.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 05 Feb 2026 10:58:18 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-05T11:04:53.128Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Login successfull\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIiwic3ViIjoiYWF5dXNoLnBhdGhha0Byb2ltYWludC5jb20iLCJpYXQiOjE3NzAyODkwOTgsImV4cCI6MTc3MDI5MjY5OH0.Es9jj_USEVIyOledcbf1csU5EUzvJbJUC7GfmZzBYAs\"\n    }\n}"
+            }
+          ]
+        }
+      ],
       "id": "a508123a-08b2-49d5-871e-e96a5148640d"
     },
     {
