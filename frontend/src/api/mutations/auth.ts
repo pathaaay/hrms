@@ -1,14 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../actions/auth";
 import toast from "react-hot-toast";
+import type { AxiosError } from "axios";
 
-// Login Mutation
-export const loginMutation = useMutation({
-  mutationFn: login,
-  onSuccess: () => {
-    toast.success("Login Successfull");
-  },
-  onError: (error) => {
-    toast.error("Failed to add product Error: " + error?.message);
-  },
-});
+export const useLoginMutation = () => {
+  return useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      toast.success("Login Successfull");
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error("Login Failed: " + error?.response?.data.message);
+    },
+  });
+};
