@@ -5,5 +5,5 @@ export const login = async (data: LoginSchemaType) => {
   const res = await apiService.get("/auth/login", {
     data,
   });
-  return res.data;
+  return res;
 };
