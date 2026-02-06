@@ -120,6 +120,40 @@
       "id": "a508123a-08b2-49d5-871e-e96a5148640d"
     },
     {
+      "name": "User",
+      "item": [
+        {
+          "name": "get user profile",
+          "id": "e5c65c1b-cbd6-4c53-a00d-a33a2245bc96",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/user",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "6e2b0969-6a53-4f02-a98d-e7f23c215e66"
+    },
+    {
       "name": "Home",
       "id": "b49acb15-c9d6-4da1-b180-aeb41ebee4f4",
       "request": {
