@@ -16,6 +16,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, { payload }) {
+      state.isAuthenticated = true;
       state.userProfile = payload;
     },
   },
