@@ -11,10 +11,11 @@ import { Input } from "@/components/ui/input";
 import { LoginSchema, type LoginSchemaType } from "@/lib/schemas/login-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 export const LoginForm = () => {
   const { mutate: login, data: response, isPending } = useLoginMutation();
-
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -28,6 +29,7 @@ export const LoginForm = () => {
     const token = response?.data?.token;
     if (token && token != null) {
       localStorage.setItem("access_token", token);
+      navigate("/");
     }
   };
 
