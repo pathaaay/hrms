@@ -18,7 +18,7 @@ export const LoginForm = () => {
   const { mutate: handleLogin, data: response, isPending } = useLoginMutation();
 
   const navigate = useNavigate();
-  
+
   const form = useForm({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -28,12 +28,12 @@ export const LoginForm = () => {
   });
 
   useEffect(() => {
-    if (!response || !response?.data) return;
+    if (!response?.data) return;
 
     const token = response?.data?.token;
     if (token && token != null) {
       localStorage.setItem("access_token", token);
-      navigate("/");
+      navigate("/", { replace: true });
     }
     return () => {};
   }, [response]);
