@@ -1,6 +1,7 @@
 package com.hrms.backend.exceptions;
 
 import com.hrms.backend.utilities.ErrorResponse;
+import jakarta.servlet.ServletException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
@@ -52,13 +54,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({NoResourceFoundException.class})
     public ResponseEntity<ErrorResponse> handleNotFoundException(NoResourceFoundException ex) {
-        log.error("Not Found ex occurred - Error: " + ex.getMessage());
+        log.error("Not Found occurred - Error: " + ex.getMessage());
         return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "route_not_found", null), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({HttpClientErrorException.class})
     public ResponseEntity<ErrorResponse> handleUnauthorizedException(HttpClientErrorException ex) {
-        log.error("HttpClientErrorException ex occurred - Error: " + ex.getMessage());
+        log.error("HttpClientErrorException occurred - Error: " + ex.getMessage());
         return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "http_client_error", null), HttpStatus.UNAUTHORIZED);
     }
 

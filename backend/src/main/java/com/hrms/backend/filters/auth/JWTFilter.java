@@ -3,6 +3,7 @@ package com.hrms.backend.filters.auth;
 
 import com.hrms.backend.service.auth.JwtService;
 import com.hrms.backend.utilities.Constants;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
@@ -38,6 +40,8 @@ public class JWTFilter extends OncePerRequestFilter {
     // This method will make sure the filter will not run for public URIs.
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
+        log.info("should not filter");
+
         String requestUri = request.getRequestURI();
 
         // This will log every request in the
@@ -48,6 +52,7 @@ public class JWTFilter extends OncePerRequestFilter {
                 return true;
             }
         }
+        log.info("should not filter false");
         return false;
     }
 

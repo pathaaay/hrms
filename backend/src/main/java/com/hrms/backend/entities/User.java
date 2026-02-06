@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Setter
 @Getter
 @Entity
@@ -17,4 +19,11 @@ public class User {
     private String name;
     private String email;
     private String password;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserProfile profile; // "mappedBy" indicates this side is the inverse (not the owner)
+
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+    private List<UserProfile> manager;
+
 }
