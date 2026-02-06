@@ -22,3 +22,19 @@ apiService.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+
+apiService.interceptors.response.use(
+  (res) => {
+    console.log(res);
+    return res;
+  },
+  (error) => {
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403)
+    ) {
+      window.location.href = "/auth/login";
+    }
+    return Promise.reject(error);
+  },
+);
