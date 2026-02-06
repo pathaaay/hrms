@@ -1,6 +1,5 @@
 import axios from "axios";
 import { ENV } from "./ENV";
-import { redirect } from "react-router";
 
 export const apiService = axios.create({
   baseURL: ENV.API_BASE_URL,
@@ -34,7 +33,7 @@ apiService.interceptors.response.use(
       error.response &&
       (error.response.status === 401 || error.response.status === 403)
     ) {
-      redirect("/auth/login")
+      window.location.href = "/auth/login";
     }
     return Promise.reject(error);
   },
