@@ -1,18 +1,27 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import RootLayout from "./pages/root-layout.tsx";
 import AuthLayout from "./pages/auth/auth-layout.tsx";
 import LoginPage from "./pages/auth/login-page.tsx";
 import NotFoundPage from "./components/common/not-found.tsx";
+import ProtectedLayout from "./pages/protected/protected-layout.tsx";
+import { DashboardPage } from "./pages/protected/index.tsx";
 
 const router = createBrowserRouter([
   {
-    path: "/",
     element: <RootLayout />,
     children: [
-      { index: true, element: <App /> },
+      {
+        path: "/",
+        element: <ProtectedLayout />,
+        children: [
+          {
+            index: true,
+            element: <DashboardPage />,
+          },
+        ],
+      },
       {
         path: "auth",
         element: <AuthLayout />,
@@ -23,7 +32,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-
       { path: "*", element: <NotFoundPage /> },
     ],
   },
