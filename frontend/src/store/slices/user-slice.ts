@@ -1,9 +1,9 @@
-import type { IUserProfileType } from "@/lib/types/user";
+import type { IUserProfile } from "@/lib/types/user";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IInitialState {
   isAuthenticated: boolean;
-  userProfile: IUserProfileType | null;
+  userProfile: IUserProfile | null;
 }
 
 const initialState = {
