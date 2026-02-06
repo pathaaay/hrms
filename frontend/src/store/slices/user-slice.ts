@@ -8,6 +8,7 @@ interface IInitialState {
 
 const initialState = {
   isAuthenticated: false,
+  isLoading: false,
   userProfile: null,
 } as IInitialState;
 
