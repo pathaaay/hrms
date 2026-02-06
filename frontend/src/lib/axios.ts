@@ -1,6 +1,5 @@
 import axios from "axios";
 import { ENV } from "./ENV";
-import { useNavigate } from "react-router";
 
 export const apiService = axios.create({
   baseURL: ENV.API_BASE_URL,
@@ -29,13 +28,11 @@ apiService.interceptors.response.use(
     return res.data;
   },
   (error) => {
-    const navigate = useNavigate();
-    console.log("coming to error");
     if (
       error.response &&
       (error.response.status === 401 || error.response.status === 403)
     ) {
-      navigate("/auth/login", { replace: true });
+      window.location.href = "/auth/login";
     }
     return Promise.reject(error);
   },
