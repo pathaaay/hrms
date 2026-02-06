@@ -6,7 +6,7 @@ import { AppSidebar } from "@/components/common/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
 const ProtectedLayout = () => {
-  const { data, isPending } = useQuery<IUserProfile>({
+  const { data } = useQuery<IUserProfile>({
     queryKey: ["user"],
     queryFn: getUser,
   });
@@ -14,8 +14,10 @@ const ProtectedLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <Navbar userProfile={data} />
-      <Outlet context={{ isPending }} />
+      <div className="w-full">
+        <Navbar userProfile={data} />
+        <Outlet />
+      </div>
     </SidebarProvider>
   );
 };

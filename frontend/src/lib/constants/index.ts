@@ -1,4 +1,4 @@
-import { LayoutDashboardIcon, WalletIcon } from "lucide-react";
+import { BriefcaseBusinessIcon, DicesIcon, LayoutDashboardIcon, WalletIcon } from "lucide-react";
 
 export const navLinks = [
   {
@@ -7,8 +7,18 @@ export const navLinks = [
     icon: LayoutDashboardIcon,
   },
   {
-    url: "/expenses",
-    label: "Expenses",
+    url: "/travel",
+    label: "Travel",
     icon: WalletIcon,
+  },
+  {
+    url: "/games",
+    label: "Games",
+    icon: DicesIcon,
+  },
+  {
+    url: "/jobs",
+    label: "Jobs",
+    icon: BriefcaseBusinessIcon,
   },
 ];
