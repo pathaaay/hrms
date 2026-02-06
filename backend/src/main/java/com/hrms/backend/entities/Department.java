@@ -1,24 +1,23 @@
 package com.hrms.backend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
 
 @Setter
 @Getter
 @Entity
 @ToString
-@Table(name = "users")
-public class User {
+@Table(name = "departments")
+public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String email;
 
-    @JsonIgnore
-    private String password;
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<UserProfile> userProfile;
 }
