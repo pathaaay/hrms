@@ -41,6 +41,4 @@ public class UserProfile {
 
     @Column(name = "avatar_file_path", columnDefinition = "TEXT")
     private String avatarFilePath;
-
-
 }

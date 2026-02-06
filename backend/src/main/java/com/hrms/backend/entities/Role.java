@@ -17,7 +17,4 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private List<UserProfile> userProfile;
 }

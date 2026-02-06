@@ -40,11 +40,9 @@ public class JWTFilter extends OncePerRequestFilter {
     // This method will make sure the filter will not run for public URIs.
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        log.info("should not filter");
-
         String requestUri = request.getRequestURI();
 
-        // This will log every request in the
+        // This will log every request in the api
         log.info("API called - METHOD: {} - URL: {} - Time:{}", request.getMethod(), requestUri, LocalDateTime.now());
 
         for (String publicUrl : Constants.PUBLIC_URLS) {
@@ -52,7 +50,6 @@ public class JWTFilter extends OncePerRequestFilter {
                 return true;
             }
         }
-        log.info("should not filter false");
         return false;
     }
 
@@ -66,7 +63,6 @@ public class JWTFilter extends OncePerRequestFilter {
                 token = authHeader.substring(7);
             }
 
-            log.info("token {}", token);
 
             if (request.getCookies() != null) {
                 for (Cookie cookie : request.getCookies()) {
@@ -77,6 +73,7 @@ public class JWTFilter extends OncePerRequestFilter {
                 }
             }
 
+            // If the token is null then throwing the exception
             if (token == null)
                 throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "Authentication token is missing");
 
