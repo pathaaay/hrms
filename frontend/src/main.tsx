@@ -7,7 +7,7 @@ import LoginPage from "./pages/auth/login-page.tsx";
 import NotFoundPage from "./components/common/not-found.tsx";
 import ProtectedLayout from "./pages/protected/protected-layout.tsx";
 import { DashboardPage } from "./pages/protected/index.tsx";
-import { ProfilePage } from "./pages/protected/profile/index.tsx";
+import { AccountPage } from "./pages/protected/account/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,8 +22,8 @@ const router = createBrowserRouter([
             element: <DashboardPage />,
           },
           {
-            path: "/profile",
-            element: <ProfilePage />,
+            path: "/account",
+            element: <AccountPage />,
           },
         ],
       },
