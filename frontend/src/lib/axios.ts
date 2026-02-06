@@ -25,8 +25,7 @@ apiService.interceptors.request.use(
 
 apiService.interceptors.response.use(
   (res) => {
-    console.log(res);
-    return res;
+    return res.data;
   },
   (error) => {
     if (
