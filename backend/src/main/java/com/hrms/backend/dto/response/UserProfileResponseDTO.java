@@ -13,7 +13,7 @@ public class UserProfileResponseDTO {
     private Long profileId;
     private String name;
     private String email;
-    private User manager_details;
+    private User manager;
     private String role;
     private String department;
     private Date dateOfBirth;

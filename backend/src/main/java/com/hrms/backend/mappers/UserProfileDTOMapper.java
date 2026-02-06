@@ -12,7 +12,7 @@ public class UserProfileDTOMapper {
         UserProfileResponseDTO profileDetails = new UserProfileResponseDTO();
         profileDetails.setProfileId(profile.getId());
         profileDetails.setUserId(profile.getUser().getId());
-        profileDetails.setManager_details(profile.getManager());
+        profileDetails.setManager(profile.getManager());
         profileDetails.setName(profile.getUser().getName());
         profileDetails.setEmail(profile.getUser().getEmail());
         profileDetails.setDateOfBirth(profile.getDateOfBirth());
