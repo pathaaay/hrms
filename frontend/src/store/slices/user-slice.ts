@@ -8,7 +8,6 @@ interface IInitialState {
 
 const initialState = {
   isAuthenticated: false,
-  isLoading: false,
   userProfile: null,
 } as IInitialState;
 
@@ -17,6 +16,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, { payload }) {
+      state.isAuthenticated = true;
       state.userProfile = payload;
     },
   },
