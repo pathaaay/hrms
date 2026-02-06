@@ -1,5 +1,7 @@
 package com.hrms.backend.dto.response;
 
+import com.hrms.backend.entities.Role;
+import com.hrms.backend.entities.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,10 +11,9 @@ import java.util.Date;
 @Setter
 public class UserProfileResponseDTO {
     private Long id;
-    private String name;
-    private String email;
-    private String avatarFilePath;
-    private Date dateOfJoining;
+    private User user;
+    private User manager;
+    private Role role;
     private Date dateOfBirth;
-    private Date manager;
+    private Date dateOfJoining;
 }
