@@ -2,6 +2,7 @@ package com.hrms.backend.service.user;
 
 import com.hrms.backend.dto.response.UserProfileResponseDTO;
 import com.hrms.backend.entities.UserProfile;
+import com.hrms.backend.mappers.UserProfileDTOMapper;
 import com.hrms.backend.repository.UserProfileRepo;
 import com.hrms.backend.utilities.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +23,10 @@ public class UserService {
     private final UserProfileRepo userProfileRepo;
     private final ModelMapper modelMapper;
 
-    public UserProfileResponseDTO convertToDto(UserProfile user) {
-        return modelMapper.map(user, UserProfileResponseDTO.class);
-    }
-
     public ResponseEntity<ApiResponse<UserProfileResponseDTO>> getUserProfile(Long userId) throws BadRequestException {
         Optional<UserProfile> profile = userProfileRepo.findByUserId(userId);
         if (profile.isPresent()) {
-            return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", convertToDto(profile.orElse(null))));
+            return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", UserProfileDTOMapper.convertToDto(profile.orElse(null))));
         } else
             throw new BadRequestException("User not exists");
     }
