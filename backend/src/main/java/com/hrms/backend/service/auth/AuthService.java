@@ -23,7 +23,6 @@ public class AuthService {
     private final ObjectMapper mapper;
     private final PasswordEncoder passwordEncoder;
 
-
     public ResponseEntity<ApiResponse<JsonNode>> login(String email, String password) throws BadRequestException {
         User user = userRepo.findByEmail(email).orElse(null);
 
