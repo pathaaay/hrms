@@ -1,7 +1,7 @@
 package com.hrms.backend.service.user;
 
 import com.hrms.backend.dto.response.UserProfileResponseDTO;
-import com.hrms.backend.entities.UserProfile;
+import com.hrms.backend.entities.user.UserProfile;
 import com.hrms.backend.mappers.UserProfileDTOMapper;
 import com.hrms.backend.repository.UserProfileRepo;
 import com.hrms.backend.utilities.ApiResponse;
