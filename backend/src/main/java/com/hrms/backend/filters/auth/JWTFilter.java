@@ -1,7 +1,6 @@
 package com.hrms.backend.filters.auth;
 
 
-import com.hrms.backend.entities.user.Role;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.UserProfileRepo;
 import com.hrms.backend.repository.UserRepo;
@@ -37,7 +36,6 @@ import java.util.List;
 public class JWTFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserRepo userRepo;
-    private final UserProfileRepo userProfileRepo;
 
     @Autowired
     @Qualifier("handlerExceptionResolver")
@@ -62,14 +60,6 @@ public class JWTFilter extends OncePerRequestFilter {
 
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        try {
-
-            String authHeader = request.getHeader("Authorization");
-            String token = null;
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                token = authHeader.substring(7);
-            }
-
         try {
 
             String authHeader = request.getHeader("Authorization");
@@ -123,9 +113,6 @@ public class JWTFilter extends OncePerRequestFilter {
         } catch (Exception ex) {
             exceptionResolver.resolveException(request, response, null, ex);
         }
-            chain.doFilter(request, response);
-        } catch (Exception ex) {
-            exceptionResolver.resolveException(request, response, null, ex);
-        }
     }
 }
+
