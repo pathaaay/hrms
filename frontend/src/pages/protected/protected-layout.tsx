@@ -1,19 +1,27 @@
-import { getUser } from "@/api/actions/user";
 import { Navbar } from "@/components/common/navbar";
-import type { IUserProfile } from "@/lib/types/user";
-import { useQuery } from "@tanstack/react-query";
+import { AppSidebar } from "@/components/common/app-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
+import { useFetchUser } from "@/hooks/user/use-fetch-user";
+import { LoaderIcon } from "react-hot-toast";
 const ProtectedLayout = () => {
-  const { data, isPending } = useQuery<IUserProfile>({
-    queryKey: ["user"],
-    queryFn: getUser,
-  });
+  const { isPending } = useFetchUser();
+  
+  if (isPending)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoaderIcon className="size-10! animate-spin" />
+      </div>
+    );
 
   return (
-    <>
-      <Navbar userProfile={data} />
-      <Outlet context={{ isPending }} />
-    </>
+    <SidebarProvider>
+      <AppSidebar />
+      <div className="w-full">
+        <Navbar />
+        <Outlet />
+      </div>
+    </SidebarProvider>
   );
 };
 
