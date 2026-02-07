@@ -23,23 +23,10 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserService {
     private final UserProfileRepo userProfileRepo;
-
+    private final GameRepo gameRepo;
     public UserProfileResponseDTO getUserProfile(User user) throws BadRequestException {
         UserProfile profile = userProfileRepo.findByUserId(user.getId()).orElseThrow(() -> new BadRequestException("User not exists"));
-        UserProfileResponseDTO dto = new UserProfileResponseDTO();
-//        dto.setName(user.getName());
-//        dto.setUserId(user.getId());
-//        dto.setProfileId(user.getId());
-//        dto.setEmail(user.getEmail());
-//        dto.setRole(user.getRole().getName());
-//        dto.setDepartment(profile.getDepartment().getName());
-//        dto.setInterestedGames(profile.getInterestedGames());
-//        dto.setTimezone(profile.getTimezone().getName());
-//        dto.setManagerId(profile.getManager().getId());
-//        dto.setDateOfBirth(profile.getDateOfBirth());
-//        dto.setDateOfJoining(profile.getDateOfJoining());
         return UserProfileDTOMapper.convertToDto(profile);
-//        return dto;
     }
 
     public List<UserProfileResponseDTO> getAllUsers(Long gameId) {
@@ -66,19 +53,5 @@ public class UserService {
         Set<Game> games = new HashSet<>(gameRepo.findAllById(dto.getGameIds()));
         profile.setInterestedGames(games);
         userProfileRepo.save(profile);
-    }
-
-    @Transactional
-    public ResponseEntity<ApiResponse> updateUserInterestedGames(User user, UpdateGameRequestDTO dto) throws BadRequestException {
-        UserProfile profile = userProfileRepo.findByUserId(user.getId()).orElseThrow(() -> new BadRequestException("Profile not found"));
-
-        log.info("Received param dto {}", dto.getGameIds());
-        Set<Game> games = new HashSet<>(gameRepo.findAllById(dto.getGameIds()));
-
-        profile.setInterestedGames(games);
-
-        userProfileRepo.save(profile);
-
-        return ResponseEntity.ok(new ApiResponse<>(true, "Games updated successfully", null));
     }
 }
