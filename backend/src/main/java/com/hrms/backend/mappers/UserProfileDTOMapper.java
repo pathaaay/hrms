@@ -1,7 +1,7 @@
 package com.hrms.backend.mappers;
 
 import com.hrms.backend.dto.response.UserProfileResponseDTO;
-import com.hrms.backend.entities.UserProfile;
+import com.hrms.backend.entities.user.UserProfile;
 
 public class UserProfileDTOMapper {
 
@@ -27,6 +27,10 @@ public class UserProfileDTOMapper {
 
         if (profile.getTimezone() != null)
             profileDetails.setTimezone(profile.getTimezone().getName());
+
+        if (profile.getInterestedGames() != null) {
+            profileDetails.setInterestedGames(profile.getInterestedGames());
+        }
 
         if (profile.getCity() != null) {
             profileDetails.setCity(profile.getCity().getName());
