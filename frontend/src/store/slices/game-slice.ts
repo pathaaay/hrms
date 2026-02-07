@@ -11,17 +11,17 @@ const initialState = {
   games: [],
 } as IInitialState;
 
-export const userSlice = createSlice({
-  name: "game-slice",   
+export const gameSlice = createSlice({
+  name: "game-slice",
   initialState,
   reducers: {
-    setUser(state, { payload }) {
-      state.isLoading = true;
+    setGames(state, { payload }) {
+      console.log("setting games", payload);
+      state.isLoading = false;
       state.games = payload;
     },
   },
 });
 
-
-export const { setUser } = userSlice.actions;
-export default userSlice.reducer;
+export const { setGames } = gameSlice.actions;
+export default gameSlice.reducer;

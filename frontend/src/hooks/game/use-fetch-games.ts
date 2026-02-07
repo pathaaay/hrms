@@ -1,14 +1,19 @@
 import { getAllGames } from "@/api/actions/game";
 import type { IGame } from "@/lib/types/game";
+import { setGames } from "@/store/slices/game-slice";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-export const useFetchGames = (): {
-  games: IGame[] | undefined;
-  isPending: boolean;
-} => {
-  const { data: games, isPending } = useQuery<IGame[]>({
+export const useFetchGames = () => {
+  const dispatch = useDispatch();
+
+  const { data: games } = useQuery<IGame[]>({
     queryKey: ["all-games"],
     queryFn: getAllGames,
   });
-  return { games, isPending };
+  useEffect(() => {
+    if (games?.length && games?.length > 0) dispatch(setGames(games));
+    return () => {};
+  }, [games, dispatch]);
 };
