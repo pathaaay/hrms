@@ -120,6 +120,250 @@
       "id": "a508123a-08b2-49d5-871e-e96a5148640d"
     },
     {
+      "name": "User",
+      "item": [
+        {
+          "name": "get user profile",
+          "id": "e5c65c1b-cbd6-4c53-a00d-a33a2245bc96",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIiwic3ViIjoiYWF5dXNoLnBhdGhha0Byb2ltYWludC5jb20iLCJpYXQiOjE3NzAzNTYwNzMsImV4cCI6MTc3MDM1OTY3M30.JDUT0REpzkNkb9TyUlt0WCpU0QvQOD9ZDZBsPYXXtkA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/user",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7856a735-eb22-418e-9211-0f2cf7760605",
+              "name": "get user profile",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/user",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "user"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 06 Feb 2026 06:20:38 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-06T06:20:51.864Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"User get successfully\",\n    \"data\": {\n        \"profileId\": 3,\n        \"userId\": 1,\n        \"name\": \"Aayush Pathak\",\n        \"email\": \"aayush.pathak@roimaint.com\",\n        \"manager_details\": {\n            \"id\": 2,\n            \"name\": \"Manager\",\n            \"email\": \"manager@gmail.com\"\n        },\n        \"role\": \"intern\",\n        \"department\": \"it\",\n        \"dateOfBirth\": \"2005-11-30T18:30:00.000+00:00\",\n        \"dateOfJoining\": \"2025-12-31T18:30:00.000+00:00\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "update user interested games",
+          "id": "ef5b4d68-23eb-4eff-99a8-5b00eecfd9ee",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "6e2b0969-6a53-4f02-a98d-e7f23c215e66"
+    },
+    {
+      "name": "Game",
+      "item": [
+        {
+          "name": "Get All games",
+          "id": "73eeb9d6-3107-449a-a02c-c14bb3f2c5da",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIiwic3ViIjoiYWF5dXNoLnBhdGhha0Byb2ltYWludC5jb20iLCJpYXQiOjE3NzA0NDg1NTYsImV4cCI6MTc3MDQ1MjE1Nn0.DyjlALG10rAqGXUjMARUl_mKDVeTjuEchctzOkV8zxE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/games",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "games"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "032c78db-1217-4385-9d8a-6a03247c354a",
+              "name": "Get All games",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/games",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "games"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 07 Feb 2026 07:17:50 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-07T07:19:35.506Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Game get successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Pool\",\n            \"startTime\": 10,\n            \"endTime\": 22,\n            \"bookingCycleHours\": 24,\n            \"maxSlotDurationInMinutes\": 30,\n            \"maxPlayersPerSlot\": 4\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Chess\",\n            \"startTime\": 10,\n            \"endTime\": 22,\n            \"bookingCycleHours\": 12,\n            \"maxSlotDurationInMinutes\": 1,\n            \"maxPlayersPerSlot\": 2\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ],
+      "id": "edad663d-28cd-4130-b054-91b5c147bfab"
+    },
+    {
       "name": "Home",
       "id": "b49acb15-c9d6-4da1-b180-aeb41ebee4f4",
       "request": {
