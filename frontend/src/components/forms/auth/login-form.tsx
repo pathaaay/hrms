@@ -75,6 +75,7 @@ export const LoginForm = () => {
                 <FieldLabel htmlFor="password">Password</FieldLabel>
                 <Input
                   {...field}
+                  type="password"
                   aria-invalid={fieldState.invalid}
                   id="password"
                   placeholder="Enter password"
@@ -87,7 +88,7 @@ export const LoginForm = () => {
           />
           <Field>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Login" : "Please wait..."}
+              {isPending ? "Please wait..." : "Login"}
             </Button>
           </Field>
         </FieldGroup>
