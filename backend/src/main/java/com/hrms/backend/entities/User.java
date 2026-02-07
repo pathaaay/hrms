@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 
 @Setter
@@ -19,6 +20,11 @@ public class User {
     private String name;
     private String email;
 
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private Boolean isDeleted;
+
+    //This field will be ignored from every response.
     @JsonIgnore
     private String password;
 }

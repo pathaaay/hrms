@@ -18,11 +18,11 @@ public class UserProfile {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id") // Specifies the foreign key column name
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "manager_id") // Specifies the foreign key column name
+    @JoinColumn(name = "manager_id")
     private User manager;
 
     @ManyToOne
@@ -33,6 +33,14 @@ public class UserProfile {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @ManyToOne
+    @JoinColumn(name = "timezone_id")
+    private TimeZone timezone;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
@@ -41,4 +49,5 @@ public class UserProfile {
 
     @Column(name = "avatar_file_path", columnDefinition = "TEXT")
     private String avatarFilePath;
+
 }
