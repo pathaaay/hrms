@@ -1,10 +1,12 @@
 package com.hrms.backend.dto.response;
 
-import com.hrms.backend.entities.User;
+import com.hrms.backend.entities.game.Game;
+import com.hrms.backend.entities.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,4 +24,5 @@ public class UserProfileResponseDTO {
     private String timezone;
     private Date dateOfBirth;
     private Date dateOfJoining;
+    private Set<Game> interestedGames;
 }
