@@ -32,7 +32,9 @@ apiService.interceptors.response.use(
       error.response &&
       (error.response.status === 401 || error.response.status === 403)
     ) {
-      window.location.href = "/auth/login";
+      globalThis.window.location.href = "/auth/login";
+    } else if (error.response && error?.response?.status === 500) {
+      globalThis.window.location.href = "/server-error";
     }
     return Promise.reject(error);
   },

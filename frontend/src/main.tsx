@@ -1,62 +1,8 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router";
-import RootLayout from "./pages/root-layout.tsx";
-import AuthLayout from "./pages/auth/auth-layout.tsx";
-import LoginPage from "./pages/auth/login-page.tsx";
-import NotFoundPage from "./components/common/not-found.tsx";
-import ProtectedLayout from "./pages/protected/protected-layout.tsx";
-import { DashboardPage } from "./pages/protected/index.tsx";
-import { AccountPage } from "./pages/protected/account/index.tsx";
-import { GamesPage } from "./pages/protected/games/index.tsx";
-import { TravelPage } from "./pages/protected/travel/index.tsx";
-import { JobsPage } from "./pages/protected/jobs/index.tsx";
-
-const router = createBrowserRouter([
-  {
-    element: <RootLayout />,
-    children: [
-      {
-        path: "/",
-        element: <ProtectedLayout />,
-        children: [
-          {
-            index: true,
-            element: <DashboardPage />,
-          },
-          {
-            path: "/account",
-            element: <AccountPage />,
-          },
-          {
-            path: "/games",
-            element: <GamesPage />,
-          },
-          {
-            path: "/travel",
-            element: <TravelPage />,
-          },
-          {
-            path: "/jobs",
-            element: <JobsPage />,
-          },
-        ],
-      },
-      {
-        path: "auth",
-        element: <AuthLayout />,
-        children: [
-          {
-            path: "login",
-            element: <LoginPage />,
-          },
-        ],
-      },
-      { path: "*", element: <NotFoundPage /> },
-    ],
-  },
-]);
+import { RouterProvider } from "react-router";
+import { appRouter } from "./router";
 
 createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />,
+  <RouterProvider router={appRouter} />,
 );
