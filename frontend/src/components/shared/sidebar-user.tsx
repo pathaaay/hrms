@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavLink } from "react-router";
 import { useUser } from "@/hooks/user/use-user";
+import { logout } from "@/api/actions/auth";
 
 export function SidebarUser() {
   const { isMobile } = useSidebar();
@@ -88,7 +89,7 @@ export function SidebarUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
               <LogOut />
               Log out
             </DropdownMenuItem>
