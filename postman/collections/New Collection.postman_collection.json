@@ -597,6 +597,34 @@
               "body": "{\n    \"success\": true,\n    \"message\": \"Game get successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Pool\",\n            \"startTime\": 10,\n            \"endTime\": 22,\n            \"bookingCycleHours\": 24,\n            \"maxSlotDurationInMinutes\": 30,\n            \"maxPlayersPerSlot\": 4\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Chess\",\n            \"startTime\": 10,\n            \"endTime\": 22,\n            \"bookingCycleHours\": 12,\n            \"maxSlotDurationInMinutes\": 1,\n            \"maxPlayersPerSlot\": 2\n        }\n    ]\n}"
             }
           ]
+        },
+        {
+          "name": "Book a game slot",
+          "id": "c4e35158-086c-417c-ae3b-5d57f846cf14",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"gameId\": 1,\r\n    \"userIds\": [\r\n        1,2\r\n    ],\r\n    \"startTime\": 1,\r\n    \"endTime\": 2,\r\n    \"leaderId\": 1,\r\n    \"bookingDate\": \"2026-02-08\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/games/book-slot",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "games",
+                "book-slot"
+              ]
+            }
+          },
+          "response": []
         }
       ],
       "id": "edad663d-28cd-4130-b054-91b5c147bfab"

@@ -6,7 +6,7 @@ import com.hrms.backend.entities.game.Game;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.entities.user.UserProfile;
 import com.hrms.backend.mappers.UserProfileDTOMapper;
-import com.hrms.backend.repository.GameRepo;
+import com.hrms.backend.repository.game.GameRepo;
 import com.hrms.backend.repository.UserProfileRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +24,7 @@ import java.util.Set;
 public class UserService {
     private final UserProfileRepo userProfileRepo;
     private final GameRepo gameRepo;
+
     public UserProfileResponseDTO getUserProfile(User user) throws BadRequestException {
         UserProfile profile = userProfileRepo.findByUserId(user.getId()).orElseThrow(() -> new BadRequestException("User not exists"));
         return UserProfileDTOMapper.convertToDto(profile);
@@ -54,4 +55,6 @@ public class UserService {
         profile.setInterestedGames(games);
         userProfileRepo.save(profile);
     }
+
+
 }
