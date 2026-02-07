@@ -20,9 +20,10 @@ import { NavLink } from "react-router";
 
 interface GameCardProps {
   game: IGame;
+  showBookBtn?: boolean;
 }
 
-export const GameCard = ({ game }: GameCardProps) => {
+export const GameCard = ({ game, showBookBtn = true }: GameCardProps) => {
   return (
     <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-muted">
       <CardHeader>
@@ -54,11 +55,13 @@ export const GameCard = ({ game }: GameCardProps) => {
           value={game.bookingCycleHours + " hrs"}
         />
       </CardContent>
-      <CardFooter>
-        <Button className="w-full mt-4 rounded-xl" asChild>
-          <NavLink to={`/games/${game.id}`}>Book Now</NavLink>
-        </Button>
-      </CardFooter>
+      {showBookBtn && (
+        <CardFooter>
+          <Button className="w-full mt-4 rounded-xl" asChild>
+            <NavLink to={`/games/${game.id}`}>Book Now</NavLink>
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };

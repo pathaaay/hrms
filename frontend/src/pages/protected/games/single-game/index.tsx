@@ -1,3 +1,5 @@
+import { GameSlots } from "@/components/games/book-game";
+import { GameCard } from "@/components/games/game-card";
 import { Button } from "@/components/ui/button";
 import { useGame } from "@/hooks/game/use-game";
 import { ArrowLeftIcon } from "lucide-react";
@@ -15,6 +17,8 @@ export const SingleGamePage = () => {
     if (!isLoading && !singleGame) navigate("/games", { replace: true });
   }, [singleGame, isLoading]);
 
+  if (!singleGame) return;
+
   return (
     <div className="flex flex-col items-center gap-2 relative">
       <Button variant={"secondary"} className="absolute left-0" asChild>
@@ -23,9 +27,10 @@ export const SingleGamePage = () => {
           Go Back
         </NavLink>
       </Button>
-      <div className="w-full mt-20 flex items-center relative justify-center">
-        <div className="text-3xl font-semibold mt-">{singleGame?.name}</div>
+      <div className="w-full max-w-lg mt-20 mb-5">
+        <GameCard showBookBtn={false} game={singleGame} />
       </div>
+      <GameSlots game={singleGame} />
     </div>
   );
 };

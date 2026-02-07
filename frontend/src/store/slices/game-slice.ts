@@ -16,7 +16,6 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     setGames(state, { payload }) {
-      console.log("setting games", payload);
       state.isLoading = false;
       state.games = payload;
     },
