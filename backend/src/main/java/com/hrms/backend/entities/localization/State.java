@@ -1,23 +1,23 @@
-package com.hrms.backend.entities;
+package com.hrms.backend.entities.localization;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
 
 @Setter
 @Getter
 @Entity
 @ToString
-@Table(name = "departments")
-public class Department {
+@Table(name = "states")
+public class State {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
-    private List<UserProfile> userProfile;
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
 }

@@ -14,4 +14,5 @@ export interface IUserProfile {
   department: string;
   dateOfBirth: string;
   dateOfJoining: string;
+  avatarPathSrc: string;
 }
