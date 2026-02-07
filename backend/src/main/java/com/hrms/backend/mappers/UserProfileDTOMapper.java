@@ -19,8 +19,8 @@ public class UserProfileDTOMapper {
         profileDetails.setDateOfBirth(profile.getDateOfBirth());
         profileDetails.setDateOfJoining(profile.getDateOfJoining());
 
-        if (profile.getRole() != null)
-            profileDetails.setRole(profile.getRole().getName());
+        if (profile.getUser().getRole() != null)
+            profileDetails.setRole(profile.getUser().getRole().getName());
 
         if (profile.getDepartment() != null)
             profileDetails.setDepartment(profile.getDepartment().getName());
