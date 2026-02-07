@@ -10,10 +10,14 @@ import lombok.ToString;
 @Getter
 @Entity
 @ToString
-@Table(name = "roles")
-public class Role {
+@Table(name = "cities")
+public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "state_id")
+    private State state;
 }

@@ -1,7 +1,6 @@
 package com.hrms.backend.config;
 
 import com.hrms.backend.filters.auth.JWTFilter;
-import com.hrms.backend.utilities.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +29,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfiguration corsConfiguration() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("localhost");
+        corsConfiguration.addAllowedOrigin("http://localhost:5173/");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
         return corsConfiguration;
