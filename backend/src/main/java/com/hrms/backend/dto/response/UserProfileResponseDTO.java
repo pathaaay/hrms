@@ -16,6 +16,10 @@ public class UserProfileResponseDTO {
     private User manager;
     private String role;
     private String department;
+    private String city;
+    private String state;
+    private String country;
+    private String timezone;
     private Date dateOfBirth;
     private Date dateOfJoining;
 }
