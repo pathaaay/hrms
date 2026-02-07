@@ -7,8 +7,8 @@ import lombok.ToString;
 
 @Setter
 @Getter
-@Entity
 @ToString
+@Entity
 @Table(name = "games")
 public class Game {
     @Id

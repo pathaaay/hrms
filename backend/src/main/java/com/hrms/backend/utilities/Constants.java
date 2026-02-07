@@ -14,4 +14,9 @@ public class Constants {
             "/api/swagger-ui/**",
             "/api/swagger-ui.html"
     };
+
+    public enum GameBookingStatusType {
+        PENDING,
+        CONFIRMED
+    }
 }

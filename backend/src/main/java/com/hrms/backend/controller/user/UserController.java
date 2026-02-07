@@ -37,6 +37,6 @@ public class UserController {
     @PostMapping("/update-games")
     public ResponseEntity<ApiResponse> updateGameIds(@AuthenticationPrincipal User user, @Valid @RequestBody UpdateGameRequestDTO dto) throws BadRequestException {
         userService.updateUserInterestedGames(user, dto);
-        return ResponseEntity.ok(new ApiResponse<>(true, "Games updated successfully", null));
+        return ResponseEntity.ok(new ApiResponse(true, "Games updated successfully", null));
     }
 }
