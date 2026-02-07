@@ -7,21 +7,18 @@ import com.hrms.backend.repository.UserProfileRepo;
 import com.hrms.backend.utilities.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @ToString
 public class UserService {
     private final UserProfileRepo userProfileRepo;
-    private final ModelMapper modelMapper;
+
 
     public ResponseEntity<ApiResponse<UserProfileResponseDTO>> getUserProfile(Long userId) throws BadRequestException {
         Optional<UserProfile> profile = userProfileRepo.findByUserId(userId);
