@@ -1,4 +1,4 @@
-package com.hrms.backend.entities;
+package com.hrms.backend.entities.localization;
 
 import jakarta.persistence.*;
 import lombok.Getter;
