@@ -38,6 +38,6 @@ public class JwtService {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        return claims.get("userId", Long.class);
+        return Long.parseLong(claims.get("userId", String.class));
     }
 }

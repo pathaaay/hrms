@@ -3,10 +3,9 @@ package com.hrms.backend.service.auth;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.hrms.backend.entities.User;
+import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.UserRepo;
 import com.hrms.backend.utilities.ApiResponse;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
@@ -22,7 +21,6 @@ public class AuthService {
     private final JwtService jwtService;
     private final ObjectMapper mapper;
     private final PasswordEncoder passwordEncoder;
-
 
     public ResponseEntity<ApiResponse<JsonNode>> login(String email, String password) throws BadRequestException {
         User user = userRepo.findByEmail(email).orElse(null);

@@ -52,13 +52,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({NoResourceFoundException.class})
     public ResponseEntity<ErrorResponse> handleNotFoundException(NoResourceFoundException ex) {
-        log.error("Not Found ex occurred - Error: " + ex.getMessage());
+        log.error("Not Found occurred - Error: " + ex.getMessage());
         return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "route_not_found", null), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({HttpClientErrorException.class})
     public ResponseEntity<ErrorResponse> handleUnauthorizedException(HttpClientErrorException ex) {
-        log.error("HttpClientErrorException ex occurred - Error: " + ex.getMessage());
+        log.error("HttpClientErrorException occurred - Error: " + ex.getMessage());
         return new ResponseEntity<>(new ErrorResponse(false, ex.getMessage(), "http_client_error", null), HttpStatus.UNAUTHORIZED);
     }
 

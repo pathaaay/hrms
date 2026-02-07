@@ -1,6 +1,6 @@
 package com.hrms.backend.repository;
 
-import com.hrms.backend.entities.User;
+import com.hrms.backend.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

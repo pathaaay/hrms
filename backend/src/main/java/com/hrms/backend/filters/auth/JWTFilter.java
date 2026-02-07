@@ -7,6 +7,7 @@ import com.hrms.backend.repository.UserProfileRepo;
 import com.hrms.backend.repository.UserRepo;
 import com.hrms.backend.service.auth.JwtService;
 import com.hrms.backend.utilities.Constants;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,9 +23,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -35,14 +39,21 @@ public class JWTFilter extends OncePerRequestFilter {
     private final UserRepo userRepo;
     private final UserProfileRepo userProfileRepo;
 
+    @Autowired
+    @Qualifier("handlerExceptionResolver")
+    private HandlerExceptionResolver exceptionResolver;
 
 
-    // This method will make sure the filter will not run for above URIs.
+    // This method will make sure the filter will not run for public URIs.
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String requestUri = request.getRequestURI();
+
+        // This will log every request in the api
+        log.info("API called - METHOD: {} - URL: {} - Time:{}", request.getMethod(), requestUri, LocalDateTime.now());
+
         for (String publicUrl : Constants.PUBLIC_URLS) {
-            if (requestUri.startsWith(publicUrl.replace("/**", ""))) {
+            if (publicUrl.equals(requestUri) || (publicUrl.contains("/**") && requestUri.startsWith(publicUrl.replace("/**", "")))) {
                 return true;
             }
         }
@@ -59,7 +70,23 @@ public class JWTFilter extends OncePerRequestFilter {
                 token = authHeader.substring(7);
             }
 
+        try {
 
+            String authHeader = request.getHeader("Authorization");
+            String token = null;
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                token = authHeader.substring(7);
+            }
+
+
+            if (request.getCookies() != null) {
+                for (Cookie cookie : request.getCookies()) {
+                    if (Constants.AUTH_TOKEN_COOKIE_NAME.equals(cookie.getName())) {
+                        token = cookie.getValue();
+                        break;
+                    }
+                }
+            }
             if (request.getCookies() != null) {
                 for (Cookie cookie : request.getCookies()) {
                     if (Constants.AUTH_TOKEN_COOKIE_NAME.equals(cookie.getName())) {
@@ -92,6 +119,10 @@ public class JWTFilter extends OncePerRequestFilter {
                 throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, ex.getMessage());
             }
 
+            chain.doFilter(request, response);
+        } catch (Exception ex) {
+            exceptionResolver.resolveException(request, response, null, ex);
+        }
             chain.doFilter(request, response);
         } catch (Exception ex) {
             exceptionResolver.resolveException(request, response, null, ex);
