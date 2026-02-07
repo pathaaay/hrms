@@ -16,7 +16,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useUser } from "@/hooks/use-user";
 import { NavLink } from "react-router";
 import { useUser } from "@/hooks/user/use-user";
 import { logout } from "@/api/actions/auth";

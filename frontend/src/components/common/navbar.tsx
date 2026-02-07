@@ -1,7 +1,3 @@
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { setUser } from "@/store/slices/user-slice";
-import type { IUserProfile } from "@/lib/types/user";
 import { Button } from "../ui/button";
 import { SidebarTrigger } from "../ui/sidebar";
 import { NotificationPopover } from "../shared/notification-popover";
@@ -9,18 +5,9 @@ import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "./theme-provider";
 import { cn } from "@/lib/utils";
 
-interface NavbarProps {
-  userProfile: IUserProfile | undefined;
-}
-
-export const Navbar = ({ userProfile }: NavbarProps) => {
-  const dispatch = useDispatch();
+export const Navbar = () => {
   const { theme, setTheme } = useTheme();
-  useEffect(() => {
-    dispatch(setUser(userProfile));
-    return () => {};
-  }, [userProfile]);
-
+ 
   return (
     <>
       {/* Desktop Navbar */}

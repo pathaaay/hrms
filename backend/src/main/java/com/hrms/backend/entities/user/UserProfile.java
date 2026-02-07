@@ -1,11 +1,15 @@
-package com.hrms.backend.entities;
+package com.hrms.backend.entities.user;
 
+import com.hrms.backend.entities.game.Game;
+import com.hrms.backend.entities.localization.City;
+import com.hrms.backend.entities.localization.TimeZone;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -41,6 +45,13 @@ public class UserProfile {
     @JoinColumn(name = "city_id")
     private City city;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_interested_games",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "game_id"))
+    Set<Game> interestedGames;
+
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
@@ -49,5 +60,4 @@ public class UserProfile {
 
     @Column(name = "avatar_file_path", columnDefinition = "TEXT")
     private String avatarFilePath;
-
 }

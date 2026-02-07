@@ -1,4 +1,4 @@
-package com.hrms.backend.entities;
+package com.hrms.backend.entities.localization;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,14 +10,14 @@ import lombok.ToString;
 @Getter
 @Entity
 @ToString
-@Table(name = "cities")
-public class City {
+@Table(name = "states")
+public class State {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "state_id")
-    private State state;
+    @JoinColumn(name = "country_id")
+    private Country country;
 }
