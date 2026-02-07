@@ -4,7 +4,7 @@ export interface IUser {
   email: string;
 }
 
-export interface IUserProfileType {
+export interface IUserProfile {
   userId: number;
   profileId: number;
   name: string;
@@ -14,4 +14,5 @@ export interface IUserProfileType {
   department: string;
   dateOfBirth: string;
   dateOfJoining: string;
+  avatarPathSrc: string;
 }
