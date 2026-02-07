@@ -25,6 +25,10 @@ public class User {
     @JsonIgnore
     private Boolean isDeleted;
 
+    @OneToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
     //This field will be ignored from every response.
     @JsonIgnore
     private String password;

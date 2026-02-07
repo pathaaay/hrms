@@ -1,6 +1,9 @@
 package com.hrms.backend.filters.auth;
 
 
+import com.hrms.backend.entities.user.User;
+import com.hrms.backend.repository.UserProfileRepo;
+import com.hrms.backend.repository.UserRepo;
 import com.hrms.backend.service.auth.JwtService;
 import com.hrms.backend.utilities.Constants;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -14,8 +17,9 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -31,6 +35,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
+    private final UserRepo userRepo;
 
     @Autowired
     @Qualifier("handlerExceptionResolver")
@@ -71,6 +76,14 @@ public class JWTFilter extends OncePerRequestFilter {
                     }
                 }
             }
+            if (request.getCookies() != null) {
+                for (Cookie cookie : request.getCookies()) {
+                    if (Constants.AUTH_TOKEN_COOKIE_NAME.equals(cookie.getName())) {
+                        token = cookie.getValue();
+                        break;
+                    }
+                }
+            }
 
             // If the token is null then throwing the exception
             if (token == null)
@@ -79,13 +92,20 @@ public class JWTFilter extends OncePerRequestFilter {
             try {
                 Long userId = jwtService.extractUserId(token);
                 if (userId != null) {
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, null, List.of());
+                    User user = userRepo.findById(userId).orElseThrow(() -> new BadRequestException("User not found"));
+
+                    if (Boolean.TRUE.equals(user.getIsDeleted())) {
+                        throw new BadRequestException(("User is deleted"));
+                    }
+
+                    List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole() != null ? user.getRole().getName() : null));
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             } catch (ExpiredJwtException ex) {
                 throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "Authentication token is expired");
             } catch (Exception ex) {
-                throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "Authentication token is invalid");
+                throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, ex.getMessage());
             }
 
             chain.doFilter(request, response);
@@ -94,3 +114,4 @@ public class JWTFilter extends OncePerRequestFilter {
         }
     }
 }
+

@@ -1,10 +1,12 @@
 package com.hrms.backend.controller.user;
 
+import com.hrms.backend.dto.request.UpdateGameRequestDTO;
 import com.hrms.backend.dto.response.UserProfileResponseDTO;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.entities.user.UserProfile;
 import com.hrms.backend.service.user.UserService;
 import com.hrms.backend.utilities.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
