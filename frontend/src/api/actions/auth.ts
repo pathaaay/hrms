@@ -1,4 +1,5 @@
 import { apiService } from "@/lib/axios";
+import { emitCustomRedirect } from "@/lib/helpers/events/redirect-event";
 import type { LoginSchemaType } from "@/lib/schemas/login-schema";
 import toast from "react-hot-toast";
 
@@ -12,4 +13,5 @@ export const login = async (data: LoginSchemaType) => {
 export const logout = () => {
   localStorage.removeItem("access_token");
   toast.success("Logout successfull");
+  emitCustomRedirect(`/auth/login`);
 };
