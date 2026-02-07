@@ -10,6 +10,8 @@ import { GamesPage } from "@/pages/protected/games/index.tsx";
 import { TravelPage } from "@/pages/protected/travel/index.tsx";
 import { JobsPage } from "@/pages/protected/jobs/index.tsx";
 import { InternalServerErrorPage } from "@/components/common/internal-server-error";
+import { GameLayout } from "@/pages/protected/games/game-layout";
+import { SingleGamePage } from "@/pages/protected/games/single-game";
 
 export const appRouter = createBrowserRouter([
   {
@@ -28,8 +30,18 @@ export const appRouter = createBrowserRouter([
             element: <AccountPage />,
           },
           {
-            path: "/games",
-            element: <GamesPage />,
+            path: "games",
+            element: <GameLayout />,
+            children: [
+              {
+                index: true,
+                element: <GamesPage />,
+              },
+              {
+                path: ":gameId",
+                element: <SingleGamePage />,
+              },
+            ],
           },
           {
             path: "/travel",
