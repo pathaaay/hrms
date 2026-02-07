@@ -15,7 +15,7 @@ export const GamesPage = () => {
     <div className="grid md:frid-cols-2 lg:grid-cols-3 gap-6">
       {games.map((game) => (
         <GameCard game={game} key={game.id} />
-      ))}{" "}
+      ))}
     </div>
   );
 };

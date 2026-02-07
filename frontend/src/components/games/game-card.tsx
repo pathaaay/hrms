@@ -16,6 +16,7 @@ import {
   UsersIcon,
   type LucideIcon,
 } from "lucide-react";
+import { NavLink } from "react-router";
 
 interface GameCardProps {
   game: IGame;
@@ -45,16 +46,18 @@ export const GameCard = ({ game }: GameCardProps) => {
         <CardContentRow
           Icon={TimerIcon}
           label={"Slot Duration"}
-          value={game.maxSlotDurationInMinutes + "mins"}
+          value={game.maxSlotDurationInMinutes + " mins"}
         />
         <CardContentRow
           Icon={RepeatIcon}
           label={"Booking Cycle"}
-          value={game.bookingCycleHours + "hrs"}
+          value={game.bookingCycleHours + " hrs"}
         />
       </CardContent>
       <CardFooter>
-        <Button className="w-full mt-4 rounded-xl">Book Now</Button>
+        <Button className="w-full mt-4 rounded-xl" asChild>
+          <NavLink to={`/games/${game.id}`}>Book Now</NavLink>
+        </Button>
       </CardFooter>
     </Card>
   );

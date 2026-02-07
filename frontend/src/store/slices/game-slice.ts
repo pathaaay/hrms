@@ -7,7 +7,7 @@ interface IInitialState {
 }
 
 const initialState = {
-  isLoading: false,
+  isLoading: true,
   games: [],
 } as IInitialState;
 

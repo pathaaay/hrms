@@ -11,6 +11,7 @@ import { TravelPage } from "@/pages/protected/travel/index.tsx";
 import { JobsPage } from "@/pages/protected/jobs/index.tsx";
 import { InternalServerErrorPage } from "@/components/common/internal-server-error";
 import { GameLayout } from "@/pages/protected/games/game-layout";
+import { SingleGamePage } from "@/pages/protected/games/single-game";
 
 export const appRouter = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const appRouter = createBrowserRouter([
               {
                 index: true,
                 element: <GamesPage />,
+              },
+              {
+                path: ":gameId",
+                element: <SingleGamePage />,
               },
             ],
           },
