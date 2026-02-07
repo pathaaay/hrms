@@ -12,12 +12,13 @@ import { LoginSchema, type LoginSchemaType } from "@/lib/schemas/login-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
 export const LoginForm = () => {
   const { mutate: handleLogin, data: response, isPending } = useLoginMutation();
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const form = useForm({
     resolver: zodResolver(LoginSchema),
@@ -33,7 +34,9 @@ export const LoginForm = () => {
     const token = response?.data?.token;
     if (token && token != null) {
       localStorage.setItem("access_token", token);
-      navigate("/", { replace: true });
+
+      const routeToNavigate = searchParams.get("redirect") || "/";
+      navigate(routeToNavigate, { replace: true });
     }
     return () => {};
   }, [response]);
