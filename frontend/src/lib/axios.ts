@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ENV } from "./ENV";
+import { emitCustomRedirect } from "./helpers/events/redirect-event";
 
 export const apiService = axios.create({
   baseURL: ENV.API_BASE_URL,
@@ -32,7 +33,11 @@ apiService.interceptors.response.use(
       error.response &&
       (error.response.status === 401 || error.response.status === 403)
     ) {
-      window.location.href = "/auth/login";
+      emitCustomRedirect(
+        `/auth/login?redirect=${globalThis.window.location.pathname}`,
+      );
+    } else if (error.response && error?.response?.status === 500) {
+      emitCustomRedirect("/server-error");
     }
     return Promise.reject(error);
   },

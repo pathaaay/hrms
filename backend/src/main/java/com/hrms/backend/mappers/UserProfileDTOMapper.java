@@ -1,7 +1,7 @@
 package com.hrms.backend.mappers;
 
 import com.hrms.backend.dto.response.UserProfileResponseDTO;
-import com.hrms.backend.entities.UserProfile;
+import com.hrms.backend.entities.user.UserProfile;
 
 public class UserProfileDTOMapper {
 
@@ -10,6 +10,7 @@ public class UserProfileDTOMapper {
 
     public static UserProfileResponseDTO convertToDto(UserProfile profile) {
         UserProfileResponseDTO profileDetails = new UserProfileResponseDTO();
+
         profileDetails.setProfileId(profile.getId());
         profileDetails.setUserId(profile.getUser().getId());
         profileDetails.setManager(profile.getManager());
@@ -17,8 +18,25 @@ public class UserProfileDTOMapper {
         profileDetails.setEmail(profile.getUser().getEmail());
         profileDetails.setDateOfBirth(profile.getDateOfBirth());
         profileDetails.setDateOfJoining(profile.getDateOfJoining());
-        profileDetails.setRole(profile.getRole().getName());
-        profileDetails.setDepartment(profile.getDepartment().getName());
+
+        if (profile.getRole() != null)
+            profileDetails.setRole(profile.getRole().getName());
+
+        if (profile.getDepartment() != null)
+            profileDetails.setDepartment(profile.getDepartment().getName());
+
+        if (profile.getTimezone() != null)
+            profileDetails.setTimezone(profile.getTimezone().getName());
+
+        if (profile.getInterestedGames() != null) {
+            profileDetails.setInterestedGames(profile.getInterestedGames());
+        }
+
+        if (profile.getCity() != null) {
+            profileDetails.setCity(profile.getCity().getName());
+            profileDetails.setState(profile.getCity().getState().getName());
+            profileDetails.setCountry(profile.getCity().getState().getCountry().getName());
+        }
         return profileDetails;
     }
 }

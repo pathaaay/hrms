@@ -21,7 +21,6 @@ public class UserController {
 
     @GetMapping()
     public ResponseEntity<ApiResponse<UserProfileResponseDTO>> getUserProfile(@AuthenticationPrincipal Long userId) throws BadRequestException {
-        log.info("/user");
         return userService.getUserProfile(userId);
     }
 }

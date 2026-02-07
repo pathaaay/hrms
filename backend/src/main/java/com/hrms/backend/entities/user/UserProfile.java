@@ -1,11 +1,15 @@
-package com.hrms.backend.entities;
+package com.hrms.backend.entities.user;
 
+import com.hrms.backend.entities.game.Game;
+import com.hrms.backend.entities.localization.City;
+import com.hrms.backend.entities.localization.TimeZone;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -18,11 +22,11 @@ public class UserProfile {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id") // Specifies the foreign key column name
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "manager_id") // Specifies the foreign key column name
+    @JoinColumn(name = "manager_id")
     private User manager;
 
     @ManyToOne
@@ -32,6 +36,21 @@ public class UserProfile {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @ManyToOne
+    @JoinColumn(name = "timezone_id")
+    private TimeZone timezone;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_interested_games",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "game_id"))
+    Set<Game> interestedGames;
 
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
