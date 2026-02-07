@@ -236,10 +236,36 @@
           "name": "update user interested games",
           "id": "ef5b4d68-23eb-4eff-99a8-5b00eecfd9ee",
           "request": {
-            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIiwic3ViIjoiYWF5dXNoLnBhdGhha0Byb2ltYWludC5jb20iLCJpYXQiOjE3NzA0NzM1NTcsImV4cCI6MTc3MDQ3NzE1N30.xZYj2i-2J0rjYbh-ib4DFumWf6soXHJp2dZFtbLLbSE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"gameIds\":[1]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": ""
+              "raw": "{{base_url}}/user/update-games",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user",
+                "update-games"
+              ]
             }
           },
           "response": []
@@ -259,7 +285,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIiwic3ViIjoiYWF5dXNoLnBhdGhha0Byb2ltYWludC5jb20iLCJpYXQiOjE3NzA0NDg1NTYsImV4cCI6MTc3MDQ1MjE1Nn0.DyjlALG10rAqGXUjMARUl_mKDVeTjuEchctzOkV8zxE",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIiwic3ViIjoiYWF5dXNoLnBhdGhha0Byb2ltYWludC5jb20iLCJpYXQiOjE3NzA0NzM1NTcsImV4cCI6MTc3MDQ3NzE1N30.xZYj2i-2J0rjYbh-ib4DFumWf6soXHJp2dZFtbLLbSE",
                   "type": "string"
                 }
               ]
