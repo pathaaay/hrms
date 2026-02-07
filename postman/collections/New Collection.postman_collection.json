@@ -231,6 +231,18 @@
               "body": "{\n    \"success\": true,\n    \"message\": \"User get successfully\",\n    \"data\": {\n        \"profileId\": 3,\n        \"userId\": 1,\n        \"name\": \"Aayush Pathak\",\n        \"email\": \"aayush.pathak@roimaint.com\",\n        \"manager_details\": {\n            \"id\": 2,\n            \"name\": \"Manager\",\n            \"email\": \"manager@gmail.com\"\n        },\n        \"role\": \"intern\",\n        \"department\": \"it\",\n        \"dateOfBirth\": \"2005-11-30T18:30:00.000+00:00\",\n        \"dateOfJoining\": \"2025-12-31T18:30:00.000+00:00\"\n    }\n}"
             }
           ]
+        },
+        {
+          "name": "update user interested games",
+          "id": "ef5b4d68-23eb-4eff-99a8-5b00eecfd9ee",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
         }
       ],
       "id": "6e2b0969-6a53-4f02-a98d-e7f23c215e66"
