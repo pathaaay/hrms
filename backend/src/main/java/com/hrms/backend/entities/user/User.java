@@ -1,4 +1,4 @@
-package com.hrms.backend.entities;
+package com.hrms.backend.entities.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -20,7 +20,7 @@ public class User {
     private String name;
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "is_deleted")
     @ColumnDefault("0")
     private Boolean isDeleted;
 
