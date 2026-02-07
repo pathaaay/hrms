@@ -32,7 +32,14 @@ const RootLayout = () => {
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <Outlet />
-          <Toaster />
+          <Toaster
+            toastOptions={{
+              style: {
+                background: "var(--secondary)",
+                color:"var(--foreground)"
+              },
+            }}
+          />
         </QueryClientProvider>
       </ThemeProvider>
     </Provider>
