@@ -63,7 +63,6 @@ public class JWTFilter extends OncePerRequestFilter {
                 token = authHeader.substring(7);
             }
 
-
             if (request.getCookies() != null) {
                 for (Cookie cookie : request.getCookies()) {
                     if (Constants.AUTH_TOKEN_COOKIE_NAME.equals(cookie.getName())) {

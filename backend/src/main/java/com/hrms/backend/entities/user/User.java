@@ -22,6 +22,7 @@ public class User {
 
     @Column(nullable = false,name = "is_deleted")
     @ColumnDefault("0")
+    @JsonIgnore
     private Boolean isDeleted;
 
     //This field will be ignored from every response.
