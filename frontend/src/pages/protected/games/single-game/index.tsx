@@ -2,19 +2,27 @@ import { BookGame } from "@/components/games/book-game";
 import { GameCard } from "@/components/games/game-card";
 import { Button } from "@/components/ui/button";
 import { useGame } from "@/hooks/game/use-game";
+import { useUser } from "@/hooks/user/use-user";
 import { ArrowLeftIcon } from "lucide-react";
 import { useEffect } from "react";
 import { NavLink, useNavigate, useParams } from "react-router";
 
 export const SingleGamePage = () => {
   const { gameId } = useParams();
+  const { interestedGameIds } = useUser();
   const { isLoading, games } = useGame();
   const navigate = useNavigate();
   const singleGame = games.find(({ id }) => id === Number(gameId));
 
   useEffect(() => {
     //If games is loaded but not found in game array then redirect to the games page
-    if (!isLoading && !singleGame) navigate("/games", { replace: true });
+    if (
+      (!isLoading && !singleGame) ||
+      
+      // Check if the user has no interest in this game.
+      (singleGame && !interestedGameIds.includes(singleGame.id))
+    )
+      navigate("/games", { replace: true });
   }, [singleGame, isLoading]);
 
   if (!singleGame) return;

@@ -4,20 +4,24 @@ import { createSlice } from "@reduxjs/toolkit";
 interface IInitialState {
   isAuthenticated: boolean;
   userProfile: IUserProfile | null;
+  interestedGameIds: Array<number>;
 }
 
 const initialState = {
   isAuthenticated: false,
   userProfile: null,
+  interestedGameIds: [],
 } as IInitialState;
 
 export const userSlice = createSlice({
   name: "user-slice",
   initialState,
   reducers: {
-    setUser(state, { payload }) {
+    setUser(state, { payload }: { payload: IUserProfile }) {
       state.isAuthenticated = true;
       state.userProfile = payload;
+      console.log({ payload });
+      state.interestedGameIds = payload?.interestedGames?.map(({ id }) => id);
     },
   },
 });
