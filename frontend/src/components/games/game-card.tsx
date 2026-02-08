@@ -16,8 +16,9 @@ import {
   UsersIcon,
 } from "lucide-react";
 import { NavLink } from "react-router";
-import { BookGameBtn } from "./book-game-btn";
+import { UpdateInterestedGamesBtn } from "./update-interested-games-btn";
 import { CardContentRow } from "../shared/card-content-row";
+import { useUser } from "@/hooks/user/use-user";
 
 interface GameCardProps {
   game: IGame;
@@ -30,6 +31,7 @@ export const GameCard = ({
   showBookBtn = true,
   showAddBtn = false,
 }: GameCardProps) => {
+  const { interestedGameIds } = useUser();
   return (
     <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-muted">
       <CardHeader>
@@ -71,7 +73,10 @@ export const GameCard = ({
 
       {showAddBtn && (
         <CardFooter>
-          <BookGameBtn id={game.id} />
+          <UpdateInterestedGamesBtn
+            ids={[game.id, ...interestedGameIds]}
+            btnText="Add to interested games"
+          />
         </CardFooter>
       )}
     </Card>

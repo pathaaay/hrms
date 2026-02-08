@@ -1,9 +1,11 @@
+import UpdateInterestedGames from "@/components/forms/user/update-interested-games";
 import { CardContentRow } from "@/components/shared/card-content-row";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useFetchGames } from "@/hooks/game/use-fetch-games";
 import { useUser } from "@/hooks/user/use-user";
 import { EditIcon } from "lucide-react";
 
@@ -31,8 +33,9 @@ const profileContents = [
 ] as const;
 
 export const AccountPage = () => {
+  useFetchGames();
+  
   const { userProfile } = useUser();
-
   if (!userProfile) return;
 
   return (
@@ -77,7 +80,7 @@ export const AccountPage = () => {
           label={
             <div className="flex items-center gap-2 justify-between">
               <div>Interested Games</div>{" "}
-              <Button size={"xs"} variant={'secondary'}>
+              <Button size={"xs"} variant={"secondary"}>
                 Edit <EditIcon />
               </Button>
             </div>
@@ -89,6 +92,7 @@ export const AccountPage = () => {
             </Badge>
           ))}
         />
+        <UpdateInterestedGames />
       </CardContent>
     </Card>
   );
