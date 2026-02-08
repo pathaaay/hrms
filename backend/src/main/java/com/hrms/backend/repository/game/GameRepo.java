@@ -1,4 +1,4 @@
-package com.hrms.backend.repository;
+package com.hrms.backend.repository.game;
 
 import com.hrms.backend.entities.game.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
