@@ -20,7 +20,6 @@ export const userSlice = createSlice({
     setUser(state, { payload }: { payload: IUserProfile }) {
       state.isAuthenticated = true;
       state.userProfile = payload;
-      console.log({ payload });
       state.interestedGameIds = payload?.interestedGames?.map(({ id }) => id);
     },
   },

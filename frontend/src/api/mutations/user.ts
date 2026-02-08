@@ -16,7 +16,7 @@ export const useEditProfileMutation = () => {
   });
 };
 
-export const useUpdateInterestedGames = () => {
+export const useUpdateInterestedGamesMutation = () => {
   return useMutation({
     mutationFn: updateUserInterestedGames,
     onSuccess: () => {
