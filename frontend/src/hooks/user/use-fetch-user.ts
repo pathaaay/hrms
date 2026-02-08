@@ -11,9 +11,9 @@ export const useFetchUser = (): { isPending: boolean } => {
     queryKey: ["user"],
     queryFn: getUser,
   });
-  
+
   useEffect(() => {
-    dispatch(setUser(data));
+    if (data != null) dispatch(setUser(data));
   }, [data, dispatch]);
 
   return { isPending };

@@ -1,18 +1,19 @@
-export interface IUser {
-  id: number;
-  name: string;
-  email: string;
-}
+import type { IGame } from "./game";
 
 export interface IUserProfile {
   userId: number;
   profileId: number;
   name: string;
   email: string;
-  manager: IUser;
+  managerId: number;
   role: string;
   department: string;
   dateOfBirth: string;
   dateOfJoining: string;
   avatarPathSrc: string;
+  interestedGames: IGame[];
+  city: string;
+  state: string;
+  country: string;
+  timezone: string;
 }
