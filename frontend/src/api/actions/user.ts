@@ -6,6 +6,13 @@ export const getUser = async () => {
   return res.data;
 };
 
+export const getAllUsers = async (gameId: number | null = null) => {
+  const res = await apiService.get("/user/all", {
+    params: gameId ? { gameId } : null,
+  });
+  return res.data;
+};
+
 export const updateUser = async (values: EditProfileSchemaType) => {
   const res = await apiService.post("/user/update", {
     ...values,
