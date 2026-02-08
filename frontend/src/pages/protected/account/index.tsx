@@ -1,4 +1,43 @@
+import UpdateInterestedGames from "@/components/forms/user/update-interested-games";
+import { CardContentRow } from "@/components/shared/card-content-row";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { useFetchGames } from "@/hooks/game/use-fetch-games";
+import { useUser } from "@/hooks/user/use-user";
+import { EditIcon } from "lucide-react";
+
+const profileContents = [
+  {
+    label: "Role",
+    key: "role",
+  },
+  {
+    label: "Department",
+    key: "department",
+  },
+  {
+    label: "City",
+    key: "city",
+  },
+  {
+    label: "State",
+    key: "state",
+  },
+  {
+    label: "Timezone",
+    key: "timezone",
+  },
+] as const;
+
 export const AccountPage = () => {
+  useFetchGames();
+  
+  const { userProfile } = useUser();
+  if (!userProfile) return;
+
   return (
     <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-muted w-full max-w-lg mx-auto">
       <CardHeader>
@@ -35,6 +74,23 @@ export const AccountPage = () => {
         <CardContentRow
           label="Date of Joining"
           value={new Date(userProfile.dateOfJoining).toLocaleDateString()}
+        />
+        <Separator />
+        <CardContentRow
+          label={
+            <div className="flex items-center gap-2 justify-between">
+              <div>Interested Games</div>{" "}
+              <Button size={"xs"} variant={"secondary"}>
+                Edit <EditIcon />
+              </Button>
+            </div>
+          }
+          className="flex-col gap-2"
+          value={userProfile.interestedGames.map(({ name }) => (
+            <Badge variant={"secondary"} key={name}>
+              {name}
+            </Badge>
+          ))}
         />
         <UpdateInterestedGames />
       </CardContent>

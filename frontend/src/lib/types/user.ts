@@ -8,8 +8,8 @@ export interface IUserProfile {
   managerId: number;
   role: string;
   department: string;
-  dateOfBirth: string;
-  dateOfJoining: string;
+  dateOfBirth: Date;
+  dateOfJoining: Date;
   avatarPathSrc: string;
   interestedGames: IGame[];
   city: string;

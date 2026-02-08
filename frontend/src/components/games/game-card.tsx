@@ -14,16 +14,24 @@ import {
   RepeatIcon,
   TimerIcon,
   UsersIcon,
-  type LucideIcon,
 } from "lucide-react";
 import { NavLink } from "react-router";
+import { UpdateInterestedGamesBtn } from "./update-interested-games-btn";
+import { CardContentRow } from "../shared/card-content-row";
+import { useUser } from "@/hooks/user/use-user";
 
 interface GameCardProps {
   game: IGame;
   showBookBtn?: boolean;
+  showAddBtn?: boolean;
 }
 
-export const GameCard = ({ game, showBookBtn = true }: GameCardProps) => {
+export const GameCard = ({
+  game,
+  showBookBtn = true,
+  showAddBtn = false,
+}: GameCardProps) => {
+  const { interestedGameIds } = useUser();
   return (
     <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-muted">
       <CardHeader>
@@ -62,26 +70,15 @@ export const GameCard = ({ game, showBookBtn = true }: GameCardProps) => {
           </Button>
         </CardFooter>
       )}
-    </Card>
-  );
-};
 
-const CardContentRow = ({
-  Icon,
-  label,
-  value,
-}: {
-  Icon: LucideIcon;
-  label: string;
-  value: string | number;
-}) => {
-  return (
-    <div className="flex justify-between">
-      <div className="flex items-center gap-2">
-        <Icon className="size-4!" />
-        <span>{label}</span>
-      </div>
-      <span className="font-medium text-foreground">{value}</span>
-    </div>
+      {showAddBtn && (
+        <CardFooter>
+          <UpdateInterestedGamesBtn
+            ids={[game.id, ...interestedGameIds]}
+            btnText="Add to interested games"
+          />
+        </CardFooter>
+      )}
+    </Card>
   );
 };
