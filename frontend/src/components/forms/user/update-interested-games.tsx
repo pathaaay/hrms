@@ -15,34 +15,32 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useGame } from "@/hooks/game/use-game";
 import { useUser } from "@/hooks/user/use-user";
-import type { IGame } from "@/lib/types/game";
 import { useEffect, useState } from "react";
 
 const UpdateInterestedGames = () => {
   const { games } = useGame();
-  const { interestedGameIds } = useUser();
   const anchor = useComboboxAnchor();
+  const { interestedGameIds } = useUser();
   const [selectedGames, setSelectedGames] = useState<number[]>([]);
 
   useEffect(() => {
-    if (games.length > 0 && interestedGameIds) {
+    if (interestedGameIds) {
       setSelectedGames(interestedGameIds);
     }
-  }, [interestedGameIds, games]);
-
-  const handleGameValueChange = (value: number) => {
-    const newSelectedGames = selectedGames.includes(value)
-      ? selectedGames.filter((id) => id != value)
-      : [...selectedGames, value];
-    setSelectedGames(newSelectedGames);
-  };
+  }, [interestedGameIds]);
 
   if (games.length === 0) return;
   return (
     <div className="flex flex-col gap-2">
       <Separator />
       <Label className="mt-3 text-md">Select Games</Label>
-      <Combobox multiple autoHighlight items={games} value={selectedGames}>
+      <Combobox
+        multiple
+        autoHighlight
+        items={games.map(({ id }) => id)}
+        value={selectedGames}
+        onValueChange={setSelectedGames}
+      >
         <ComboboxChips ref={anchor} className="w-full">
           <ComboboxValue>
             {(values) => (
@@ -60,13 +58,9 @@ const UpdateInterestedGames = () => {
         <ComboboxContent anchor={anchor}>
           <ComboboxEmpty>No items found.</ComboboxEmpty>
           <ComboboxList>
-            {(item: IGame) => (
-              <ComboboxItem
-                onClick={() => handleGameValueChange(item.id)}
-                key={item.id}
-                value={item.id}
-              >
-                {item.name}
+            {(item: number) => (
+              <ComboboxItem key={item} value={item}>
+                {games.find(({ id }) => id === item)?.name}
               </ComboboxItem>
             )}
           </ComboboxList>

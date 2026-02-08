@@ -6,7 +6,7 @@ export const getUser = async () => {
   return res.data;
 };
 
-export const getAllUsers = async (gameId: number | null = null) => {
+export const getAllUsers = async (gameId?: number) => {
   const res = await apiService.get("/user/all", {
     params: gameId ? { gameId } : null,
   });
