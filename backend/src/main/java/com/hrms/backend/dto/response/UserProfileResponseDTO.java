@@ -1,5 +1,6 @@
 package com.hrms.backend.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hrms.backend.entities.game.Game;
 import com.hrms.backend.entities.user.User;
 import lombok.Getter;
@@ -10,12 +11,13 @@ import java.util.Set;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserProfileResponseDTO {
     private Long userId;
     private Long profileId;
     private String name;
     private String email;
-    private User manager;
+    private Long managerId;
     private String role;
     private String department;
     private String city;
@@ -24,5 +26,6 @@ public class UserProfileResponseDTO {
     private String timezone;
     private Date dateOfBirth;
     private Date dateOfJoining;
+    private String avatarFilePath;
     private Set<Game> interestedGames;
 }

@@ -2,6 +2,7 @@ import { getUser } from "@/api/actions/user";
 import type { IUserProfile } from "@/lib/types/user";
 import { setUser } from "@/store/slices/user-slice";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 export const useFetchUser = (): { isPending: boolean } => {
@@ -10,6 +11,10 @@ export const useFetchUser = (): { isPending: boolean } => {
     queryKey: ["user"],
     queryFn: getUser,
   });
-  dispatch(setUser(data));
+
+  useEffect(() => {
+    if (data != null) dispatch(setUser(data));
+  }, [data, dispatch]);
+
   return { isPending };
 };

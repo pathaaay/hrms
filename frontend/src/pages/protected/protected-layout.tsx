@@ -6,7 +6,7 @@ import { useFetchUser } from "@/hooks/user/use-fetch-user";
 import { LoaderIcon } from "react-hot-toast";
 const ProtectedLayout = () => {
   const { isPending } = useFetchUser();
-  
+
   if (isPending)
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -19,7 +19,9 @@ const ProtectedLayout = () => {
       <AppSidebar />
       <div className="w-full">
         <Navbar />
-        <Outlet />
+        <div className="p-3">
+            <Outlet />
+        </div>
       </div>
     </SidebarProvider>
   );

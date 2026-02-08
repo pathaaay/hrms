@@ -1,23 +1,36 @@
 package com.hrms.backend.service.game;
 
+import com.hrms.backend.dto.request.BookGameSlotRequestDTO;
 import com.hrms.backend.dto.response.GameResponseDTO;
 import com.hrms.backend.entities.game.Game;
-import com.hrms.backend.repository.GameRepo;
-import com.hrms.backend.utilities.ApiResponse;
+import com.hrms.backend.entities.game.GameBooking;
+import com.hrms.backend.entities.game.GameTeam;
+import com.hrms.backend.entities.user.User;
+import com.hrms.backend.repository.UserRepo;
+import com.hrms.backend.repository.game.GameBookingRepo;
+import com.hrms.backend.repository.game.GameRepo;
+import com.hrms.backend.repository.game.GameTeamRepo;
+import com.hrms.backend.utilities.Constants;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@ToString
 public class GameService {
     private final GameRepo gameRepo;
+    private final UserRepo userRepo;
     private final ModelMapper modelMapper;
+    private final GameTeamRepo gameTeamRepo;
+    private final GameBookingRepo gameBookingRepo;
+    private final FairPlayAlgorithmService fairPlayAlgorithmService;
 
     public GameResponseDTO convertToDTO(Game game) {
         return modelMapper.map(game, GameResponseDTO.class);
@@ -27,9 +40,54 @@ public class GameService {
         return games.stream().map(this::convertToDTO).toList();
     }
 
-    public ResponseEntity<ApiResponse<List<GameResponseDTO>>> getAllGames() {
+    public List<GameResponseDTO> getAllGames() {
         List<Game> games = gameRepo.findAll();
-        List<GameResponseDTO> response = convertToDTOList(games);
-        return ResponseEntity.ok(new ApiResponse<>(true, "Game get successfully", response));
+        return convertToDTOList(games);
     }
+
+    @Transactional
+    public void bookGameSlot(User user, BookGameSlotRequestDTO bookingDetails) throws BadRequestException {
+
+        // If the members in booking is less than 2 then throw error
+        if (bookingDetails.getUserIds().stream().count() < 2)
+            throw new BadRequestException("Minimum 2 player is required to book a slot");
+
+        Date today = new Date();
+        Date bookingDate = bookingDetails.getBookingDate();
+
+        // If the booking date is less than current date then throw error
+        if (bookingDate.compareTo(today) < 0) throw new BadRequestException("You cannot book past date slot.");
+
+        // Get the game from db
+        Game game = gameRepo.findById(bookingDetails.getGameId()).orElseThrow(() -> new BadRequestException("Game not found"));
+
+        // now find all the users with provided id
+        Set<User> users = userRepo.findAllById(bookingDetails.getUserIds()).stream().collect(Collectors.toSet());
+
+        // Create a team first
+        GameTeam team = new GameTeam();
+        team.setGame(game);
+        team.setUser(user);
+        team.setGameTeamMembers(users);
+        // save the team in db
+        GameTeam createdTeam = gameTeamRepo.save(team);
+
+
+        // Throw an error if the count less than 2 of team members
+        if (users.size() < 2) throw new BadRequestException("Minimum 2 player is required to book a slot");
+
+
+        Constants.GameBookingStatusType status = fairPlayAlgorithmService.getStatus(createdTeam);
+
+        // Create a new Booking
+        GameBooking newBooking = new GameBooking();
+        newBooking.setTeam(createdTeam);
+        newBooking.setConfirmed(status == Constants.GameBookingStatusType.CONFIRMED);
+        newBooking.setStartTime(bookingDetails.getStartTime());
+        newBooking.setEndTime(bookingDetails.getEndTime());
+
+        // Save the Booking to db
+        gameBookingRepo.save(newBooking);
+    }
+
 }

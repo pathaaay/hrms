@@ -22,7 +22,12 @@ public class User {
 
     @Column(nullable = false,name = "is_deleted")
     @ColumnDefault("0")
+    @JsonIgnore
     private Boolean isDeleted;
+
+    @OneToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     //This field will be ignored from every response.
     @JsonIgnore

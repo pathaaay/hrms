@@ -5,6 +5,7 @@ public class Constants {
     }
 
     public static final String AUTH_TOKEN_COOKIE_NAME = "hrms_access_token";
+
     public static final String[] PUBLIC_URLS = {
             "/api/",
             "/api/health",
@@ -13,4 +14,9 @@ public class Constants {
             "/api/swagger-ui/**",
             "/api/swagger-ui.html"
     };
+
+    public enum GameBookingStatusType {
+        PENDING,
+        CONFIRMED
+    }
 }

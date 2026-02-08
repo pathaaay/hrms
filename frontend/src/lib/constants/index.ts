@@ -1,4 +1,9 @@
-import { BriefcaseBusinessIcon, DicesIcon, LayoutDashboardIcon, WalletIcon } from "lucide-react";
+import {
+  BriefcaseBusinessIcon,
+  DicesIcon,
+  LayoutDashboardIcon,
+  WalletIcon,
+} from "lucide-react";
 
 export const navLinks = [
   {
@@ -21,4 +26,14 @@ export const navLinks = [
     label: "Jobs",
     icon: BriefcaseBusinessIcon,
   },
+];
+
+export const weekDays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
 ];
