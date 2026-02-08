@@ -58,7 +58,7 @@ export const EditProfile = () => {
           />
           <Field>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Update Profile" : "Please wait..."}
+              {isPending ? "Please wait..." : "Update Profile"}
             </Button>
           </Field>
         </FieldGroup>

@@ -1,12 +1,15 @@
 import { apiService } from "@/lib/axios";
+import type { EditProfileSchemaType } from "@/lib/schemas/profile-schema";
 
 export const getUser = async () => {
   const res = await apiService.get("/user");
   return res.data;
 };
 
-export const updateUser = async () => {
-  const res = await apiService.post("/user/update");
+export const updateUser = async (values: EditProfileSchemaType) => {
+  const res = await apiService.post("/user/update", {
+    ...values,
+  });
   return res.data;
 };
 
