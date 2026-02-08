@@ -17,13 +17,19 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { NavLink } from "react-router";
+import { BookGameBtn } from "./book-game-btn";
 
 interface GameCardProps {
   game: IGame;
   showBookBtn?: boolean;
+  showAddBtn?: boolean;
 }
 
-export const GameCard = ({ game, showBookBtn = true }: GameCardProps) => {
+export const GameCard = ({
+  game,
+  showBookBtn = true,
+  showAddBtn = false,
+}: GameCardProps) => {
   return (
     <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-muted">
       <CardHeader>
@@ -60,6 +66,12 @@ export const GameCard = ({ game, showBookBtn = true }: GameCardProps) => {
           <Button className="w-full mt-4 rounded-xl" asChild>
             <NavLink to={`/games/${game.id}`}>Book Now</NavLink>
           </Button>
+        </CardFooter>
+      )}
+
+      {showAddBtn && (
+        <CardFooter>
+          <BookGameBtn id={game.id} />
         </CardFooter>
       )}
     </Card>
