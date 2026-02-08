@@ -20,7 +20,7 @@ const ProtectedLayout = () => {
       <div className="w-full">
         <Navbar />
         <div className="p-3">
-            <Outlet />
+          <Outlet />
         </div>
       </div>
     </SidebarProvider>

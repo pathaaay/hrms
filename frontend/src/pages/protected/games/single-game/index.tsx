@@ -1,11 +1,11 @@
-import { BookGame } from "@/components/games/book-game";
+import { GameBooking } from "@/components/games/game-booking";
 import { GameCard } from "@/components/games/game-card";
 import { Button } from "@/components/ui/button";
 import { useGame } from "@/hooks/game/use-game";
 import { useUser } from "@/hooks/user/use-user";
 import { ArrowLeftIcon } from "lucide-react";
 import { useEffect } from "react";
-import { NavLink, useNavigate, useParams } from "react-router";
+import { NavLink, Outlet, useNavigate, useParams } from "react-router";
 
 export const SingleGamePage = () => {
   const { gameId } = useParams();
@@ -18,7 +18,6 @@ export const SingleGamePage = () => {
     //If games is loaded but not found in game array then redirect to the games page
     if (
       (!isLoading && !singleGame) ||
-      
       // Check if the user has no interest in this game.
       (singleGame && !interestedGameIds.includes(singleGame.id))
     )
@@ -38,7 +37,8 @@ export const SingleGamePage = () => {
       <div className="w-full max-w-lg mt-20 mb-5">
         <GameCard showBookBtn={false} game={singleGame} />
       </div>
-      <BookGame game={singleGame} />
+      <GameBooking game={singleGame} />
+      <Outlet />
     </div>
   );
 };
