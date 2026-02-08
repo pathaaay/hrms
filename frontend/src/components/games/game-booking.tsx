@@ -1,17 +1,13 @@
 import type { IGame } from "@/lib/types/game";
-import { cn, generateSlots } from "@/lib/utils";
-import { Button, buttonVariants } from "../ui/button";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "../ui/button";
 import { weekDays } from "@/lib/constants";
+import GameSlots from "./game-slots";
 
 interface BookGameProps {
   game: IGame;
 }
-export const BookGame = ({ game }: BookGameProps) => {
-  const slots = generateSlots({
-    startTime: game.startTime,
-    endTime: game.endTime,
-    duration: game.maxSlotDurationInMinutes,
-  });
+export const GameBooking = ({ game }: BookGameProps) => {
   const today = new Date();
 
   return (
@@ -30,18 +26,7 @@ export const BookGame = ({ game }: BookGameProps) => {
               <span className="text-lg ">{weekDay.substring(0, 3)}</span>
               <span>{date.toLocaleDateString()}</span>
             </div>
-            <div className="flex items-center flex-col gap-2">
-              {slots.map((slot) => (
-                <Button
-                  key={slot}
-                  disabled={date < today}
-                  variant={"outline"}
-                  className="h-12 w-30 disabled:opacity-30"
-                >
-                  {slot}
-                </Button>
-              ))}
-            </div>
+            <GameSlots game={game} date={date} isDisabled={date < today} />
           </div>
         );
       })}

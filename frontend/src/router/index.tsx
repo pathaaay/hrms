@@ -12,6 +12,7 @@ import { JobsPage } from "@/pages/protected/jobs/index.tsx";
 import { InternalServerErrorPage } from "@/components/common/internal-server-error";
 import { GameLayout } from "@/pages/protected/games/game-layout";
 import { SingleGamePage } from "@/pages/protected/games/single-game";
+import BookGame from "@/pages/protected/games/single-game/book-game";
 
 export const appRouter = createBrowserRouter([
   {
@@ -40,6 +41,12 @@ export const appRouter = createBrowserRouter([
               {
                 path: ":gameId",
                 element: <SingleGamePage />,
+                children: [
+                  {
+                    path: "book-slot",
+                    element: <BookGame />,
+                  },
+                ],
               },
             ],
           },
