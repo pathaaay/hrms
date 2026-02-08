@@ -40,6 +40,12 @@ const UpdateInterestedGames = () => {
         items={games.map(({ id }) => id)}
         value={selectedGames}
         onValueChange={setSelectedGames}
+        filter={(item, query) => {
+          return games.some(
+            ({ id, name }) =>
+              id === item && name.toLowerCase().includes(query.toLowerCase()),
+          );
+        }}
       >
         <ComboboxChips ref={anchor} className="w-full">
           <ComboboxValue>
