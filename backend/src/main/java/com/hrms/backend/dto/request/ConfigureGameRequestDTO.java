@@ -7,22 +7,22 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ConfigureGameRequestDTO {
-    @NotNull(message = "Name Date is required")
+    @NotNull(message = "Name is required")
     private String name;
 
     @NotNull(message = "Start Time is required")
-    private int StartTime;
+    private Integer startTime;
 
     @NotNull(message = "End time is required")
-    private int endTime;
+    private Integer endTime;
 
     @NotNull(message = "Booking Cycle In Hours is required")
-    private int bookingCycleHours;
+    private Integer bookingCycleHours;
 
     @NotNull(message = "Max slot duration in minutes is required")
-    private int maxSlotDurationInMinutes;
+    private Integer maxSlotDurationInMinutes;
 
     @NotNull(message = "Max player per slot is required")
-    private int maxPlayerPerSlot;
+    private Integer maxPlayersPerSlot;
 }
 
