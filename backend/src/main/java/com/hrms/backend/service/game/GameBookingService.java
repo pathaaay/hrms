@@ -31,6 +31,11 @@ public class GameBookingService {
         return convertToDTOList(bookedGameSlots);
     }
 
+    public List<BookedGameSlotsResponseDTO> getAllBookings(Long userId) {
+        List<GameBooking> bookedGameSlots = gameBookingRepo.getBookingsByUserId(userId);
+        return convertToDTOList(bookedGameSlots);
+    }
+
     @Transactional
     public void deleteBooking(Long bookingId) throws BadRequestException {
         GameBooking booking = gameBookingRepo.findById(bookingId).orElseThrow(() -> new BadRequestException("Booking not found"));

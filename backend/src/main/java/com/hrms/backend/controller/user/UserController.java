@@ -1,9 +1,11 @@
 package com.hrms.backend.controller.user;
 
 import com.hrms.backend.dto.request.UpdateGameRequestDTO;
+import com.hrms.backend.dto.response.BookedGameSlotsResponseDTO;
 import com.hrms.backend.dto.response.UserProfileResponseDTO;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.entities.user.UserProfile;
+import com.hrms.backend.service.game.GameBookingService;
 import com.hrms.backend.service.user.UserService;
 import com.hrms.backend.utilities.ApiResponse;
 import jakarta.validation.Valid;
@@ -23,6 +25,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final GameBookingService gameBookingService;
 
     @GetMapping()
     public ResponseEntity<ApiResponse<UserProfileResponseDTO>> getUserProfile(@AuthenticationPrincipal User user) throws BadRequestException {
@@ -38,5 +41,10 @@ public class UserController {
     public ResponseEntity<ApiResponse> updateGameIds(@AuthenticationPrincipal User user, @Valid @RequestBody UpdateGameRequestDTO dto) throws BadRequestException {
         userService.updateUserInterestedGames(user, dto);
         return ResponseEntity.ok(new ApiResponse(true, "Games updated successfully", null));
+    }
+
+    @GetMapping("/game-bookings")
+    public ResponseEntity<ApiResponse<List<BookedGameSlotsResponseDTO>>> getUserBookings(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(new ApiResponse<>(true, "Bookings get successfully of user " + user.getId(), gameBookingService.getAllBookings(user.getId())));
     }
 }

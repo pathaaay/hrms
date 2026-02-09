@@ -481,6 +481,108 @@
               "body": "{\n    \"success\": true,\n    \"message\": \"User get successfully\",\n    \"data\": [\n        {\n            \"name\": \"Aayush Pathak\",\n            \"email\": \"aayush.pathak@roimaint.com\",\n            \"role\": \"intern\",\n            \"department\": \"it\"\n        },\n        {\n            \"name\": \"Manager\",\n            \"email\": \"manager@gmail.com\",\n            \"role\": \"manager\",\n            \"department\": \"it\"\n        },\n        {\n            \"name\": \"HR\",\n            \"email\": \"hr@gmail.com\",\n            \"role\": \"hr\",\n            \"department\": \"it\"\n        },\n        {\n            \"name\": \"Intern\",\n            \"email\": \"intern@gmail.com\",\n            \"role\": \"employee\",\n            \"department\": \"it\"\n        },\n        {\n            \"name\": \"Rohan\",\n            \"email\": \"rohan@gmail.com\",\n            \"role\": \"employee\",\n            \"department\": \"it\"\n        },\n        {\n            \"name\": \"Rahul\",\n            \"email\": \"rahul@gmail.com\",\n            \"role\": \"intern\",\n            \"department\": \"it\"\n        },\n        {\n            \"name\": \"CEO\",\n            \"email\": \"CEO\",\n            \"role\": \"manager\",\n            \"department\": \"it\"\n        }\n    ]\n}"
             }
           ]
+        },
+        {
+          "name": "get user game bookings",
+          "id": "b3df5bb3-cf59-4360-9728-2e255206c8ef",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/user/game-bookings",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user",
+                "game-bookings"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "26b18aa2-e69f-4102-89a4-b96c23b10450",
+              "name": "get user game bookings",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/user/game-bookings",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "user",
+                    "game-bookings"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 09 Feb 2026 11:01:12 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-09T11:01:20.753Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Bookings get successfully of user 1\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"startTime\": 1020,\n            \"endTime\": 1080,\n            \"createdAt\": \"2026-02-09T10:15:54.369+00:00\",\n            \"bookedSlotDate\": \"2026-02-09T00:00:00.000+00:00\",\n            \"confirmed\": true\n        },\n        {\n            \"id\": 2,\n            \"startTime\": 900,\n            \"endTime\": 960,\n            \"createdAt\": \"2026-02-09T10:34:42.269+00:00\",\n            \"bookedSlotDate\": \"2026-02-11T00:00:00.000+00:00\",\n            \"confirmed\": false\n        }\n    ]\n}"
+            }
+          ]
         }
       ],
       "id": "6e2b0969-6a53-4f02-a98d-e7f23c215e66"
@@ -652,7 +754,99 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "id": "794eb8ba-a6db-4cfe-9e1e-9f39ace050a2",
+              "name": "Get All Bookings by game id",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"gameId\": 1,\r\n    \"fromDate\": \"2026-02-08\",\r\n    \"toDate\": \"2026-02-10\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/games/get-booked-slots",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "games",
+                    "get-booked-slots"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 09 Feb 2026 10:58:13 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-09T10:58:20.790Z",
+              "body": "{\n    \"success\": false,\n    \"message\": \"401 Authentication token is missing\",\n    \"type\": \"http_client_error\"\n}"
+            }
+          ]
         }
       ],
       "id": "edad663d-28cd-4130-b054-91b5c147bfab"

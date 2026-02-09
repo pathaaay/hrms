@@ -35,8 +35,8 @@ public class GameController {
     }
 
     @DeleteMapping("/delete-slot/{bookingId}")
-    public ResponseEntity<ApiResponse> deleteBooking(@PathVariable Long gameId) throws BadRequestException {
-        gameBookingService.deleteBooking(gameId);
+    public ResponseEntity<ApiResponse> deleteBooking(@PathVariable Long bookingId) throws BadRequestException {
+        gameBookingService.deleteBooking(bookingId);
         return ResponseEntity.ok(new ApiResponse<>(true, "Game Booking deleted successfully", null));
     }
 
