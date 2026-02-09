@@ -48,6 +48,8 @@ declare module "@tanstack/react-table" {
     filterLabels?: {
       [key: string]: string;
     };
+    bindLabel?: string;
+    bindValue?: string;
   }
 }
 
@@ -87,7 +89,7 @@ const DataTable = <T,>({
         {filterColumns && (
           <div className="flex flex-wrap gap-3 px-2 py-6">
             {filterColumns.map((name: string) => (
-              <div key={name} className="w-44">
+              <div key={name} className="min-w-44">
                 <Filter column={table.getColumn(name)!} />
               </div>
             ))}

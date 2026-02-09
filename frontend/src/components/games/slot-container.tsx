@@ -26,7 +26,6 @@ export const SlotContainer = ({ game }: BookGameProps) => {
     toDate,
   });
 
-  console.log({ bookings, isPending });
   return (
     <div className="flex items-center gap-2">
       {weekDays.map((weekDay, i) => {

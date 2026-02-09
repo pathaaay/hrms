@@ -18,11 +18,13 @@ const columns: ColumnDef<IGameBooking>[] = [
   {
     header: "Game",
     accessorKey: "team.game.name",
+    id: "team.game.name",
     cell: ({ row }) => <div>{row.original.team.game.name}</div>,
     enableSorting: false,
-    filterFn: (row, id, value) => {
-      console.log({ row, id, value });
-      return true;
+    meta: {
+      filterVariant: "select",
+      bindLabel: "",
+      bindValue: "",
     },
   },
   {
@@ -43,41 +45,35 @@ const columns: ColumnDef<IGameBooking>[] = [
         false: "Pending",
       },
     },
-    filterFn: (row, id, value) => {
+    filterFn: (row, _, value) => {
       if (!value) return true;
 
-      if (value == "true" && row.original.confirmed) return true;
-      else if (value == "false" && !row.original.confirmed) return true;
+      if (
+        (value == "true" && row.original.confirmed) ||
+        (value == "false" && !row.original.confirmed)
+      )
+        return true;
       return false;
     },
   },
   {
     header: "Start Time",
     accessorKey: "startTime",
-    cell: ({ row }) => <div>{formatMinutesToHours(row.original.startTime)}</div>,
+    cell: ({ row }) => (
+      <div>{formatMinutesToHours(row.original.startTime)}</div>
+    ),
     enableSorting: false,
-    filterFn: (row, id, value) => {
-      console.log({ row, id, value });
-      return true;
-    },
   },
   {
     header: "End Time",
     accessorKey: "endTime",
     cell: ({ row }) => <div>{formatMinutesToHours(row.original.endTime)}</div>,
     enableSorting: false,
-    filterFn: (row, id, value) => {
-      console.log({ row, id, value });
-      return true;
-    },
   },
   {
     header: "Members",
     accessorKey: "team.gameTeamMembers",
     cell: ({ row }) => (
-      // <div className="flex flex-col gap-2">
-      //   {row.original.team.gameTeamMembers.length + 1}
-      // </div>
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -143,7 +139,6 @@ const columns: ColumnDef<IGameBooking>[] = [
 export const UserGameBookingPage = () => {
   const { bookings, isPending } = useFetchUserGameBookings();
   if (isPending) return;
-  console.log({ bookings });
 
   return (
     <div className="flex flex-col items-center gap-2 relative">
@@ -152,7 +147,7 @@ export const UserGameBookingPage = () => {
         <DataTable
           columns={columns}
           data={bookings || []}
-          filterColumns={["confirmed", "bookedSlotDate"]}
+          filterColumns={["team.game.name", "confirmed", "bookedSlotDate"]}
         />
       </div>
     </div>
