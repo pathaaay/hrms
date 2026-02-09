@@ -1,4 +1,4 @@
-import { useRef, useState, type SetStateAction } from "react";
+import { useEffect, useRef, useState, type SetStateAction } from "react";
 import {
   Sheet,
   SheetContent,
@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { useBookGameSlotMutation } from "@/api/mutations/game";
+import { queryClient } from "@/lib/tanstack-query/query-client";
 
 export const GameBookingModal = ({
   open,
@@ -29,7 +30,7 @@ export const GameBookingModal = ({
 }) => {
   const { gameId } = useParams();
   const { userProfile } = useUser();
-  const { mutate: bookSlot, isPending } = useBookGameSlotMutation();
+  const { mutate: bookSlot, isPending, isSuccess } = useBookGameSlotMutation();
   const [searchParams] = useSearchParams();
   const startTime = searchParams.get("startTime");
   const endTime = searchParams.get("endTime");
@@ -37,6 +38,15 @@ export const GameBookingModal = ({
   const multiSelectRef = useRef<MultiSelectRef>(null);
   const { users } = useFetchUsersByGameId(Number(gameId));
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      queryClient.invalidateQueries({
+        queryKey: [`booked-game-slots-${gameId}`],
+      });
+      setOpen(false);
+    }
+  }, [isSuccess]);
 
   const singleGame = userProfile?.interestedGames?.find(
     ({ id }) => id === Number(gameId),
@@ -72,63 +82,61 @@ export const GameBookingModal = ({
     bookSlot(data);
   };
 
-    return (
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Game: {singleGame?.name}</SheetTitle>
-            <SheetDescription>
-              Book {singleGame?.name} with your friends
-            </SheetDescription>
-            <Separator />
-            <div className="flex items-center gap-2 text-muted-foreground">
-              Date: <span className="font-medium text-black">{date}</span>
-            </div>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              Start Time:{" "}
-              <span className="font-medium text-black">
-                {formatMinutesToHours(Number(startTime))}
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              End Time:{" "}
-              <span className="font-medium text-black">
-                {formatMinutesToHours(Number(endTime))}
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              Leader:{" "}
-              <span className="font-medium text-black">
-                {userProfile?.name}
-              </span>
-            </div>
-          </SheetHeader>
-          <div className="px-3 flex flex-col gap-1">
-            <Label>
-              Select more {singleGame?.maxPlayersPerSlot! - 1} Players
-            </Label>
-            <MultiSelect
-              ref={multiSelectRef}
-              variant={"secondary"}
-              options={options || []}
-              hideSelectAll
-              defaultValue={selectedValues}
-              closeOnSelect={
-                selectedValues.length === singleGame?.maxPlayersPerSlot! - 2
-              }
-              responsive
-              onValueChange={handleSelectChange}
-            />
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Game: {singleGame?.name}</SheetTitle>
+          <SheetDescription>
+            Book {singleGame?.name} with your friends
+          </SheetDescription>
+          <Separator />
+          <div className="flex items-center gap-2 text-muted-foreground">
+            Date: <span className="font-medium text-black">{date}</span>
           </div>
-          <SheetFooter>
-            <Button
-              onClick={handleSubmit}
-              disabled={isPending || selectedValues.length < 2}
-            >
-              {isPending ? "Please wait..." : "Book Now"}
-            </Button>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
-    );
+          <div className="flex items-center gap-2 text-muted-foreground">
+            Start Time:{" "}
+            <span className="font-medium text-black">
+              {formatMinutesToHours(Number(startTime))}
+            </span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            End Time:{" "}
+            <span className="font-medium text-black">
+              {formatMinutesToHours(Number(endTime))}
+            </span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            Leader:{" "}
+            <span className="font-medium text-black">{userProfile?.name}</span>
+          </div>
+        </SheetHeader>
+        <div className="px-3 flex flex-col gap-1">
+          <Label>
+            Select more {singleGame?.maxPlayersPerSlot! - 1} Players
+          </Label>
+          <MultiSelect
+            ref={multiSelectRef}
+            variant={"secondary"}
+            options={options || []}
+            hideSelectAll
+            defaultValue={selectedValues}
+            closeOnSelect={
+              selectedValues.length === singleGame?.maxPlayersPerSlot! - 2
+            }
+            responsive
+            onValueChange={handleSelectChange}
+          />
+        </div>
+        <SheetFooter>
+          <Button
+            onClick={handleSubmit}
+            disabled={isPending || selectedValues.length < 2}
+          >
+            {isPending ? "Please wait..." : "Book Now"}
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
 };
