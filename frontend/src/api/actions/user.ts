@@ -28,3 +28,8 @@ export const updateUserInterestedGames = async (gameIds: number[]) => {
   });
   return res.data;
 };
+
+export const getUserGameBookings = async () => {
+  const res = await apiService.get(`${USER_ENDPOINT}/game-bookings`);
+  return res.data;
+};
