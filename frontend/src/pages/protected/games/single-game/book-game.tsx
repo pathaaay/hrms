@@ -7,7 +7,8 @@ const BookGame = () => {
   const { gameId } = useParams();
   const [searchParams] = useSearchParams();
   const [bookingSheetOpen, setBookingSheetOpen] = useState(true);
-  const slot = searchParams.get("slot");
+  const startTime = searchParams.get("startTime");
+  const endTime = searchParams.get("endTime");
   const date = searchParams.get("date");
   const convertedDate = date;
 
@@ -29,7 +30,7 @@ const BookGame = () => {
     }
   }, [bookingSheetOpen]);
 
-  if (!slot || !date || !convertedDate) {
+  if (!startTime || !endTime || !date || !convertedDate) {
     navigate(`/games/${gameId}`, { replace: true });
     return;
   }
@@ -38,7 +39,6 @@ const BookGame = () => {
     <GameBookingModal
       open={bookingSheetOpen}
       setOpen={setBookingSheetOpen}
-      slot={slot}
       date={convertedDate}
     />
   );
