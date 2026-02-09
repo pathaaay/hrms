@@ -1,6 +1,7 @@
 package com.hrms.backend.controller.game;
 
 import com.hrms.backend.dto.request.BookGameSlotRequestDTO;
+import com.hrms.backend.dto.request.ConfigureGameRequestDTO;
 import com.hrms.backend.dto.request.GetBookedGameSlotsRequestDTO;
 import com.hrms.backend.dto.response.BookedGameSlotsResponseDTO;
 import com.hrms.backend.dto.response.GameResponseDTO;
@@ -27,6 +28,11 @@ public class GameController {
     @GetMapping()
     public ResponseEntity<ApiResponse<List<GameResponseDTO>>> getAllGames() {
         return ResponseEntity.ok(new ApiResponse<>(true, "Game get successfully", gameService.getAllGames()));
+    }
+
+    @PostMapping("/{gameId}/configure")
+    public ResponseEntity<ApiResponse<GameResponseDTO> configureGameDetails(@PathVariable Long gameId, @Valid @RequestBody ConfigureGameRequestDTO dto) throws BadRequestException {
+        return ResponseEntity.ok(new ApiResponse<GameResponseDTO>(true, "Game configured successfully", gameService.updateGameConfig(gameId, dto)));
     }
 
     @PostMapping("/get-booked-slots")
