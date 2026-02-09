@@ -1,8 +1,6 @@
 package com.hrms.backend.service.game;
 
 import com.hrms.backend.dto.request.BookGameSlotRequestDTO;
-import com.hrms.backend.dto.request.GetBookedGameSlotsDTO;
-import com.hrms.backend.dto.response.BookedGameSlotsResponseDTO;
 import com.hrms.backend.dto.response.GameResponseDTO;
 import com.hrms.backend.entities.game.Game;
 import com.hrms.backend.entities.game.GameBooking;
@@ -51,12 +49,6 @@ public class GameService {
         return convertToDTOList(games);
     }
 
-//    public List<BookedGameSlotsResponseDTO> getAllBookedGameSlots(User user, GetBookedGameSlotsDTO dto) {
-//
-//        List<Game> games = gameRepo.getAllBookedSlots(dto.getId(), dto.getFromDate(), dto.getToDate());
-
-    /// /        return ;
-//    }
     @Transactional
     public void bookGameSlot(User user, BookGameSlotRequestDTO bookingDetails) throws BadRequestException {
 
@@ -96,7 +88,6 @@ public class GameService {
 
         // Throw an error if the count less than 2 of team members
         if (users.size() < 2) throw new BadRequestException("Minimum 2 player is required to book a slot");
-
 
         Constants.GameBookingStatusType status = fairPlayAlgorithmService.getStatus(createdTeam);
         // Create a new Booking

@@ -9,9 +9,9 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class GetBookedGameSlotsDTO {
-    @NotEmpty(message = "Game id is required")
-    private Long id;
+public class GetBookedGameSlotsRequestDTO {
+    @NotNull(message = "Game id is required")
+    private Long gameId;
 
     @NotNull(message = "From Date is required")
     private Date fromDate;
