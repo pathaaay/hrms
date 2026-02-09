@@ -3,10 +3,21 @@ package com.hrms.backend.repository.game;
 import com.hrms.backend.entities.game.GameBooking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface GameBookingRepo extends JpaRepository<GameBooking, Long> {
-    @Query(value = "SELECT g from GameBooking g  JOIN g.team t JOIN t.gameTeamMembers gtm WHERE (gtm.id = :userId OR t.id = :userId) AND g.bookedSlotDate > DATEADD(HOUR,-:bookingCycleHours,GETDATE())", nativeQuery = true)
-    Optional<GameBooking> findBookingOfUserByHours(Long userId, int bookingCycleHours);
+
+    String query = """
+            SELECT gb.*
+            from game_bookings gb
+            JOIN game_teams gt ON gt.leader_id = :leaderId
+            WHERE
+            gb.team_id = gt.id AND
+            gb.booked_slot_date > DATEADD(HOUR,-:bookingCycleHours,GETDATE())
+            """;
+
+    @Query(value = query, nativeQuery = true)
+    List<GameBooking> findBookingOfTeamByHours(@Param("gameId") Long gameId, @Param("teamId") Long teamId, @Param("leaderId") Long leaderId, @Param("bookingCycleHours") int bookingCycleHours);
 }

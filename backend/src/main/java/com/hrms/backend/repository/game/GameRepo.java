@@ -9,5 +9,4 @@ import java.util.Date;
 import java.util.List;
 
 public interface GameRepo extends JpaRepository<Game, Long> {
-//    List<Object> getAllBookedSlots(int id, Date fromDate, Date toDate);
 }

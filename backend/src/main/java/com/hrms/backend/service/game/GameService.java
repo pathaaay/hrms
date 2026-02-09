@@ -99,7 +99,6 @@ public class GameService {
 
 
         Constants.GameBookingStatusType status = fairPlayAlgorithmService.getStatus(createdTeam);
-
         // Create a new Booking
         GameBooking newBooking = new GameBooking();
         newBooking.setTeam(createdTeam);
