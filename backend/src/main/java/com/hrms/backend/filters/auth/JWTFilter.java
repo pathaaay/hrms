@@ -98,7 +98,7 @@ public class JWTFilter extends OncePerRequestFilter {
                         throw new BadRequestException(("User is deleted"));
                     }
 
-                    List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole() != null ? user.getRole().getName() : null));
+                    List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole() != null ? "ROLE_" + user.getRole().getName().toUpperCase() : null));
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
