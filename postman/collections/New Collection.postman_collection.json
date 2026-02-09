@@ -16,7 +16,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"hr@gmail.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"aayush.pathak@roimaint.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -828,7 +828,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"gameId\": 1,\r\n    \"fromDate\": \"2026-02-08\",\r\n    \"toDate\": \"2026-02-10\"\r\n}",
+              "raw": "{\r\n    \"gameId\": 1,\r\n    \"fromDate\": \"2026-02-08\",\r\n    \"toDate\": \"2026-02-20\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1239,6 +1239,189 @@
               "cookie": [],
               "responseTime": "2026-02-09T14:45:18.764Z",
               "body": "{\n    \"success\": true,\n    \"message\": \"Game configuration updated successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Pool\",\n        \"startTime\": 10,\n        \"endTime\": 22,\n        \"bookingCycleHours\": 24,\n        \"maxSlotDurationInMinutes\": 60,\n        \"maxPlayersPerSlot\": 4\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete booking",
+          "id": "709054cf-6c4a-48d4-9763-411d5d58cf95",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/games/delete-slot/3",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "games",
+                "delete-slot",
+                "3"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d7f474d6-1496-4b8f-b8b3-189364770488",
+              "name": "cannot delete other user booking",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/games/delete-slot/3",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "games",
+                    "delete-slot",
+                    "3"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 09 Feb 2026 15:05:36 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-09T15:05:37.920Z",
+              "body": "{\n    \"success\": false,\n    \"message\": \"You cannot delete other user bookings\",\n    \"type\": \"bad_request\"\n}"
+            },
+            {
+              "id": "9d890ec8-e699-4377-8ab8-9e3294ed247e",
+              "name": "successfull delete booking",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/games/delete-slot/3",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "games",
+                    "delete-slot",
+                    "3"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 09 Feb 2026 15:05:59 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-09T15:06:01.395Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Game Booking deleted successfully\"\n}"
             }
           ]
         }

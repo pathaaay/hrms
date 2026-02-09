@@ -3,6 +3,7 @@ package com.hrms.backend.service.game;
 import com.hrms.backend.dto.request.GetBookedGameSlotsRequestDTO;
 import com.hrms.backend.dto.response.BookedGameSlotsResponseDTO;
 import com.hrms.backend.entities.game.GameBooking;
+import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.game.GameBookingRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +38,13 @@ public class GameBookingService {
     }
 
     @Transactional
-    public void deleteBooking(Long bookingId) throws BadRequestException {
+    public void deleteBooking(Long bookingId, User user) throws BadRequestException {
         GameBooking booking = gameBookingRepo.findById(bookingId).orElseThrow(() -> new BadRequestException("Booking not found"));
+
+        // Check if the user is not the leader then throw error
+        if (!booking.getTeam().getUser().getId().equals(user.getId()))
+            throw new BadRequestException("You cannot delete other user bookings");
+
         booking.setDeleted(true);
         gameBookingRepo.save(booking);
     }
