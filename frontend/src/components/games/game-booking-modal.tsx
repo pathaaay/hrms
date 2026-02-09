@@ -1,4 +1,4 @@
-import { useState, type SetStateAction } from "react";
+import { useRef, useState, type SetStateAction } from "react";
 import {
   Sheet,
   SheetContent,
@@ -6,12 +6,13 @@ import {
   SheetHeader,
   SheetTitle,
 } from "../ui/sheet";
-import { MultiSelect } from "../common/multi-select";
+import { MultiSelect, type MultiSelectRef } from "../common/multi-select";
 import { useFetchUsersByGameId } from "@/hooks/user/use-fetch-users-by-game-id";
 import { useParams } from "react-router";
 import { useUser } from "@/hooks/user/use-user";
 import { Label } from "../ui/label";
 import { createMultiSelectOption } from "@/lib/utils";
+import toast from "react-hot-toast";
 
 export const GameBookingModal = ({
   open,
@@ -24,6 +25,8 @@ export const GameBookingModal = ({
   slot: string;
   date: string;
 }) => {
+  const multiSelectRef = useRef<MultiSelectRef>(null);
+
   const { gameId } = useParams();
   const { userProfile } = useUser();
   const { users } = useFetchUsersByGameId(Number(gameId));
@@ -32,9 +35,19 @@ export const GameBookingModal = ({
     ({ id }) => id === Number(gameId),
   );
 
-  const options = users?.map((user) =>
+  let options = users?.map((user) =>
     createMultiSelectOption(user.userId.toString(), user.name),
   );
+
+  const handleSelectChange = (values: string[]) => {
+    if (values.length <= singleGame?.maxPlayersPerSlot!) {
+      console.log(multiSelectRef.current?.getSelectedValues());
+      setSelectedValues(values);
+    } else {
+      toast.error("Max player amount reached");
+      multiSelectRef.current?.setSelectedValues(selectedValues);
+    }
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -47,10 +60,13 @@ export const GameBookingModal = ({
         <div className="px-3 flex flex-col gap-1">
           <Label>Select Players</Label>
           <MultiSelect
+            ref={multiSelectRef}
+            variant={"secondary"}
             options={options || []}
-            maxCount={singleGame?.maxPlayersPerSlot}
-            onValueChange={setSelectedValues}
+            hideSelectAll
             defaultValue={selectedValues}
+            responsive
+            onValueChange={handleSelectChange}
           />
         </div>
       </SheetContent>
