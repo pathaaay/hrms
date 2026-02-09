@@ -27,3 +27,8 @@ export const BookGameSlot = async (value: any) => {
   });
   return res.data;
 };
+
+export const DeleteGameSlot = async (gameId: number) => {
+  const res = await apiService.delete(`${GAMES_ENDPOINT}/delete-slot/${gameId}`);
+  return res.data;
+};
