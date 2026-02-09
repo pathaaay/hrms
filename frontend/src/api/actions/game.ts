@@ -9,12 +9,12 @@ export const getAllGames = async () => {
 };
 
 export const getBookedGameSlots = async ({
-  id,
+  gameId,
   fromDate,
   toDate,
 }: FetchBookedGameSlotsProps) => {
   const res = await apiService.post(`${GAMES_ENDPOINT}/get-booked-slots`, {
-    id,
+    gameId,
     fromDate,
     toDate,
   });

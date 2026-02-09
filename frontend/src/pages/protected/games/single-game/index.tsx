@@ -1,4 +1,4 @@
-import { GameBooking } from "@/components/games/game-booking";
+import { SlotContainer } from "@/components/games/slot-container";
 import { GameCard } from "@/components/games/game-card";
 import { Button } from "@/components/ui/button";
 import { useGame } from "@/hooks/game/use-game";
@@ -37,7 +37,7 @@ export const SingleGamePage = () => {
       <div className="w-full max-w-lg mt-20 mb-5">
         <GameCard showBookBtn={false} game={singleGame} />
       </div>
-      <GameBooking game={singleGame} />
+      <SlotContainer game={singleGame} />
       <Outlet />
     </div>
   );
