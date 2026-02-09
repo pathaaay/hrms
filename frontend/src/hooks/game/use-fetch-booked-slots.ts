@@ -1,21 +1,21 @@
 import { getBookedGameSlots } from "@/api/actions/game";
-import type { IGame } from "@/lib/types/game";
+import type { IGameBooking } from "@/lib/types/game";
 import { useQuery } from "@tanstack/react-query";
 
 export interface FetchBookedGameSlotsProps {
-  id: number;
+  gameId: number;
   fromDate: string;
   toDate: string;
 }
 
-export const useFetchGames = ({
-  id,
+export const useFetchGameBookedSlots = ({
+  gameId,
   fromDate,
   toDate,
 }: FetchBookedGameSlotsProps) => {
-  const { data: games, isPending } = useQuery<IGame[]>({
-    queryKey: ["booked-game-slots"],
-    queryFn: () => getBookedGameSlots({ id, fromDate, toDate }),
+  const { data: bookings, isPending } = useQuery<IGameBooking[]>({
+    queryKey: [`booked-game-slots-${gameId}`],
+    queryFn: () => getBookedGameSlots({ gameId, fromDate, toDate }),
   });
-  return { games, isPending };
+  return { bookings, isPending };
 };

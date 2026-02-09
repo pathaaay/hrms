@@ -1,4 +1,4 @@
-import { GameBooking } from "@/components/games/game-booking";
+import { SlotContainer } from "@/components/games/slot-container";
 import { GameCard } from "@/components/games/game-card";
 import { Button } from "@/components/ui/button";
 import { useGame } from "@/hooks/game/use-game";
@@ -6,6 +6,7 @@ import { useUser } from "@/hooks/user/use-user";
 import { ArrowLeftIcon } from "lucide-react";
 import { useEffect } from "react";
 import { NavLink, Outlet, useNavigate, useParams } from "react-router";
+import { GoBackBtn } from "@/components/shared/go-back-btn";
 
 export const SingleGamePage = () => {
   const { gameId } = useParams();
@@ -28,16 +29,11 @@ export const SingleGamePage = () => {
 
   return (
     <div className="flex flex-col items-center gap-2 relative">
-      <Button variant={"secondary"} className="absolute left-0" asChild>
-        <NavLink to={"/games"}>
-          <ArrowLeftIcon className="size-4!" />
-          Go Back
-        </NavLink>
-      </Button>
+      <GoBackBtn to={"/games"} />
       <div className="w-full max-w-lg mt-20 mb-5">
         <GameCard showBookBtn={false} game={singleGame} />
       </div>
-      <GameBooking game={singleGame} />
+      <SlotContainer game={singleGame} />
       <Outlet />
     </div>
   );

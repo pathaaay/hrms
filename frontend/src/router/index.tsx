@@ -13,6 +13,7 @@ import { InternalServerErrorPage } from "@/components/common/internal-server-err
 import { GameLayout } from "@/pages/protected/games/game-layout";
 import { SingleGamePage } from "@/pages/protected/games/single-game";
 import BookGame from "@/pages/protected/games/single-game/book-game";
+import { UserGameBookingPage } from "@/pages/protected/games/bookings";
 
 export const appRouter = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const appRouter = createBrowserRouter([
                     element: <BookGame />,
                   },
                 ],
+              },
+              {
+                path: "bookings",
+                element: <UserGameBookingPage />,
               },
             ],
           },

@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
-import { queryClient } from "@/lib/tanstack-query/query-client";
 import { BookGameSlot } from "../actions/game";
 
 export const useBookGameSlotMutation = () => {
@@ -9,7 +8,6 @@ export const useBookGameSlotMutation = () => {
     mutationFn: BookGameSlot,
     onSuccess: () => {
       toast.success("Game Slot Booked successfully");
-      queryClient.invalidateQueries({ queryKey: ["game-slots"] });
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(
