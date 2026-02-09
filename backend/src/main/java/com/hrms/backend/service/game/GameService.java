@@ -1,6 +1,8 @@
 package com.hrms.backend.service.game;
 
 import com.hrms.backend.dto.request.BookGameSlotRequestDTO;
+import com.hrms.backend.dto.request.GetBookedGameSlotsDTO;
+import com.hrms.backend.dto.response.BookedGameSlotsResponseDTO;
 import com.hrms.backend.dto.response.GameResponseDTO;
 import com.hrms.backend.entities.game.Game;
 import com.hrms.backend.entities.game.GameBooking;
@@ -15,8 +17,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +30,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class GameService {
+    private static final Logger log = LoggerFactory.getLogger(GameService.class);
     private final GameRepo gameRepo;
     private final UserRepo userRepo;
     private final ModelMapper modelMapper;
@@ -45,6 +51,12 @@ public class GameService {
         return convertToDTOList(games);
     }
 
+//    public List<BookedGameSlotsResponseDTO> getAllBookedGameSlots(User user, GetBookedGameSlotsDTO dto) {
+//
+//        List<Game> games = gameRepo.getAllBookedSlots(dto.getId(), dto.getFromDate(), dto.getToDate());
+
+    /// /        return ;
+//    }
     @Transactional
     public void bookGameSlot(User user, BookGameSlotRequestDTO bookingDetails) throws BadRequestException {
 
@@ -52,11 +64,20 @@ public class GameService {
         if (bookingDetails.getUserIds().stream().count() < 2)
             throw new BadRequestException("Minimum 2 player is required to book a slot");
 
-        Date today = new Date();
         Date bookingDate = bookingDetails.getBookingDate();
 
+        Calendar today = Calendar.getInstance();
+        today.setTime(new Date());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(bookingDate);
+        calendar.set(Calendar.HOUR_OF_DAY, bookingDetails.getStartTime() / 60);
+        calendar.set(Calendar.MINUTE, bookingDetails.getStartTime() % 60);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
         // If the booking date is less than current date then throw error
-        if (bookingDate.compareTo(today) < 0) throw new BadRequestException("You cannot book past date slot.");
+        if (calendar.compareTo(today) < 0) throw new BadRequestException("You cannot book past date slot.");
 
         // Get the game from db
         Game game = gameRepo.findById(bookingDetails.getGameId()).orElseThrow(() -> new BadRequestException("Game not found"));
@@ -85,7 +106,7 @@ public class GameService {
         newBooking.setConfirmed(status == Constants.GameBookingStatusType.CONFIRMED);
         newBooking.setStartTime(bookingDetails.getStartTime());
         newBooking.setEndTime(bookingDetails.getEndTime());
-
+        newBooking.setBookedSlotDate(bookingDetails.getBookingDate());
         // Save the Booking to db
         gameBookingRepo.save(newBooking);
     }

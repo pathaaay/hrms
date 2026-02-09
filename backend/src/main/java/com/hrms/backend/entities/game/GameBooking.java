@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
@@ -26,15 +27,15 @@ public class GameBooking {
     private GameTeam team;
 
     @Column(name = "start_time")
-    private Long startTime;
+    private int startTime;
 
     @Column(name = "end_time")
-    private Long endTime;
+    private int endTime;
 
     @Column(name = "is_confirmed")
     private boolean isConfirmed;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
 
