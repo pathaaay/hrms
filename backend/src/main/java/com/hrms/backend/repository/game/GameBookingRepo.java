@@ -23,5 +23,8 @@ public interface GameBookingRepo extends JpaRepository<GameBooking, Long> {
     List<GameBooking> findBookingOfTeamByHours(@Param("gameId") Long gameId, @Param("teamId") Long teamId, @Param("leaderId") Long leaderId, @Param("bookingCycleHours") int bookingCycleHours);
 
     @Query("SELECT gb from GameBooking gb where gb.team.game.id=:gameId AND gb.bookedSlotDate BETWEEN :fromDate AND :toDate")
-    List<GameBooking> getBookedSlotsByGameId(@Param("gameId") Long gameId, @Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
+    List<GameBooking> getBookedSlotsByGameId(@Param("gameId") Long gameId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
+
+    @Query("SELECT gb from GameBooking gb where gb.team.user.id=:userId")
+    List<GameBooking> getBookingsByUserId(@Param("userId") Long userId);
 }
