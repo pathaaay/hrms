@@ -1,27 +1,29 @@
 import { apiService } from "@/lib/axios";
 import type { EditProfileSchemaType } from "@/lib/schemas/profile-schema";
 
+const USER_ENDPOINT = "/user";
+
 export const getUser = async () => {
-  const res = await apiService.get("/user");
+  const res = await apiService.get(USER_ENDPOINT);
   return res.data;
 };
 
 export const getAllUsers = async (gameId?: number) => {
-  const res = await apiService.get("/user/all", {
+  const res = await apiService.get(`${USER_ENDPOINT}/all`, {
     params: gameId ? { gameId } : null,
   });
   return res.data;
 };
 
 export const updateUser = async (values: EditProfileSchemaType) => {
-  const res = await apiService.post("/user/update", {
+  const res = await apiService.post(`${USER_ENDPOINT}/update`, {
     ...values,
   });
   return res.data;
 };
 
 export const updateUserInterestedGames = async (gameIds: number[]) => {
-  const res = await apiService.post("/user/update-games", {
+  const res = await apiService.post(`${USER_ENDPOINT}/update-games`, {
     gameIds,
   });
   return res.data;
