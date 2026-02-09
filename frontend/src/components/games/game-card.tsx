@@ -32,6 +32,7 @@ export const GameCard = ({
   showAddBtn = false,
 }: GameCardProps) => {
   const { interestedGameIds } = useUser();
+  const { userProfile } = useUser();
   return (
     <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-muted">
       <CardHeader>
@@ -70,7 +71,6 @@ export const GameCard = ({
           </Button>
         </CardFooter>
       )}
-
       {showAddBtn && (
         <CardFooter>
           <UpdateInterestedGamesBtn
