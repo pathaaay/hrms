@@ -1,6 +1,7 @@
 package com.hrms.backend.service.game;
 
 import com.hrms.backend.dto.request.BookGameSlotRequestDTO;
+import com.hrms.backend.dto.request.ConfigureGameRequestDTO;
 import com.hrms.backend.dto.response.GameResponseDTO;
 import com.hrms.backend.entities.game.Game;
 import com.hrms.backend.entities.game.GameBooking;
@@ -17,6 +18,8 @@ import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -47,6 +50,12 @@ public class GameService {
     public List<GameResponseDTO> getAllGames() {
         List<Game> games = gameRepo.findAll();
         return convertToDTOList(games);
+    }
+
+    @Transactional
+    public GameResponseDTO updateGameConfig(Long gameId, ConfigureGameRequestDTO dto) throws BadRequestException {
+        Game game = gameRepo.findById(gameId).orElseThrow(() -> new BadRequestException("Game not found"));
+        return convertToDTO(game);
     }
 
     @Transactional
