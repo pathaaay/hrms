@@ -1,3 +1,4 @@
+import type { MultiSelectOption } from "@/components/common/multi-select";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -27,3 +28,13 @@ export const generateSlots = ({
   }
   return slots;
 };
+
+export const createMultiSelectOption = (
+  value: string,
+  label: string,
+  options?: Partial<MultiSelectOption>,
+): MultiSelectOption => ({
+  value,
+  label,
+  ...options,
+});
