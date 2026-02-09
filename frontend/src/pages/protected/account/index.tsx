@@ -76,22 +76,6 @@ export const AccountPage = () => {
           value={new Date(userProfile.dateOfJoining).toLocaleDateString()}
         />
         <Separator />
-        <CardContentRow
-          label={
-            <div className="flex items-center gap-2 justify-between">
-              <div>Interested Games</div>{" "}
-              <Button size={"xs"} variant={"secondary"}>
-                Edit <EditIcon />
-              </Button>
-            </div>
-          }
-          className="flex-col gap-2"
-          value={userProfile.interestedGames.map(({ name }) => (
-            <Badge variant={"secondary"} key={name}>
-              {name}
-            </Badge>
-          ))}
-        />
         <UpdateInterestedGames />
       </CardContent>
     </Card>

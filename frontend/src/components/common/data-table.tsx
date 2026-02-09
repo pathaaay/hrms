@@ -1,6 +1,6 @@
 import { useId, useMemo, useState } from "react";
 
-import { SearchIcon } from "lucide-react";
+import { CalendarIcon, SearchIcon } from "lucide-react";
 
 import type {
   Column,
@@ -37,6 +37,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
+import { Calendar } from "../ui/calendar";
+import { format } from "date-fns";
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -44,6 +48,8 @@ declare module "@tanstack/react-table" {
     filterLabels?: {
       [key: string]: string;
     };
+    bindLabel?: string;
+    bindValue?: string;
   }
 }
 
@@ -83,7 +89,7 @@ const DataTable = <T,>({
         {filterColumns && (
           <div className="flex flex-wrap gap-3 px-2 py-6">
             {filterColumns.map((name: string) => (
-              <div key={name} className="w-44">
+              <div key={name} className="min-w-44">
                 <Filter column={table.getColumn(name)!} />
               </div>
             ))}
@@ -141,22 +147,18 @@ const DataTable = <T,>({
           </TableBody>
         </Table>
       </div>
-
-      <p className="text-muted-foreground mt-4 text-center text-sm">
-        Data table with column filter
-      </p>
     </div>
   );
 };
 
 function Filter({ column }: { column: Column<any, unknown> }) {
   const id = useId();
+  const [open, setOpen] = useState(false);
   const columnFilterValue = column.getFilterValue();
   const { filterVariant } = column.columnDef.meta ?? {};
   const { filterLabels } = column.columnDef.meta ?? {};
   const columnHeader =
     typeof column.columnDef.header === "string" ? column.columnDef.header : "";
-
   const sortedUniqueValues = useMemo(() => {
     const values = Array.from(column.getFacetedUniqueValues().keys());
     const flattenedValues = values.reduce((acc: string[], curr) => {
@@ -201,24 +203,36 @@ function Filter({ column }: { column: Column<any, unknown> }) {
     return (
       <div className="*:not-first:mt-2">
         <Label htmlFor={`${id}-select`}>{columnHeader}</Label>
-        <Select
-          value={columnFilterValue?.toString() ?? "all"}
-          onValueChange={(value) => {
-            column.setFilterValue(value === "all" ? undefined : value);
-          }}
-        >
-          <SelectTrigger id={`${id}-select`} className="w-full">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            {sortedUniqueValues.map((value) => (
-              <SelectItem key={String(value)} value={String(value)}>
-                {filterLabels ? filterLabels[String(value)] : String(value)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              data-empty={!columnFilterValue}
+              className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
+            >
+              <CalendarIcon />
+              {columnFilterValue ? (
+                format(new Date(columnFilterValue.toString()), "yyyy-MM-dd")
+              ) : (
+                <span>Pick a date</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={
+                columnFilterValue?.toString()
+                  ? new Date(columnFilterValue?.toString())
+                  : undefined
+              }
+              onSelect={(value) => {
+                column.setFilterValue(value);
+                setOpen(false);
+              }}
+            />
+          </PopoverContent>
+        </Popover>
       </div>
     );
   }

@@ -3,6 +3,7 @@ import { generateSlots } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router";
 import { Skeleton } from "../ui/skeleton";
+import { format } from "date-fns";
 
 interface BookGameProps {
   game: IGame;
@@ -11,7 +12,12 @@ interface BookGameProps {
   bookings: IGameBooking[];
 }
 
-export const SlotCalendar = ({ date, game, isPending, bookings }: BookGameProps) => {
+export const SlotCalendar = ({
+  date,
+  game,
+  isPending,
+  bookings,
+}: BookGameProps) => {
   const navigate = useNavigate();
   const slots = generateSlots({
     startTime: game.startTime,
@@ -33,9 +39,8 @@ export const SlotCalendar = ({ date, game, isPending, bookings }: BookGameProps)
         if (
           bookings.some(
             ({ startTime, bookedSlotDate }) =>
-              new Date(bookedSlotDate).toISOString().split("T")[0] ==
-                date.toISOString().split("T")[0] &&
-              startTime == slot.startMinutes,
+              format(bookedSlotDate, "yyyy-MM-dd") ==
+                format(date, "yyyy-MM-dd") && startTime == slot.startMinutes,
           )
         )
           return (
@@ -58,7 +63,7 @@ export const SlotCalendar = ({ date, game, isPending, bookings }: BookGameProps)
             }
             onClick={() =>
               navigate(
-                `book-slot?startTime=${slot.startMinutes}&endTime=${slot.endMinutes}&date=${date.toISOString().split("T")[0]}`,
+                `book-slot?startTime=${slot.startMinutes}&endTime=${slot.endMinutes}&date=${format(date,"yyyy-MM-dd")}`,
               )
             }
             variant={"outline"}

@@ -1,12 +1,14 @@
 import type { IGame } from "./game";
 
+export type ROLE = "manager" | "hr" | "intern" | "employee";
+
 export interface IUserProfile {
   userId: number;
   profileId: number;
   name: string;
   email: string;
   managerId: number;
-  role: string;
+  role: ROLE;
   department: string;
   dateOfBirth: Date;
   dateOfJoining: Date;
