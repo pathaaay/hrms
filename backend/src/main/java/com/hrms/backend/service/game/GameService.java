@@ -55,6 +55,13 @@ public class GameService {
     @Transactional
     public GameResponseDTO updateGameConfig(Long gameId, ConfigureGameRequestDTO dto) throws BadRequestException {
         Game game = gameRepo.findById(gameId).orElseThrow(() -> new BadRequestException("Game not found"));
+        game.setName(dto.getName());
+        game.setEndTime(dto.getEndTime());
+        game.setStartTime(dto.getStartTime());
+        game.setBookingCycleHours(dto.getBookingCycleHours());
+        game.setMaxPlayersPerSlot(dto.getMaxPlayersPerSlot());
+        game.setMaxSlotDurationInMinutes(dto.getMaxSlotDurationInMinutes());
+        gameRepo.save(game);
         return convertToDTO(game);
     }
 

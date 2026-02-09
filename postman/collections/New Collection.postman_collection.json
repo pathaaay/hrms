@@ -944,11 +944,11 @@
           "name": "Configure Game by id",
           "id": "dd539386-2597-4b77-ad21-c900b9ac0533",
           "request": {
-            "method": "POST",
+            "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"fromDate\":\"aaa\",\r\n    \"toDate\":\"aaa\"\r\n}",
+              "raw": "{\r\n    \"name\": \"Pool\",\r\n    \"startTime\": 10,\r\n    \"endTime\": 22,\r\n    \"bookingCycleHours\": 24,\r\n    \"maxSlotDurationInMinutes\": 60,\r\n    \"maxPlayersPerSlot\": 4\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1147,6 +1147,98 @@
               "cookie": [],
               "responseTime": "2026-02-09T14:30:18.802Z",
               "body": "{\n    \"success\": false,\n    \"message\": \"Access Denied\",\n    \"type\": \"unknown_error\"\n}"
+            },
+            {
+              "id": "0d28d503-f153-4eb3-8124-d6a8bbc5e759",
+              "name": "Configure Game by id",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Pool\",\r\n    \"startTime\": 10,\r\n    \"endTime\": 22,\r\n    \"bookingCycleHours\": 24,\r\n    \"maxSlotDurationInMinutes\": 60,\r\n    \"maxPlayersPerSlot\": 4\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/games/1/configure",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "games",
+                    "1",
+                    "configure"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 09 Feb 2026 14:45:14 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-09T14:45:18.764Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Game configuration updated successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Pool\",\n        \"startTime\": 10,\n        \"endTime\": 22,\n        \"bookingCycleHours\": 24,\n        \"maxSlotDurationInMinutes\": 60,\n        \"maxPlayersPerSlot\": 4\n    }\n}"
             }
           ]
         }
