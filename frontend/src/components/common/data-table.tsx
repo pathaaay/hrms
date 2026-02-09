@@ -40,25 +40,25 @@ import {
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
-    filterVariant?: "text" | "range" | "select";
+    filterVariant?: "text" | "select" | "calendar";
+    filterLabels?: {
+      [key: string]: string;
+    };
   }
 }
 
 const DataTable = <T,>({
   data,
   columns,
+  filterColumns,
 }: {
   data: T[];
   columns: ColumnDef<T>[];
+  filterColumns?: string[];
 }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const [sorting, setSorting] = useState<SortingState>([
-    {
-      id: "name",
-      desc: false,
-    },
-  ]);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data: data,
@@ -73,7 +73,6 @@ const DataTable = <T,>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-    getFacetedMinMaxValues: getFacetedMinMaxValues(),
     onSortingChange: setSorting,
     enableSortingRemoval: false,
   });
@@ -81,14 +80,15 @@ const DataTable = <T,>({
   return (
     <div className="w-full">
       <div className="rounded-md border">
-        <div className="flex flex-wrap gap-3 px-2 py-6">
-          <div className="w-44">
-            <Filter column={table.getColumn("product")!} />
+        {filterColumns && (
+          <div className="flex flex-wrap gap-3 px-2 py-6">
+            {filterColumns.map((name: string) => (
+              <div key={name} className="w-44">
+                <Filter column={table.getColumn(name)!} />
+              </div>
+            ))}
           </div>
-          <div className="w-44">
-            <Filter column={table.getColumn("availability")!} />
-          </div>
-        </div>
+        )}
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -153,14 +153,12 @@ function Filter({ column }: { column: Column<any, unknown> }) {
   const id = useId();
   const columnFilterValue = column.getFilterValue();
   const { filterVariant } = column.columnDef.meta ?? {};
+  const { filterLabels } = column.columnDef.meta ?? {};
   const columnHeader =
     typeof column.columnDef.header === "string" ? column.columnDef.header : "";
 
   const sortedUniqueValues = useMemo(() => {
-    if (filterVariant === "range") return [];
-
     const values = Array.from(column.getFacetedUniqueValues().keys());
-
     const flattenedValues = values.reduce((acc: string[], curr) => {
       if (Array.isArray(curr)) {
         return [...acc, ...curr];
@@ -190,7 +188,33 @@ function Filter({ column }: { column: Column<any, unknown> }) {
             <SelectItem value="all">All</SelectItem>
             {sortedUniqueValues.map((value) => (
               <SelectItem key={String(value)} value={String(value)}>
-                {String(value)}
+                {filterLabels ? filterLabels[String(value)] : String(value)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    );
+  }
+
+  if (filterVariant === "calendar") {
+    return (
+      <div className="*:not-first:mt-2">
+        <Label htmlFor={`${id}-select`}>{columnHeader}</Label>
+        <Select
+          value={columnFilterValue?.toString() ?? "all"}
+          onValueChange={(value) => {
+            column.setFilterValue(value === "all" ? undefined : value);
+          }}
+        >
+          <SelectTrigger id={`${id}-select`} className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All</SelectItem>
+            {sortedUniqueValues.map((value) => (
+              <SelectItem key={String(value)} value={String(value)}>
+                {filterLabels ? filterLabels[String(value)] : String(value)}
               </SelectItem>
             ))}
           </SelectContent>
