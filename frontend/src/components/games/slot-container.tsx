@@ -4,18 +4,21 @@ import { buttonVariants } from "../ui/button";
 import { weekDays } from "@/lib/constants";
 import { SlotCalendar } from "./slot-calendar";
 import { useFetchGameBookedSlots } from "@/hooks/game/use-fetch-booked-slots";
+import { format } from "date-fns";
 
 interface BookGameProps {
   game: IGame;
 }
 export const SlotContainer = ({ game }: BookGameProps) => {
   const today = new Date();
-  const fromDate = new Date(
-    today.setDate(today.getDate() - today.getDay()),
-  ).toISOString();
-  const toDate = new Date(
-    today.setDate(today.getDate() - today.getDay() + 6),
-  ).toISOString();
+  const fromDate = format(
+    new Date(today.setDate(today.getDate() - today.getDay())),
+    "yyyy-MM-dd",
+  );
+  const toDate = format(
+    new Date(today.setDate(today.getDate() - today.getDay() + 6)),
+    "yyyy-MM-dd",
+  );
 
   const { bookings, isPending } = useFetchGameBookedSlots({
     gameId: game.id,
@@ -23,7 +26,6 @@ export const SlotContainer = ({ game }: BookGameProps) => {
     toDate,
   });
 
-  console.log({ bookings, isPending });
   return (
     <div className="flex items-center gap-2">
       {weekDays.map((weekDay, i) => {

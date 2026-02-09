@@ -21,7 +21,7 @@ const UpdateInterestedGames = () => {
   return (
     <div className="flex flex-col gap-2">
       <Separator />
-      <Label className="mt-3 text-md">Select Games</Label>
+      <Label className="mt-3 text-md">Interested Games</Label>
       <MultiSelect
         options={options || []}
         onValueChange={setSelectedGames}
