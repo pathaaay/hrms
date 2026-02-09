@@ -21,15 +21,15 @@ const GameSlots = ({ date, game, isDisabled }: BookGameProps) => {
       {slots.map((slot, i) => (
         <Button
           asChild
-          key={slot + "_" + i}
+          key={slot.startMinutes + "_" + i}
           disabled={isDisabled}
           variant={"outline"}
           className="h-12 w-30 disabled:opacity-30"
         >
           <NavLink
-            to={`book-slot?slot=${slot}&date=${date.toLocaleDateString()}`}
+            to={`book-slot?startTime=${slot.startMinutes}&endTime=${slot.endMinutes}&date=${date.toISOString().split('T')[0]}`}
           >
-            {slot}
+            {slot.formattedTime}
           </NavLink>
         </Button>
       ))}
