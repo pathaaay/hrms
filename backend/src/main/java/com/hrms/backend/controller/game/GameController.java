@@ -31,7 +31,7 @@ public class GameController {
     }
 
     @PostMapping("/{gameId}/configure")
-    public ResponseEntity<ApiResponse<GameResponseDTO> configureGameDetails(@PathVariable Long gameId, @Valid @RequestBody ConfigureGameRequestDTO dto) throws BadRequestException {
+    public ResponseEntity<ApiResponse<GameResponseDTO>> configureGameDetails(@PathVariable Long gameId, @Valid @RequestBody ConfigureGameRequestDTO dto) throws BadRequestException {
         return ResponseEntity.ok(new ApiResponse<GameResponseDTO>(true, "Game configured successfully", gameService.updateGameConfig(gameId, dto)));
     }
 
