@@ -16,7 +16,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"aayush.pathak@roimaint.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"hr@gmail.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -708,7 +708,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"gameId\": 1,\r\n    \"userIds\": [\r\n        1,2\r\n    ],\r\n    \"startTime\": 1,\r\n    \"endTime\": 2,\r\n    \"leaderId\": 1,\r\n    \"bookingDate\": \"2026-02-08\"\r\n}",
+              "raw": "{\r\n    \"gameId\": 1,\r\n    \"userIds\": [\r\n        1,2\r\n    ],\r\n    \"startTime\": 1,\r\n    \"endTime\": 2,\r\n    \"leaderId\": 1,\r\n    \"bookingDate\": \"2026-02-10\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -726,7 +726,99 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "id": "c13c6b46-503d-405e-9214-a7a05fd23892",
+              "name": "Book a game slot",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"gameId\": 1,\r\n    \"userIds\": [\r\n        1,2\r\n    ],\r\n    \"startTime\": 1,\r\n    \"endTime\": 2,\r\n    \"leaderId\": 1,\r\n    \"bookingDate\": \"2026-02-10\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/games/book-slot",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "games",
+                    "book-slot"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 09 Feb 2026 14:24:28 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-09T14:24:31.425Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Game Slot Booked Successfully\"\n}"
+            }
+          ]
         },
         {
           "name": "Get All Bookings by game id",
@@ -845,6 +937,216 @@
               "cookie": [],
               "responseTime": "2026-02-09T10:58:20.790Z",
               "body": "{\n    \"success\": false,\n    \"message\": \"401 Authentication token is missing\",\n    \"type\": \"http_client_error\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Configure Game by id",
+          "id": "dd539386-2597-4b77-ad21-c900b9ac0533",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromDate\":\"aaa\",\r\n    \"toDate\":\"aaa\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/games/1/configure",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "games",
+                "1",
+                "configure"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aa359543-5e5c-4085-8692-de70e046bf60",
+              "name": "successful response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"fromDate\":\"aaa\",\r\n    \"toDate\":\"aaa\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/games/1/configure",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "games",
+                    "1",
+                    "configure"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 09 Feb 2026 14:29:36 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-09T14:29:54.044Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Game configuration updated successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Pool\",\n        \"startTime\": 10,\n        \"endTime\": 22,\n        \"bookingCycleHours\": 24,\n        \"maxSlotDurationInMinutes\": 60,\n        \"maxPlayersPerSlot\": 4\n    }\n}"
+            },
+            {
+              "id": "0e7bc15f-ec32-463a-a1d9-2b7781508593",
+              "name": "role check response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"fromDate\":\"aaa\",\r\n    \"toDate\":\"aaa\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/games/1/configure",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "games",
+                    "1",
+                    "configure"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 09 Feb 2026 14:30:17 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-09T14:30:18.802Z",
+              "body": "{\n    \"success\": false,\n    \"message\": \"Access Denied\",\n    \"type\": \"unknown_error\"\n}"
             }
           ]
         }

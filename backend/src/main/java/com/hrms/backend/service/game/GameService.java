@@ -52,7 +52,6 @@ public class GameService {
         return convertToDTOList(games);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_HR')")
     @Transactional
     public GameResponseDTO updateGameConfig(Long gameId, ConfigureGameRequestDTO dto) throws BadRequestException {
         Game game = gameRepo.findById(gameId).orElseThrow(() -> new BadRequestException("Game not found"));

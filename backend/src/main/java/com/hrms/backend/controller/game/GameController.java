@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,9 +31,10 @@ public class GameController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Game get successfully", gameService.getAllGames()));
     }
 
-    @PostMapping("/{gameId}/configure")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_HR')")
+    @PutMapping("/{gameId}/configure")
     public ResponseEntity<ApiResponse<GameResponseDTO>> configureGameDetails(@PathVariable Long gameId, @Valid @RequestBody ConfigureGameRequestDTO dto) throws BadRequestException {
-        return ResponseEntity.ok(new ApiResponse<GameResponseDTO>(true, "Game configured successfully", gameService.updateGameConfig(gameId, dto)));
+        return ResponseEntity.ok(new ApiResponse<GameResponseDTO>(true, "Game configuration updated successfully", gameService.updateGameConfig(gameId, dto)));
     }
 
     @PostMapping("/get-booked-slots")
