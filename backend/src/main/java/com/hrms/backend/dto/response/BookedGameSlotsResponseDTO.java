@@ -18,4 +18,5 @@ public class BookedGameSlotsResponseDTO {
     private boolean isConfirmed;
     private Date createdAt;
     private Date bookedSlotDate;
+    private GameTeam team;
 }
