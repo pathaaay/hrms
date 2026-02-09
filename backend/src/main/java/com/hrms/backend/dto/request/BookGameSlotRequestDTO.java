@@ -18,10 +18,10 @@ public class BookGameSlotRequestDTO {
     private Long gameId;
 
     @NotNull(message = "Start time id is required")
-    private Long startTime;
+    private int startTime;
 
     @NotNull(message = "End time id is required")
-    private Long endTime;
+    private int endTime;
 
     @NotNull(message = "Booking Date is required")
     private Date bookingDate;

@@ -13,7 +13,7 @@ export const getBookedGameSlots = async ({
   fromDate,
   toDate,
 }: FetchBookedGameSlotsProps) => {
-  const res = await apiService.post(`${GAMES_ENDPOINT}/booked-slots`, {
+  const res = await apiService.post(`${GAMES_ENDPOINT}/get-booked-slots`, {
     id,
     fromDate,
     toDate,

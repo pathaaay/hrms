@@ -625,6 +625,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Get All Bookings by game id",
+          "id": "d5344a10-6997-4f40-9367-f7df6d19719d",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"gameId\": 1,\r\n    \"fromDate\": \"2026-02-08\",\r\n    \"toDate\": \"2026-02-10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/games/get-booked-slots",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "games",
+                "get-booked-slots"
+              ]
+            }
+          },
+          "response": []
         }
       ],
       "id": "edad663d-28cd-4130-b054-91b5c147bfab"
