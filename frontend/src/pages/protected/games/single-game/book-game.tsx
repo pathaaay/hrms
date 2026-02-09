@@ -1,5 +1,6 @@
 import { GameBookingModal } from "@/components/games/game-booking-modal";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate, useParams, useSearchParams } from "react-router";
 
 const BookGame = () => {
@@ -7,10 +8,9 @@ const BookGame = () => {
   const { gameId } = useParams();
   const [searchParams] = useSearchParams();
   const [bookingSheetOpen, setBookingSheetOpen] = useState(true);
-  const startTime = searchParams.get("startTime");
-  const endTime = searchParams.get("endTime");
+  const startTime = Number(searchParams.get("startTime"));
+  const endTime = Number(searchParams.get("endTime"));
   const date = searchParams.get("date");
-  const convertedDate = date;
 
   const handleGoBack = () => {
     if (
@@ -30,16 +30,36 @@ const BookGame = () => {
     }
   }, [bookingSheetOpen]);
 
-  if (!startTime || !endTime || !date || !convertedDate) {
-    navigate(`/games/${gameId}`, { replace: true });
-    return;
-  }
+  useEffect(() => {
+    if (!date) return;
+    const bookingTime = new Date(
+      new Date(date).setHours(Number(startTime) / 60, Number(startTime) % 60),
+    );
 
+    if (bookingTime < new Date()) {
+      navigate(`/games/${gameId}`, { replace: true });
+      toast.error("You cannot book on past date");
+    }
+
+    if (
+      !startTime ||
+      !endTime ||
+      !date ||
+      Number.isNaN(startTime) ||
+      Number.isNaN(endTime) ||
+      new Date(date).toString() == "Invalid Date"
+    ) {
+      navigate(`/games/${gameId}`, { replace: true });
+    }
+  }, []);
+
+  if (!date) return;
+  
   return (
     <GameBookingModal
       open={bookingSheetOpen}
       setOpen={setBookingSheetOpen}
-      date={convertedDate}
+      date={date}
     />
   );
 };
