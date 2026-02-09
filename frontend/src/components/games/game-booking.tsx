@@ -26,7 +26,7 @@ export const GameBooking = ({ game }: BookGameProps) => {
               <span className="text-lg ">{weekDay.substring(0, 3)}</span>
               <span>{date.toLocaleDateString()}</span>
             </div>
-            <GameSlots game={game} date={date} isDisabled={date < today} />
+            <GameSlots game={game} date={date} />
           </div>
         );
       })}
