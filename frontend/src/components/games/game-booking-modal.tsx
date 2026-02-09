@@ -72,61 +72,63 @@ export const GameBookingModal = ({
     bookSlot(data);
   };
 
-  return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Game: {singleGame?.name}</SheetTitle>
-          <SheetDescription>
-            Book {singleGame?.name} with your friends
-          </SheetDescription>
-          <Separator />
-          <div className="flex items-center gap-2 text-muted-foreground">
-            Date: <span className="font-medium text-black">{date}</span>
+    return (
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Game: {singleGame?.name}</SheetTitle>
+            <SheetDescription>
+              Book {singleGame?.name} with your friends
+            </SheetDescription>
+            <Separator />
+            <div className="flex items-center gap-2 text-muted-foreground">
+              Date: <span className="font-medium text-black">{date}</span>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              Start Time:{" "}
+              <span className="font-medium text-black">
+                {formatMinutesToHours(Number(startTime))}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              End Time:{" "}
+              <span className="font-medium text-black">
+                {formatMinutesToHours(Number(endTime))}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              Leader:{" "}
+              <span className="font-medium text-black">
+                {userProfile?.name}
+              </span>
+            </div>
+          </SheetHeader>
+          <div className="px-3 flex flex-col gap-1">
+            <Label>
+              Select more {singleGame?.maxPlayersPerSlot! - 1} Players
+            </Label>
+            <MultiSelect
+              ref={multiSelectRef}
+              variant={"secondary"}
+              options={options || []}
+              hideSelectAll
+              defaultValue={selectedValues}
+              closeOnSelect={
+                selectedValues.length === singleGame?.maxPlayersPerSlot! - 2
+              }
+              responsive
+              onValueChange={handleSelectChange}
+            />
           </div>
-          <div className="flex items-center gap-2 text-muted-foreground">
-            Start Time:{" "}
-            <span className="font-medium text-black">
-              {formatMinutesToHours(Number(startTime))}
-            </span>
-          </div>
-          <div className="flex items-center gap-2 text-muted-foreground">
-            End Time:{" "}
-            <span className="font-medium text-black">
-              {formatMinutesToHours(Number(endTime))}
-            </span>
-          </div>
-          <div className="flex items-center gap-2 text-muted-foreground">
-            Leader:{" "}
-            <span className="font-medium text-black">{userProfile?.name}</span>
-          </div>
-        </SheetHeader>
-        <div className="px-3 flex flex-col gap-1">
-          <Label>
-            Select more {singleGame?.maxPlayersPerSlot! - 1} Players
-          </Label>
-          <MultiSelect
-            ref={multiSelectRef}
-            variant={"secondary"}
-            options={options || []}
-            hideSelectAll
-            defaultValue={selectedValues}
-            closeOnSelect={
-              selectedValues.length === singleGame?.maxPlayersPerSlot! - 2
-            }
-            responsive
-            onValueChange={handleSelectChange}
-          />
-        </div>
-        <SheetFooter>
-          <Button
-            onClick={handleSubmit}
-            disabled={isPending || selectedValues.length < 2}
-          >
-            {isPending ? "Please wait..." : "Book Now"}
-          </Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  );
+          <SheetFooter>
+            <Button
+              onClick={handleSubmit}
+              disabled={isPending || selectedValues.length < 2}
+            >
+              {isPending ? "Please wait..." : "Book Now"}
+            </Button>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
+    );
 };
