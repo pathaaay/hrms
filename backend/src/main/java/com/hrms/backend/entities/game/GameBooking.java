@@ -33,7 +33,7 @@ public class GameBooking {
     private int endTime;
 
     @Column(name = "is_confirmed")
-    private boolean isConfirmed;
+    private Boolean isConfirmed;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -43,6 +43,6 @@ public class GameBooking {
     private Date bookedSlotDate;
 
     @Column(name = "is_deleted")
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
 }

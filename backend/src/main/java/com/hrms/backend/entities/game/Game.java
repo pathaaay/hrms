@@ -34,5 +34,5 @@ public class Game {
     private int maxPlayersPerSlot;
 
     @Column(name = "is_active",nullable = false, columnDefinition = "BIT default 1")
-    private boolean isActive;
+    private Boolean isActive;
 }
