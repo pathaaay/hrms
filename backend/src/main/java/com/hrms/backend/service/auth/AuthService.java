@@ -1,18 +1,10 @@
 package com.hrms.backend.service.auth;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.hrms.backend.entities.user.User;
-import com.hrms.backend.repository.UserRepo;
-import com.hrms.backend.utilities.ApiResponse;
-import com.hrms.backend.utilities.Constants;
-import jakarta.servlet.http.Cookie;
+import com.hrms.backend.repository.user.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

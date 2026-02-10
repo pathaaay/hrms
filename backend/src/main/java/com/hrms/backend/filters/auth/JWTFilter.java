@@ -2,8 +2,7 @@ package com.hrms.backend.filters.auth;
 
 
 import com.hrms.backend.entities.user.User;
-import com.hrms.backend.repository.UserProfileRepo;
-import com.hrms.backend.repository.UserRepo;
+import com.hrms.backend.repository.user.UserRepo;
 import com.hrms.backend.service.auth.JwtService;
 import com.hrms.backend.utilities.Constants;
 import io.jsonwebtoken.ExpiredJwtException;

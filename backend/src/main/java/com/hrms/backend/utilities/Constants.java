@@ -9,6 +9,7 @@ public class Constants {
     public static final String[] PUBLIC_URLS = {
             "/api/",
             "/api/health",
+            "/api/document/get/**",
             "/api/auth/**",
             "/api/v3/api-docs/**",
             "/api/swagger-ui/**",

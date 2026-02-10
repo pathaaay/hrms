@@ -7,7 +7,7 @@ import com.hrms.backend.entities.user.User;
 import com.hrms.backend.entities.user.UserProfile;
 import com.hrms.backend.mappers.UserProfileDTOMapper;
 import com.hrms.backend.repository.game.GameRepo;
-import com.hrms.backend.repository.UserProfileRepo;
+import com.hrms.backend.repository.user.UserProfileRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -7,7 +7,7 @@ import com.hrms.backend.entities.game.Game;
 import com.hrms.backend.entities.game.GameBooking;
 import com.hrms.backend.entities.game.GameTeam;
 import com.hrms.backend.entities.user.User;
-import com.hrms.backend.repository.UserRepo;
+import com.hrms.backend.repository.user.UserRepo;
 import com.hrms.backend.repository.game.GameBookingRepo;
 import com.hrms.backend.repository.game.GameRepo;
 import com.hrms.backend.repository.game.GameTeamRepo;

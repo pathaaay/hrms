@@ -1429,6 +1429,369 @@
       "id": "edad663d-28cd-4130-b054-91b5c147bfab"
     },
     {
+      "name": "Create Job",
+      "item": [
+        {
+          "name": "Create job",
+          "id": "74ea85e5-c2c1-42d9-952b-806a85431ee9",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"reviewerIds\":[1,2],\r\n    \"defaultHrEmail\":\"jhar@gmail.com\",\r\n    \"jdFileId\":3,\r\n    \"description\": \"This is a sample job description\",\r\n    \"title\": \"Software Engineer\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/jobs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "jobs"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c9607470-1dd6-4948-b0d7-b014639ce288",
+              "name": "Create job",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"reviewerIds\":[1,2],\r\n    \"defaultHrEmail\":\"jhar@gmail.com\",\r\n    \"jdFileId\":3,\r\n    \"description\": \"This is a sample job description\",\r\n    \"title\": \"Software Engineer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/jobs",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "jobs"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Feb 2026 13:19:03 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-10T13:41:06.565Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Job created successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "get all jobs",
+          "id": "126b1f0b-dbe3-4752-99b5-a54ee1ca4de5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/jobs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "jobs"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4c924b65-ee86-4e03-b4b3-337564162c77",
+              "name": "get all jobs",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/jobs",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "jobs"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Feb 2026 13:40:37 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-10T13:41:14.236Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Jobs get successfully\",\n    \"data\": [\n        {\n            \"id\": 5,\n            \"title\": \"Software Engineer updated\",\n            \"description\": \"Hello job desc updated\",\n            \"createdBy\": {\n                \"id\": 1,\n                \"name\": \"Aayush Pathak\",\n                \"email\": \"aayush.pathak@roimaint.com\",\n                \"role\": {\n                    \"id\": 4,\n                    \"name\": \"intern\"\n                }\n            },\n            \"jdDocument\": {\n                \"id\": 2,\n                \"fileType\": \"\",\n                \"filePath\": \"f97b236a-b18a-42ce-925d-cdad05384745Readme.md\",\n                \"uploadedBy\": {\n                    \"id\": 1,\n                    \"name\": \"Aayush Pathak\",\n                    \"email\": \"aayush.pathak@roimaint.com\",\n                    \"role\": {\n                        \"id\": 4,\n                        \"name\": \"intern\"\n                    }\n                }\n            },\n            \"defaultHrEmail\": \"ayush@gmail.com\",\n            \"createdAt\": \"2026-02-09T18:30:00.000+00:00\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "update job",
+          "id": "2585dd54-32cf-42ec-b2a0-92f5c414446e",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"reviewerIds\": [\r\n        1,\r\n        2,\r\n        3\r\n    ],\r\n    \"defaultHrEmail\": \"ayush@gmail.com\",\r\n    \"jdFileId\": 2,\r\n    \"description\": \"Hello job desc updated\",\r\n    \"title\": \"Software Engineer updated\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/jobs/5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "jobs",
+                "5"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4654f9b6-f9f8-47c2-bc2a-efced917f9ac",
+              "name": "update job",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"reviewerIds\": [\r\n        1,\r\n        2,\r\n        3\r\n    ],\r\n    \"defaultHrEmail\": \"ayush@gmail.com\",\r\n    \"jdFileId\": 2,\r\n    \"description\": \"Hello job desc updated\",\r\n    \"title\": \"Software Engineer updated\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/jobs/5",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "jobs",
+                    "5"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Feb 2026 13:40:35 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-10T13:41:18.761Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Job updated successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete a job",
+          "id": "e46a5351-ec18-46f2-8808-976b269b5512",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/jobs/5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "jobs",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "83b48c42-c4d2-4518-b14d-cac45a45a17d"
+    },
+    {
       "name": "Home",
       "id": "b49acb15-c9d6-4da1-b180-aeb41ebee4f4",
       "request": {
@@ -1459,6 +1822,37 @@
           ],
           "path": [
             "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "upload document",
+      "id": "6bad3e57-9cc3-49ed-967c-b9460547aa1b",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file\n",
+              "type": "file",
+              "uuid": "bed91e72-a785-4fb6-9b0e-5f401371aa37",
+              "src": [
+                "/C:/Users/pathaaay/Pictures/Screenshots/Screenshot 2026-01-22 140737.png"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/document",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "document"
           ]
         }
       },
