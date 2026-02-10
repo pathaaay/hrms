@@ -3,12 +3,14 @@ package com.hrms.backend.service.document;
 import com.hrms.backend.entities.document.Document;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.DocumentRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MimeType;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Files;
@@ -23,9 +25,15 @@ import java.util.UUID;
 public class DocumentService {
     @Value("${file.upload-dir}")
     private String uploadDir;
+
     private final DocumentRepo documentRepo;
 
-    public void uploadDocument(User user, MultipartFile file) throws BadRequestException {
+    public Document getDocument(Long id) throws BadRequestException {
+        return documentRepo.findById(id).orElseThrow(() -> new BadRequestException("Document not found"));
+    }
+
+    @Transactional
+    public Document uploadDocument(User user, MultipartFile file) throws BadRequestException {
         try {
             Path uploadPath = Paths.get(uploadDir);
 
@@ -33,7 +41,7 @@ public class DocumentService {
                 Files.createDirectories(uploadPath);
             }
             Optional<MediaType> mediaTypeOptional = MediaTypeFactory.getMediaType(file.getOriginalFilename());
-            String fileType = mediaTypeOptional.get().toString();
+            String fileType = mediaTypeOptional.map(MimeType::toString).orElse("");
             String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
             Path location = uploadPath.resolve(fileName);
 
@@ -44,8 +52,9 @@ public class DocumentService {
             document.setFileType(fileType);
 
             documentRepo.save(document);
+            return document;
         } catch (Exception e) {
-            throw new BadRequestException("Failed to upload document");
+            throw new BadRequestException(e.getMessage());
         }
     }
 }

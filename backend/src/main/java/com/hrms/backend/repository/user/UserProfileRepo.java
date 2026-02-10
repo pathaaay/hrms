@@ -1,4 +1,4 @@
-package com.hrms.backend.repository;
+package com.hrms.backend.repository.user;
 
 import com.hrms.backend.entities.user.UserProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
