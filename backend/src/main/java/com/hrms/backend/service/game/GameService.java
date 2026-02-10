@@ -18,8 +18,6 @@ import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -61,6 +59,7 @@ public class GameService {
         game.setBookingCycleHours(dto.getBookingCycleHours());
         game.setMaxPlayersPerSlot(dto.getMaxPlayersPerSlot());
         game.setMaxSlotDurationInMinutes(dto.getMaxSlotDurationInMinutes());
+        game.setActive(dto.getIsActive());
         gameRepo.save(game);
         return convertToDTO(game);
     }
