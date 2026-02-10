@@ -113,7 +113,7 @@ export function ConfigureGameDialog({ gameId }: { readonly gameId: number }) {
         </DialogTrigger>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle>Configure Game: {"Pool"}</DialogTitle>
+            <DialogTitle>Configure Game: {singleGame?.name}</DialogTitle>
             <DialogDescription hidden></DialogDescription>
           </DialogHeader>
 
