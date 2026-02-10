@@ -24,5 +24,8 @@ public class ConfigureGameRequestDTO {
 
     @NotNull(message = "Max player per slot is required")
     private Integer maxPlayersPerSlot;
+
+    @NotNull(message = "Is active is required")
+    private Boolean isActive;
 }
 

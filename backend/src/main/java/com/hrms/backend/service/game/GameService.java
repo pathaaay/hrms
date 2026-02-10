@@ -48,7 +48,7 @@ public class GameService {
     }
 
     public List<GameResponseDTO> getAllGames() {
-        List<Game> games = gameRepo.findAll();
+        List<Game> games = gameRepo.findByIsActiveTrue();
         return convertToDTOList(games);
     }
 
@@ -106,6 +106,7 @@ public class GameService {
         if (users.size() < 2) throw new BadRequestException("Minimum 2 player is required to book a slot");
 
         Constants.GameBookingStatusType status = fairPlayAlgorithmService.getStatus(createdTeam);
+
         // Create a new Booking
         GameBooking newBooking = new GameBooking();
         newBooking.setTeam(createdTeam);
