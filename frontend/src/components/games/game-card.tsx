@@ -21,23 +21,23 @@ import { CardContentRow } from "../shared/card-content-row";
 import { useUser } from "@/hooks/user/use-user";
 import { useHasRole } from "@/hooks/user/use-has-role";
 import { ConfigureGameDialog } from "./dialog/configure-game-dialog";
+import { cn } from "@/lib/utils";
 
 interface GameCardProps {
   game: IGame;
   showBookBtn?: boolean;
-  showAddBtn?: boolean;
 }
 
-export const GameCard = ({
-  game,
-  showBookBtn = true,
-  showAddBtn = false,
-}: GameCardProps) => {
-  const { interestedGameIds } = useUser();
+export const GameCard = ({ game, showBookBtn = true }: GameCardProps) => {
   const canConfigureGame = useHasRole(["hr", "manager"]);
 
   return (
-    <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-muted">
+    <Card
+      className={cn(
+        "rounded-2xl h-max shadow-md hover:shadow-xl transition-all duration-300 border-muted",
+        !game.isActive && "border-red-800",
+      )}
+    >
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           <div className="flex items-center gap-2">
@@ -67,22 +67,14 @@ export const GameCard = ({
           value={game.bookingCycleHours + " hrs"}
         />
       </CardContent>
-      {showBookBtn && (
-        <CardFooter>
-          <Button className="w-full rounded-xl" asChild>
+      <CardFooter className="flex items-center gap-1">
+        {canConfigureGame && <ConfigureGameDialog gameId={game.id} />}
+        {game.isActive && showBookBtn && (
+          <Button className="rounded-xl flex-1" asChild>
             <NavLink to={`/games/${game.id}`}>Book Now</NavLink>
           </Button>
-        </CardFooter>
-      )}
-      {showAddBtn && (
-        <CardFooter>
-          <UpdateInterestedGamesBtn
-            ids={[game.id, ...interestedGameIds]}
-            btnText="Add to interested games"
-          />
-        </CardFooter>
-      )}
-      {canConfigureGame && <ConfigureGameDialog gameId={game.id} />}
+        )}
+      </CardFooter>
     </Card>
   );
 };

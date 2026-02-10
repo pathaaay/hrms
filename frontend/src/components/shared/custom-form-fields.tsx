@@ -43,7 +43,7 @@ export const CustomFormFields = <T extends FieldValues>({
               <FieldLabel htmlFor={key}>{label}</FieldLabel>
 
               {type === "switch" ? (
-                <Switch id={key} {...field} defaultChecked={field.value} />
+                <Switch id={key} onCheckedChange={field.onChange} defaultChecked={field.value} />
               ) : (
                 <Input
                   {...field}
