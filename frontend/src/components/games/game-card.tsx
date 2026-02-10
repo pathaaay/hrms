@@ -16,9 +16,7 @@ import {
   UsersIcon,
 } from "lucide-react";
 import { NavLink } from "react-router";
-import { UpdateInterestedGamesBtn } from "./update-interested-games-btn";
 import { CardContentRow } from "../shared/card-content-row";
-import { useUser } from "@/hooks/user/use-user";
 import { useHasRole } from "@/hooks/user/use-has-role";
 import { ConfigureGameDialog } from "./dialog/configure-game-dialog";
 import { cn } from "@/lib/utils";

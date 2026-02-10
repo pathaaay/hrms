@@ -1,4 +1,5 @@
 import { GameBookingDialog } from "@/components/games/game-booking-dialog";
+import { emitGoBack } from "@/lib/helpers/events/go-back-event";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams, useSearchParams } from "react-router";
@@ -12,20 +13,10 @@ const BookGame = () => {
   const endTime = Number(searchParams.get("endTime"));
   const date = searchParams.get("date");
 
-  const handleGoBack = () => {
-    if (
-      globalThis.window &&
-      globalThis.window.history.state &&
-      globalThis.window.history.state.idx > 0
-    )
-      navigate(-1);
-    else navigate(`/games/${gameId}`, { replace: true });
-  };
-
   useEffect(() => {
     if (!bookingSheetOpen) {
       setTimeout(() => {
-        handleGoBack();
+        emitGoBack("/games");
       }, 200);
     }
   }, [bookingSheetOpen]);
@@ -54,7 +45,7 @@ const BookGame = () => {
   }, []);
 
   if (!date) return;
-  
+
   return (
     <GameBookingDialog
       open={bookingSheetOpen}

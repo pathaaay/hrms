@@ -3,24 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface IInitialState {
   isLoading: boolean;
-  games: Array<IGame> | [];
+  jobs: Array<IGame> | [];
 }
 
 const initialState = {
   isLoading: true,
-  games: [],
+  jobs: [],
 } as IInitialState;
 
-export const gameSlice = createSlice({
-  name: "game-slice",
+export const jobSlice = createSlice({
+  name: "job-slice",
   initialState,
   reducers: {
-    setGames(state, { payload }) {
+    setJobs(state, { payload }) {
       state.isLoading = false;
-      state.games = payload;
+      state.jobs = payload;
     },
   },
 });
 
-export const { setGames } = gameSlice.actions;
-export const gameReducer = gameSlice.reducer;
+export const { setJobs } = jobSlice.actions;
+export const jobReducer = jobSlice.reducer;
