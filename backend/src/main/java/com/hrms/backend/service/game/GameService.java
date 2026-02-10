@@ -11,7 +11,9 @@ import com.hrms.backend.repository.UserRepo;
 import com.hrms.backend.repository.game.GameBookingRepo;
 import com.hrms.backend.repository.game.GameRepo;
 import com.hrms.backend.repository.game.GameTeamRepo;
+import com.hrms.backend.service.mail.MailService;
 import com.hrms.backend.utilities.Constants;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -20,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +40,7 @@ public class GameService {
     private final GameTeamRepo gameTeamRepo;
     private final GameBookingRepo gameBookingRepo;
     private final FairPlayAlgorithmService fairPlayAlgorithmService;
+    private final MailService mailService;
 
     public GameResponseDTO convertToDTO(Game game) {
         return modelMapper.map(game, GameResponseDTO.class);
@@ -65,13 +70,13 @@ public class GameService {
         game.setBookingCycleHours(dto.getBookingCycleHours());
         game.setMaxPlayersPerSlot(dto.getMaxPlayersPerSlot());
         game.setMaxSlotDurationInMinutes(dto.getMaxSlotDurationInMinutes());
-        game.setActive(dto.getIsActive());
+        game.setIsActive(dto.getIsActive());
         gameRepo.save(game);
         return convertToDTO(game);
     }
 
     @Transactional
-    public void bookGameSlot(User user, BookGameSlotRequestDTO bookingDetails) throws BadRequestException {
+    public void bookGameSlot(User user, BookGameSlotRequestDTO bookingDetails) throws BadRequestException, MessagingException {
 
         // If the members in booking is less than 2 then throw error
         if (bookingDetails.getUserIds().stream().count() < 2)
@@ -115,12 +120,44 @@ public class GameService {
         // Create a new Booking
         GameBooking newBooking = new GameBooking();
         newBooking.setTeam(createdTeam);
-        newBooking.setConfirmed(status == Constants.GameBookingStatusType.CONFIRMED);
+        newBooking.setIsConfirmed(status == Constants.GameBookingStatusType.CONFIRMED);
         newBooking.setStartTime(bookingDetails.getStartTime());
         newBooking.setEndTime(bookingDetails.getEndTime());
         newBooking.setBookedSlotDate(bookingDetails.getBookingDate());
+        newBooking.setIsDeleted(false);
         // Save the Booking to db
         gameBookingRepo.save(newBooking);
+
+        String[] toEmails = new String[users.size() + 1];
+
+        int i = 0;
+        for (User singleUser : users) {
+            toEmails[i++] = singleUser.getEmail();
+        }
+        toEmails[i] = user.getEmail();
+
+        DateTimeFormatter formatToDate = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate todayDate = LocalDate.now();
+        LocalDate bookedDate = LocalDate.parse(newBooking.getBookedSlotDate().toString(), formatToDate);
+
+        String htmlBody = """
+                <div>
+                <div>Congratulations your game slot is confirmed.</div>
+                <div>Booking On: %s</div>
+                <div>Booking Date: %s</div>
+                <div>Start Time: %s</div>
+                <div>End Time: %s</div>
+                <div>Status: %s</div>
+                </div>
+                """.formatted(
+                todayDate.format(formatter),
+                bookedDate.format(formatter),
+                newBooking.getStartTime() / 60 + ":" + newBooking.getStartTime() % 60,
+                newBooking.getEndTime() / 60 + ":" + newBooking.getEndTime() % 60,
+                Boolean.TRUE.equals(newBooking.getIsConfirmed()) ? "Confirmed" : "Pending");
+
+        mailService.sendEmail(toEmails, game.getName() + " game slot is booked", htmlBody);
     }
 
 }

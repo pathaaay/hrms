@@ -13,5 +13,5 @@ public class GameResponseDTO {
     private int bookingCycleHours;
     private int maxSlotDurationInMinutes;
     private int maxPlayersPerSlot;
-    private boolean isActive;
+    private Boolean isActive;
 }

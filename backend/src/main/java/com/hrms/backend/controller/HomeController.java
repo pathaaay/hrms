@@ -3,6 +3,8 @@ package com.hrms.backend.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.hrms.backend.service.mail.MailService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +21,7 @@ public class HomeController {
     private final ObjectMapper mapper;
 
     @GetMapping("")
-    public JsonNode home() {
+    public JsonNode home() throws MessagingException {
         ObjectNode node = mapper.createObjectNode();
         node.put("success", true);
         node.put("created_by", "Aayush Pathak");

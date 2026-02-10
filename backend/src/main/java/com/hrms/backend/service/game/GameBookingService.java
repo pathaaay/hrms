@@ -45,7 +45,7 @@ public class GameBookingService {
         if (!booking.getTeam().getUser().getId().equals(user.getId()))
             throw new BadRequestException("You cannot delete other user bookings");
 
-        booking.setDeleted(true);
+        booking.setIsDeleted(true);
         gameBookingRepo.save(booking);
     }
 }
