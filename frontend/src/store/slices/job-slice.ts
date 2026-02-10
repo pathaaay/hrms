@@ -1,9 +1,9 @@
-import type { IGame } from "@/lib/types/game";
+import type { IJob } from "@/lib/types/job";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IInitialState {
   isLoading: boolean;
-  jobs: Array<IGame> | [];
+  jobs: Array<IJob> | [];
 }
 
 const initialState = {
