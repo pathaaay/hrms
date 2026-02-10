@@ -45,8 +45,14 @@ public class GameService {
         return games.stream().map(this::convertToDTO).toList();
     }
 
-    public List<GameResponseDTO> getAllGames() {
-        List<Game> games = gameRepo.findByIsActiveTrue();
+    public List<GameResponseDTO> getAllGames(User user) {
+        List<Game> games;
+
+        // If user role is hr or manager they will get all the games whether it is active or not
+        if (user.getRole().getName().equals("hr") || user.getRole().getName().equals("manager"))
+            games = gameRepo.findAll();
+
+        else games = gameRepo.findByIsActiveTrue();
         return convertToDTOList(games);
     }
 

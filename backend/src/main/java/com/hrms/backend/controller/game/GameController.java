@@ -27,14 +27,14 @@ public class GameController {
     private final GameBookingService gameBookingService;
 
     @GetMapping()
-    public ResponseEntity<ApiResponse<List<GameResponseDTO>>> getAllGames() {
-        return ResponseEntity.ok(new ApiResponse<>(true, "Game get successfully", gameService.getAllGames()));
+    public ResponseEntity<ApiResponse<List<GameResponseDTO>>> getAllGames(@AuthenticationPrincipal  User user) {
+        return ResponseEntity.ok(new ApiResponse<>(true, "Game get successfully", gameService.getAllGames(user)));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_HR')")
     @PutMapping("/{gameId}/configure")
     public ResponseEntity<ApiResponse<GameResponseDTO>> configureGameDetails(@PathVariable Long gameId, @Valid @RequestBody ConfigureGameRequestDTO dto) throws BadRequestException {
-        return ResponseEntity.ok(new ApiResponse<GameResponseDTO>(true, "Game configuration updated successfully", gameService.updateGameConfig(gameId, dto)));
+        return ResponseEntity.ok(new ApiResponse<>(true, "Game configuration updated successfully", gameService.updateGameConfig(gameId, dto)));
     }
 
     @PostMapping("/get-booked-slots")
