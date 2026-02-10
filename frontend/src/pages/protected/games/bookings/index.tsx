@@ -30,11 +30,11 @@ const columns: ColumnDef<IGameBooking>[] = [
   },
   {
     header: "Status",
-    accessorKey: "confirmed",
+    accessorKey: "isConfirmed",
     cell: ({ row }) => {
       return (
-        <Badge variant={row.getValue("confirmed") ? "default" : "secondary"}>
-          {row.getValue("confirmed") ? "Confirmed" : "Pending"}
+        <Badge variant={row.getValue("isConfirmed") ? "default" : "secondary"}>
+          {row.getValue("isConfirmed") ? "Confirmed" : "Pending"}
         </Badge>
       );
     },
@@ -50,8 +50,8 @@ const columns: ColumnDef<IGameBooking>[] = [
       if (!value) return true;
 
       if (
-        (value == "true" && row.original.confirmed) ||
-        (value == "false" && !row.original.confirmed)
+        (value == "true" && row.original.isConfirmed) ||
+        (value == "false" && !row.original.isConfirmed)
       )
         return true;
       return false;
@@ -114,7 +114,7 @@ const columns: ColumnDef<IGameBooking>[] = [
     meta: {
       filterVariant: "calendar",
     },
-    filterFn: (row, id, value) => {
+    filterFn: (row, _, value) => {
       if (!value) return true;
 
       if (
@@ -157,10 +157,11 @@ export const UserGameBookingPage = () => {
     <div className="flex flex-col items-center gap-2 relative">
       <GoBackBtn to={"/games"} />
       <div className="mt-20 w-full">
+        <div className="text-xl font-medium mb-2">Your Bookings</div>
         <DataTable
           columns={columns}
           data={bookings || []}
-          filterColumns={["team.game.name", "confirmed", "bookedSlotDate"]}
+          filterColumns={["team.game.name", "isConfirmed", "bookedSlotDate"]}
         />
       </div>
     </div>

@@ -28,7 +28,6 @@ export const GamesPage = () => {
             game={game}
             key={game.id}
             showBookBtn={interestedGameIds.includes(game.id)}
-            showAddBtn={!interestedGameIds.includes(game.id)}
           />
         ))}
       </div>

@@ -6,7 +6,7 @@ export interface IGame {
   bookingCycleHours: number;
   maxSlotDurationInMinutes: number;
   maxPlayersPerSlot: number;
-  active: boolean;
+  isActive: boolean;
 }
 
 export interface IGameBooking {
@@ -15,7 +15,7 @@ export interface IGameBooking {
   endTime: number;
   createdAt: string;
   bookedSlotDate: string;
-  confirmed: boolean;
+  isConfirmed: boolean;
   team: ITeam;
 }
 

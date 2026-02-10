@@ -81,7 +81,6 @@ export function ConfigureGameDialog({ gameId }: { readonly gameId: number }) {
       id: singleGame?.id.toString(),
       name: singleGame?.name || "",
       endTime: singleGame?.endTime.toString() || "",
-      isActive: singleGame?.active || true,
       startTime: singleGame?.startTime.toString() || "",
       bookingCycleHours: singleGame?.bookingCycleHours.toString() || "",
       maxPlayersPerSlot: singleGame?.maxPlayersPerSlot.toString() || "",
@@ -95,6 +94,10 @@ export function ConfigureGameDialog({ gameId }: { readonly gameId: number }) {
     form.reset(form.getValues());
   }, [isSuccess]);
 
+  useEffect(() => {
+    if (singleGame?.isActive) form.setValue("isActive", true);
+  }, [singleGame]);
+
   const onFormSubmit = (values: ConfigureGameSchemaType) => {
     updateGameConfig(values);
   };
@@ -103,7 +106,7 @@ export function ConfigureGameDialog({ gameId }: { readonly gameId: number }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <form onSubmit={form.handleSubmit(onFormSubmit)}>
         <DialogTrigger asChild>
-          <Button variant="ghost" size={"sm"} className="w-full rounded-xl">
+          <Button variant="outline" className="flex-1 rounded-xl">
             <SettingsIcon />
             Settings
           </Button>
