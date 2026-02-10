@@ -7,6 +7,7 @@ import {
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
+import { Switch } from "../ui/switch";
 
 export type ICustomFormField<T> = {
   key: Path<T>;
@@ -42,8 +43,7 @@ export const CustomFormFields = <T extends FieldValues>({
               <FieldLabel htmlFor={key}>{label}</FieldLabel>
 
               {type === "switch" ? (
-                // <Switch id={key} defaultChecked />
-                <></>
+                <Switch id={key} {...field} defaultChecked={field.value} />
               ) : (
                 <Input
                   {...field}

@@ -1,5 +1,5 @@
 import DataTable from "@/components/common/data-table";
-import { DeleteDialog } from "@/components/games/delete-booking-dialog";
+import { DeleteDialog } from "@/components/games/dialog/delete-booking-dialog";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

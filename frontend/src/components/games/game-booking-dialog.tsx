@@ -19,7 +19,7 @@ import { Button } from "../ui/button";
 import { useBookGameSlotMutation } from "@/api/mutations/game";
 import { queryClient } from "@/lib/tanstack-query/query-client";
 
-export const GameBookingModal = ({
+export const GameBookingDialog = ({
   open,
   setOpen,
   date,
