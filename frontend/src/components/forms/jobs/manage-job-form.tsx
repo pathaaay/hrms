@@ -107,11 +107,18 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
   }, [users]);
 
   useEffect(() => {
-    if (!isSuccess || !isUpdateSuccess) return;
+    if (!isSuccess) return;
     setTimeout(() => {
       emitGoBack("/jobs");
     }, 200);
-  }, [isSuccess, isUpdateSuccess]);
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (!isUpdateSuccess) return;
+    setTimeout(() => {
+      emitGoBack("/jobs");
+    }, 200);
+  }, [isUpdateSuccess]);
 
   const onFormSubmit = async (values: JobSchemaType) => {
     if (!files || files?.length < 0) {
@@ -120,7 +127,6 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
     }
 
     const data = await handleUploadAsync(files);
-    console.log(data);
 
     if (jobId) {
       const newValue = {
