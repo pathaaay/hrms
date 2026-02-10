@@ -20,7 +20,7 @@ import { UpdateInterestedGamesBtn } from "./update-interested-games-btn";
 import { CardContentRow } from "../shared/card-content-row";
 import { useUser } from "@/hooks/user/use-user";
 import { useHasRole } from "@/hooks/user/use-has-role";
-import { ConfigureGameDialog } from "./configure-game-dialog";
+import { ConfigureGameDialog } from "./dialog/configure-game-dialog";
 
 interface GameCardProps {
   game: IGame;
@@ -82,7 +82,7 @@ export const GameCard = ({
           />
         </CardFooter>
       )}
-      {canConfigureGame && <ConfigureGameDialog />}
+      {canConfigureGame && <ConfigureGameDialog gameId={game.id} />}
     </Card>
   );
 };

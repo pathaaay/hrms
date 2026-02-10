@@ -1,4 +1,4 @@
-import { GameBookingModal } from "@/components/games/game-booking-modal";
+import { GameBookingDialog } from "@/components/games/game-booking-dialog";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams, useSearchParams } from "react-router";
@@ -56,7 +56,7 @@ const BookGame = () => {
   if (!date) return;
   
   return (
-    <GameBookingModal
+    <GameBookingDialog
       open={bookingSheetOpen}
       setOpen={setBookingSheetOpen}
       date={date}
