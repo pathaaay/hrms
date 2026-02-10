@@ -40,7 +40,11 @@ export const CustomFormFields = <T extends FieldValues>({
               className={cn(fieldClass, className)}
             >
               <FieldLabel htmlFor={key}>{label}</FieldLabel>
-              {
+
+              {type === "switch" ? (
+                // <Switch id={key} defaultChecked />
+                <></>
+              ) : (
                 <Input
                   {...field}
                   aria-invalid={fieldState.invalid}
@@ -48,7 +52,7 @@ export const CustomFormFields = <T extends FieldValues>({
                   type={type}
                   placeholder={placeholder}
                 />
-              }
+              )}
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
