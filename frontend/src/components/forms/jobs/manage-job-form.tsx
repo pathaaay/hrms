@@ -12,18 +12,27 @@ import {
   CustomFormFields,
   type ICustomFormField,
 } from "@/components/shared/custom-form-fields";
-import { FieldGroup } from "@/components/ui/field";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-  CreateJobSchema,
-  type CreateJobSchemaType,
-} from "@/lib/schemas/job-schema";
+import { JobSchema, type JobSchemaType } from "@/lib/schemas/job-schema";
 import { useFetchAllUsers } from "@/hooks/user/use-fetch-all-users";
 import { useEffect, useState } from "react";
 import { createMultiSelectOption } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { useDocumentMutation } from "@/api/mutations/document";
+import {
+  useCreateJobMutation,
+  useUpdateJobMutation,
+} from "@/api/mutations/job";
+import { emitGoBack } from "@/lib/helpers/events/go-back-event";
 
-const formFields: ICustomFormField<CreateJobSchemaType> = [
+const formFields: ICustomFormField<JobSchemaType> = [
   {
     label: "Job Title",
     key: "title",
@@ -49,13 +58,27 @@ const formFields: ICustomFormField<CreateJobSchemaType> = [
   },
 ];
 
-export const JobForm = ({ jobId }: { jobId?: string }) => {
-  console.log({ jobId });
+export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
   const { users, isPending } = useFetchAllUsers();
   const [fields, setFields] = useState(formFields);
+  const [files, setFiles] = useState<FileList | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const { mutateAsync: handleUploadAsync, isPending: isDocumentCreating } =
+    useDocumentMutation();
+  const {
+    mutate: handleCreateJob,
+    isPending: isJobCreating,
+    isSuccess,
+  } = useCreateJobMutation();
+
+  const {
+    mutate: handleUpdateJob,
+    isPending: isJobUpdating,
+    isSuccess: isUpdateSuccess,
+  } = useUpdateJobMutation();
 
   const form = useForm({
-    resolver: zodResolver(CreateJobSchema),
+    resolver: zodResolver(JobSchema),
     defaultValues: {
       title: "",
       defaultHrEmail: "",
@@ -79,13 +102,40 @@ export const JobForm = ({ jobId }: { jobId?: string }) => {
         }
         return field;
       });
-
       setFields(newFields);
     }
   }, [users]);
 
-  const onFormSubmit = (values: CreateJobSchemaType) => {
-    console.log({ values });
+  useEffect(() => {
+    if (!isSuccess || !isUpdateSuccess) return;
+    setTimeout(() => {
+      emitGoBack("/jobs");
+    }, 200);
+  }, [isSuccess, isUpdateSuccess]);
+
+  const onFormSubmit = async (values: JobSchemaType) => {
+    if (!files || files?.length < 0) {
+      setFileError("File is required");
+      return;
+    }
+
+    const data = await handleUploadAsync(files);
+    console.log(data);
+
+    if (jobId) {
+      const newValue = {
+        ...values,
+        jobId: jobId,
+        jdFileId: data.id,
+      };
+      handleUpdateJob(newValue);
+    } else {
+      const newValue = {
+        ...values,
+        jdFileId: data.id,
+      };
+      handleCreateJob(newValue);
+    }
   };
 
   return (
@@ -97,11 +147,23 @@ export const JobForm = ({ jobId }: { jobId?: string }) => {
 
       <ScrollArea className="max-h-[80vh] pr-1">
         <FieldGroup className="flex items-center flex-col gap-3">
-          <CustomFormFields<CreateJobSchemaType>
+          <CustomFormFields<JobSchemaType>
             fieldClass="gap-1"
             control={form.control}
             formFields={fields}
           />
+          <Field data-invalid={fileError} className="gap-1">
+            <FieldLabel htmlFor="picture">JD Document (.pdf)</FieldLabel>
+            <Input
+              onChange={(e) => {
+                setFileError("");
+                setFiles(e.target.files);
+              }}
+              id="picture"
+              type="file"
+            />
+            {fileError && <FieldError>{fileError}</FieldError>}
+          </Field>
         </FieldGroup>
       </ScrollArea>
       <DialogFooter>
@@ -113,11 +175,17 @@ export const JobForm = ({ jobId }: { jobId?: string }) => {
         <Button
           onClick={form.handleSubmit(onFormSubmit)}
           type="submit"
-          disabled={isPending || !form.formState.isDirty}
+          disabled={
+            isDocumentCreating ||
+            isJobCreating ||
+            isJobUpdating ||
+            !form.formState.isDirty
+          }
           size={"sm"}
         >
-          {/* {isPending ? "Please wait..." : "Save changes"} */}
-          submit
+          {isDocumentCreating || isJobCreating || isJobUpdating
+            ? "Please wait..."
+            : "Save changes"}
         </Button>
       </DialogFooter>
     </DialogContent>

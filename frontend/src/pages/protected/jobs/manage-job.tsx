@@ -1,4 +1,4 @@
-import { JobForm } from "@/components/forms/jobs/job-form";
+import { ManageJobForm } from "@/components/forms/jobs/manage-job-form";
 import { Dialog } from "@/components/ui/dialog";
 import { useHasRole } from "@/hooks/user/use-has-role";
 import { useUser } from "@/hooks/user/use-user";
@@ -29,7 +29,7 @@ export const ManageJob = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
-        <JobForm jobId={jobId}/>
+        <ManageJobForm jobId={jobId}/>
       </form>
     </Dialog>
   );

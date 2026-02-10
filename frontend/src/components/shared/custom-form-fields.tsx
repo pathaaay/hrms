@@ -50,7 +50,6 @@ export const CustomFormFields = <T extends FieldValues>({
                   <MultiSelect
                     options={options || []}
                     onValueChange={(value) => {
-                      console.log({ value });
                       field.onChange(value);
                     }}
                   />
