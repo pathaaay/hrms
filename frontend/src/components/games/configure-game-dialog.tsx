@@ -20,6 +20,7 @@ import {
   CustomFormFields,
   type ICustomFormField,
 } from "../shared/custom-form-fields";
+import { ScrollArea } from "../ui/scroll-area";
 
 export function ConfigureGameDialog() {
   const form = useForm({
@@ -74,6 +75,11 @@ export function ConfigureGameDialog() {
       key: "maxPlayersPerSlot",
       type: "number",
     },
+    {
+      label: "Enabled",
+      key: "isActive",
+      type: "switch",
+    },
   ];
 
   return (
@@ -89,13 +95,16 @@ export function ConfigureGameDialog() {
           <DialogHeader>
             <DialogTitle>Configure Game: {"Pool"}</DialogTitle>
           </DialogHeader>
-          <FieldGroup className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">
-            <CustomFormFields<ConfigureGameSchemaType>
-              fieldClass="flex-row items-center"
-              control={form.control}
-              formFields={formFields}
-            />
-          </FieldGroup>
+
+          <ScrollArea className="max-h-[50vh] pr-1" >
+            <FieldGroup className="flex items-center flex-col gap-2">
+              <CustomFormFields<ConfigureGameSchemaType>
+                fieldClass="flex-row items-center"
+                control={form.control}
+                formFields={formFields}
+              />
+            </FieldGroup>
+          </ScrollArea>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
