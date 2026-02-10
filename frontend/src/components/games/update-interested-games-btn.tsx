@@ -14,7 +14,7 @@ export const UpdateInterestedGamesBtn = ({
     <Button
       onClick={() => mutate(ids)}
       variant={"outline"}
-      className="w-full mt-4 rounded-xl"
+      className="w-full rounded-xl"
     >
       {btnText}
     </Button>
