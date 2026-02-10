@@ -19,6 +19,8 @@ import { NavLink } from "react-router";
 import { UpdateInterestedGamesBtn } from "./update-interested-games-btn";
 import { CardContentRow } from "../shared/card-content-row";
 import { useUser } from "@/hooks/user/use-user";
+import { useHasRole } from "@/hooks/user/use-has-role";
+import { ConfigureGameDialog } from "./configure-game-dialog";
 
 interface GameCardProps {
   game: IGame;
@@ -32,7 +34,8 @@ export const GameCard = ({
   showAddBtn = false,
 }: GameCardProps) => {
   const { interestedGameIds } = useUser();
-  const { userProfile } = useUser();
+  const canConfigureGame = useHasRole(["hr", "manager"]);
+
   return (
     <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-muted">
       <CardHeader>
@@ -66,7 +69,7 @@ export const GameCard = ({
       </CardContent>
       {showBookBtn && (
         <CardFooter>
-          <Button className="w-full mt-4 rounded-xl" asChild>
+          <Button className="w-full rounded-xl" asChild>
             <NavLink to={`/games/${game.id}`}>Book Now</NavLink>
           </Button>
         </CardFooter>
@@ -79,6 +82,7 @@ export const GameCard = ({
           />
         </CardFooter>
       )}
+      {canConfigureGame && <ConfigureGameDialog />}
     </Card>
   );
 };
