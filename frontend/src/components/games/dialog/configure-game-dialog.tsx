@@ -23,6 +23,8 @@ import {
 } from "../../shared/custom-form-fields";
 import { ScrollArea } from "../../ui/scroll-area";
 import { useGame } from "@/hooks/game/use-game";
+import { useConfigureGameMutation } from "@/api/mutations/game";
+import { useEffect, useState } from "react";
 
 const formFields: ICustomFormField<ConfigureGameSchemaType> = [
   {
@@ -63,29 +65,43 @@ const formFields: ICustomFormField<ConfigureGameSchemaType> = [
 ];
 
 export function ConfigureGameDialog({ gameId }: { readonly gameId: number }) {
+  const [open, setOpen] = useState(false);
+  const {
+    mutate: updateGameConfig,
+    isPending,
+    isSuccess,
+  } = useConfigureGameMutation();
+
   const { games } = useGame();
   const singleGame = games.find(({ id }) => gameId === id);
 
   const form = useForm({
     resolver: zodResolver(ConfigureGameSchema),
     defaultValues: {
+      id: singleGame?.id.toString(),
       name: singleGame?.name || "",
-      endTime: singleGame?.endTime || 0,
+      endTime: singleGame?.endTime.toString() || "",
       isActive: singleGame?.active || true,
-      startTime: singleGame?.startTime || 0,
-      bookingCycleHours: singleGame?.bookingCycleHours || 0,
-      maxPlayersPerSlot: singleGame?.maxPlayersPerSlot || 0,
-      maxSlotDurationInMinutes: singleGame?.maxSlotDurationInMinutes || 0,
+      startTime: singleGame?.startTime.toString() || "",
+      bookingCycleHours: singleGame?.bookingCycleHours.toString() || "",
+      maxPlayersPerSlot: singleGame?.maxPlayersPerSlot.toString() || "",
+      maxSlotDurationInMinutes:
+        singleGame?.maxSlotDurationInMinutes.toString() || "",
     },
   });
 
+  useEffect(() => {
+    if (isSuccess) setOpen(false);
+    form.reset(form.getValues());
+  }, [isSuccess]);
+
   const onFormSubmit = (values: ConfigureGameSchemaType) => {
-    console.log({ values });
+    updateGameConfig(values);
   };
 
   return (
-    <Dialog>
-      <form>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <form onSubmit={form.handleSubmit(onFormSubmit)}>
         <DialogTrigger asChild>
           <Button variant="ghost" size={"sm"} className="w-full rounded-xl">
             <SettingsIcon />
@@ -109,10 +125,17 @@ export function ConfigureGameDialog({ gameId }: { readonly gameId: number }) {
           </ScrollArea>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" size={"sm"}>
+                Cancel
+              </Button>
             </DialogClose>
-            <Button onClick={form.handleSubmit(onFormSubmit)} type="submit">
-              Save changes
+            <Button
+              onClick={form.handleSubmit(onFormSubmit)}
+              type="submit"
+              disabled={isPending || !form.formState.isDirty}
+              size={"sm"}
+            >
+              {isPending ? "Please wait..." : "Save changes"}
             </Button>
           </DialogFooter>
         </DialogContent>
