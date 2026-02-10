@@ -6,6 +6,7 @@ export interface IGame {
   bookingCycleHours: number;
   maxSlotDurationInMinutes: number;
   maxPlayersPerSlot: number;
+  active: boolean;
 }
 
 export interface IGameBooking {

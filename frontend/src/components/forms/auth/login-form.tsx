@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { LoginSchema, type LoginSchemaType } from "@/lib/schemas/login-schema";
+import { queryClient } from "@/lib/tanstack-query/query-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -36,6 +37,7 @@ export const LoginForm = () => {
       localStorage.setItem("access_token", token);
 
       const routeToNavigate = searchParams.get("redirect") || "/";
+      queryClient.invalidateQueries({ type: "all", refetchType: "none" });
       navigate(routeToNavigate, { replace: true });
     }
     return () => {};

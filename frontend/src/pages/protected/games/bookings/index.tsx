@@ -1,4 +1,5 @@
 import DataTable from "@/components/common/data-table";
+import { DeleteDialog } from "@/components/games/dialog/delete-booking-dialog";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { useFetchUserGameBookings } from "@/hooks/user/use-game-bookings";
+import { useFetchUserGameBookings } from "@/hooks/user/use-user-game-bookings";
 import type { IGameBooking } from "@/lib/types/game";
 import { formatMinutesToHours } from "@/lib/utils";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -129,6 +130,18 @@ const columns: ColumnDef<IGameBooking>[] = [
     accessorKey: "createdAt",
     cell: ({ row }) => (
       <div>{new Date(row.getValue("createdAt")).toLocaleDateString()}</div>
+    ),
+    meta: {
+      filterVariant: "select",
+    },
+  },
+  {
+    header: "Actions",
+    accessorKey: "actions",
+    cell: ({ row }) => (
+      <div className="flex items-center gap-2">
+        <DeleteDialog bookingId={row.original.id} />
+      </div>
     ),
     meta: {
       filterVariant: "select",
