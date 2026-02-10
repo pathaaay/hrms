@@ -3,6 +3,11 @@ import type { JobSchemaType } from "@/lib/schemas/job-schema";
 
 const JOBS_ENDPOINT = "/jobs";
 
+export const getAllJobs = async () => {
+  const res = await apiService.get(JOBS_ENDPOINT);
+  return res.data;
+};
+
 export const createJob = async (values: JobSchemaType) => {
   const res = await apiService.post(JOBS_ENDPOINT, {
     ...values,

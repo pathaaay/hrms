@@ -145,14 +145,14 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
   };
 
   return (
-    <DialogContent className="sm:max-w-sm">
+    <DialogContent className="sm:max-w-md">
       <DialogHeader>
         <DialogTitle>Create Job</DialogTitle>
         <DialogDescription hidden></DialogDescription>
       </DialogHeader>
 
       <ScrollArea className="max-h-[80vh] pr-1">
-        <FieldGroup className="flex items-center flex-col gap-3">
+        <FieldGroup className="flex items-center flex-col gap-3 px-1.5">
           <CustomFormFields<JobSchemaType>
             fieldClass="gap-1"
             control={form.control}
