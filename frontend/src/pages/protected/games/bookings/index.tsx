@@ -17,6 +17,18 @@ import { format } from "date-fns";
 
 const columns: ColumnDef<IGameBooking>[] = [
   {
+    header: "#Id",
+    accessorKey: "id",
+    id: "id",
+    cell: ({ row }) => <div>{row.original.id}</div>,
+    enableSorting: false,
+    meta: {
+      filterVariant: "select",
+      bindLabel: "",
+      bindValue: "",
+    },
+  },
+  {
     header: "Game",
     accessorKey: "team.game.name",
     id: "team.game.name",
