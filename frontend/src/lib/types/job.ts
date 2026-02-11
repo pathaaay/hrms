@@ -9,4 +9,5 @@ export interface IJob {
   jdDocument: IDocument;
   defaultHrEmail: string;
   createdAt: string;
+  jobReviewers: IUser[];
 }

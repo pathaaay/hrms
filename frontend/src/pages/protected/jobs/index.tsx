@@ -1,5 +1,4 @@
 import DataTable from "@/components/common/data-table";
-import { DeleteDialog } from "@/components/games/dialog/delete-booking-dialog";
 import { Button } from "@/components/ui/button";
 import { useFetchJobs } from "@/hooks/job/use-fetch-jobs";
 import { useJob } from "@/hooks/job/use-job";
@@ -7,6 +6,7 @@ import { useHasRole } from "@/hooks/user/use-has-role";
 import type { IJob } from "@/lib/types/job";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import { PencilIcon } from "lucide-react";
 import { NavLink, Outlet } from "react-router";
 
 const columns: ColumnDef<IJob>[] = [
@@ -69,6 +69,11 @@ const columns: ColumnDef<IJob>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
         {/* <DeleteDialog bookingId={row.original.id} /> */}
+        <Button asChild variant={"outline"} size={"icon"}>
+          <NavLink to={`update/${row.original.id}`}>
+            <PencilIcon />
+          </NavLink>
+        </Button>
       </div>
     ),
     meta: {

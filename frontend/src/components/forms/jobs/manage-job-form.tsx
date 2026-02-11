@@ -31,6 +31,7 @@ import {
   useUpdateJobMutation,
 } from "@/api/mutations/job";
 import { emitGoBack } from "@/lib/helpers/events/go-back-event";
+import { useJob } from "@/hooks/job/use-job";
 
 const formFields: ICustomFormField<JobSchemaType> = [
   {
@@ -60,6 +61,7 @@ const formFields: ICustomFormField<JobSchemaType> = [
 
 export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
   const { users, isPending } = useFetchAllUsers();
+  const { jobs, isLoading } = useJob();
   const [fields, setFields] = useState(formFields);
   const [files, setFiles] = useState<FileList | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
@@ -108,17 +110,33 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
 
   useEffect(() => {
     if (!isSuccess) return;
-    setTimeout(() => {
-      emitGoBack("/jobs");
-    }, 200);
+    handleGoBack();
   }, [isSuccess]);
 
   useEffect(() => {
     if (!isUpdateSuccess) return;
+    handleGoBack();
+  }, [isUpdateSuccess]);
+
+  useEffect(() => {
+    if (jobId && !isLoading) {
+      const singleJob = jobs.find(({ id }) => id === Number(jobId));
+      if (!singleJob) handleGoBack();
+
+      form.reset({
+        defaultHrEmail: singleJob?.defaultHrEmail,
+        description: singleJob?.description,
+        reviewerIds: singleJob?.jobReviewers?.map(({ id }) => String(id)) || [],
+        title: singleJob?.title,
+      });
+    }
+  }, [jobId, jobs, isLoading]);
+
+  const handleGoBack = () => {
     setTimeout(() => {
       emitGoBack("/jobs");
     }, 200);
-  }, [isUpdateSuccess]);
+  };
 
   const onFormSubmit = async (values: JobSchemaType) => {
     if (!files || files?.length < 0) {
