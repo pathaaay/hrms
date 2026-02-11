@@ -24,7 +24,7 @@ public interface JobRepo extends JpaRepository<Job, Long> {
     @Modifying
     @Transactional
     @Query("UPDATE Job j " +
-            "SET j.isActive = CASE WHEN j.isActive=1 then 0 ELSE 1" +
-            "END where j.createdBy.id=:userId and b.id=:id")
+            "SET j.isActive = CASE WHEN j.isActive= true then false ELSE true " +
+            "END where j.createdBy.id=:userId and j.id=:id")
     int toggleJob(@Param("userId") Long userId, @Param("id") Long id);
 }
