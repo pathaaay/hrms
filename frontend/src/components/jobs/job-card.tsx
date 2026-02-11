@@ -39,7 +39,7 @@ export const JobCard = ({ job }: JobCardProps) => {
   return (
     <Card
       className={cn(
-        "rounded-2xl h-max shadow-md hover:shadow-xl transition-all duration-300 border-muted",
+        "rounded-2xl h-max shadow-md hover:shadow-xl transition-all duration-300 border-muted hover:scale-[1.01]",
       )}
     >
       <CardHeader>
