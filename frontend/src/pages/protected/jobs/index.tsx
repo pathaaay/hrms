@@ -18,7 +18,7 @@ export const JobsPage = () => {
           </Button>
         )}
       </div>
-      <div className="grid md:frid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {jobs.map((job) => (
           <JobCard job={job} key={job.id} />
         ))}
