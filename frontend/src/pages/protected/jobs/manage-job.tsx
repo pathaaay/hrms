@@ -16,7 +16,7 @@ export const ManageJob = () => {
     if (isAuthenticated && !canCreateJob) {
       emitGoBack("/jobs");
     }
-  }, [canCreateJob]);
+  }, [isAuthenticated, canCreateJob]);
 
   useEffect(() => {
     if (!open) {
@@ -26,11 +26,10 @@ export const ManageJob = () => {
     }
   }, [open]);
 
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <form>
-        <ManageJobForm jobId={jobId}/>
-      </form>
+        <ManageJobForm jobId={jobId} />
     </Dialog>
   );
 };

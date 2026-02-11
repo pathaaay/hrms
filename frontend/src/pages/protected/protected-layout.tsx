@@ -17,7 +17,7 @@ const ProtectedLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className="w-full">
+      <div className="w-full overflow-x-auto">
         <Navbar />
         <div className="p-3">
           <Outlet />

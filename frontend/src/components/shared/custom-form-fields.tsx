@@ -15,7 +15,7 @@ export type ICustomFormField<T> = {
   key: Path<T>;
   label: string;
   placeholder?: string;
-  type?: "multi-select" | "textarea" | "switch";
+  type?: "multi-select" | "textarea" | "switch" | "number";
   className?: string;
   options?: MultiSelectOption[];
 }[];
@@ -49,6 +49,7 @@ export const CustomFormFields = <T extends FieldValues>({
                 {type === "multi-select" && (
                   <MultiSelect
                     options={options || []}
+                    defaultValue={field.value}
                     onValueChange={(value) => {
                       field.onChange(value);
                     }}
@@ -67,7 +68,7 @@ export const CustomFormFields = <T extends FieldValues>({
                   />
                 )}
 
-                {!type && (
+                {(!type || type === "number") && (
                   <Input
                     {...field}
                     aria-invalid={fieldState.invalid}

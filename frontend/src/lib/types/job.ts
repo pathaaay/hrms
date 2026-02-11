@@ -1,4 +1,3 @@
-import type { IDocument } from "./document";
 import type { IUser } from "./user";
 
 export interface IJob {
@@ -6,7 +5,9 @@ export interface IJob {
   title: string;
   description: string;
   createdBy: IUser;
-  jdDocument: IDocument;
   defaultHrEmail: string;
   createdAt: string;
+  jobReviewers: IUser[];
+  userId: number;
+  jdFilePath:string;
 }

@@ -21,3 +21,8 @@ export const updateJob = async (values: JobSchemaType & { jobId: string }) => {
   });
   return res.data;
 };
+
+export const deleteJob = async (jobId: number) => {
+  const res = await apiService.delete(`${JOBS_ENDPOINT}/${jobId}`);
+  return res.data;
+};

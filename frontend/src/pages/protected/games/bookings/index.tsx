@@ -1,5 +1,5 @@
 import DataTable from "@/components/common/data-table";
-import { DeleteDialog } from "@/components/games/dialog/delete-booking-dialog";
+import { DeleteBookingBtn } from "@/components/games/delete-booking-btn";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,7 @@ const columns: ColumnDef<IGameBooking>[] = [
     header: "#Id",
     accessorKey: "id",
     id: "id",
-    cell: ({ row }) => <div>{row.original.id}</div>,
+    cell: ({ row }) => <div className="pl-2">{row.original.id}</div>,
     enableSorting: false,
     meta: {
       filterVariant: "select",
@@ -152,7 +152,7 @@ const columns: ColumnDef<IGameBooking>[] = [
     accessorKey: "actions",
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <DeleteDialog bookingId={row.original.id} />
+        <DeleteBookingBtn id={row.original.id} />
       </div>
     ),
     meta: {
