@@ -42,7 +42,7 @@ public class JobController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_HR')") // Only HR can deactivate job
-    @PatchMapping("/{jobId}/toggle-activation")
+    @PatchMapping("/{jobId}/toggle")
     public ResponseEntity<ApiResponse> toggleJobActivation(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId) throws BadRequestException {
         jobService.toggleJobActivation(jobId, user);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job toggled successfully", null));
