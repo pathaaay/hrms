@@ -1,12 +1,9 @@
 package com.hrms.backend.dto.request;
 
-import com.hrms.backend.entities.document.Document;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 
@@ -26,4 +23,6 @@ public class JobRequestDTO {
     private Set<Long> reviewerIds;
 
     private Long jdFileId;
+
+    private Boolean isActive;
 }

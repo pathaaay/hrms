@@ -41,6 +41,7 @@ public class JobService {
         response.setDescription(job.getDescription());
         response.setDefaultHrEmail(job.getDefaultHrEmail());
         response.setJdFilePath(job.getJdDocument().getFilePath());
+        response.setIsActive(job.getIsActive());
         return response;
     }
 
@@ -66,6 +67,7 @@ public class JobService {
         job.setDescription(dto.getDescription());
         job.setDefaultHrEmail(dto.getDefaultHrEmail());
         job.setCreatedBy(user);
+        job.setIsActive(dto.getIsActive());
         Document document = documentService.getDocument(dto.getJdFileId());
         job.setJdDocument(document);
         Set<User> reviewers = new HashSet<>(userRepo.findAllById(dto.getReviewerIds()));
@@ -77,19 +79,17 @@ public class JobService {
     public void updateJob(User user, Long jobId, JobRequestDTO dto) throws BadRequestException {
         Job job = jobRepo.findById(jobId).orElseThrow(() -> new BadRequestException("Job not found"));
 
-        log.info("job:{}, user:{}", job.getCreatedBy().getId(), user.getId());
-
         if (Boolean.TRUE.equals(job.getIsDeleted()))
             throw new BadRequestException("Job not found");
 
         if (!user.getId().equals(job.getCreatedBy().getId()))
             throw new BadRequestException("You can only update jobs created by you.");
 
-
         job.setTitle(dto.getTitle());
         job.setDescription(dto.getDescription());
         job.setDefaultHrEmail(dto.getDefaultHrEmail());
         job.setCreatedBy(user);
+        job.setIsActive(dto.getIsActive());
 
         if (dto.getJdFileId() != null) {
             Document document = documentService.getDocument(dto.getJdFileId());
@@ -98,6 +98,20 @@ public class JobService {
         Set<User> reviewers = new HashSet<>(userRepo.findAllById(dto.getReviewerIds()));
         job.setJobReviewers(reviewers);
         job.setIsDeleted(false);
+        jobRepo.save(job);
+    }
+
+    public void toggleJobActivation(Long jobId, User user) throws BadRequestException {
+        Job job = jobRepo.findById(jobId).orElseThrow(() -> new BadRequestException("Job not found"));
+
+        if (Boolean.TRUE.equals(job.getIsDeleted()))
+            throw new BadRequestException("Job not found");
+
+        if (!Objects.equals(user.getId(), job.getCreatedBy().getId()))
+            throw new BadRequestException("You can only toggle jobs created by you.");
+
+        job.setIsActive(!job.getIsActive());
+
         jobRepo.save(job);
     }
 

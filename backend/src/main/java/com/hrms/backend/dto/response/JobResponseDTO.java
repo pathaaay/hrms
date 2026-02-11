@@ -21,4 +21,5 @@ public class JobResponseDTO {
     private String jdFilePath;
     private String defaultHrEmail;
     private Date createdAt;
+    private Boolean isActive;
 }
