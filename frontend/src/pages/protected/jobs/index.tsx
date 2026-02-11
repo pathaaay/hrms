@@ -7,7 +7,7 @@ import { useHasRole } from "@/hooks/user/use-has-role";
 import { NavLink } from "react-router";
 
 export const JobsPage = () => {
-  const { jobs, isLoading } = useJob();
+  const { activeJobs, isLoading } = useJob();
   const canManageJob = useHasRole(["hr"]);
 
   return (
@@ -29,16 +29,16 @@ export const JobsPage = () => {
         </div>
       )}
 
-      {!isLoading && jobs.length === 0 && (
+      {!isLoading && activeJobs.length === 0 && (
         <CustomEmpty
           title="No jobs"
           description="There are no jobs available for now"
         />
       )}
 
-      {jobs.length > 0 && (
+      {activeJobs.length > 0 && (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {jobs.map((job) => (
+          {activeJobs.map((job) => (
             <JobCard job={job} key={job.id} />
           ))}
         </div>
