@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import toast from "react-hot-toast";
-import { createJob, deleteJob, updateJob } from "../actions/job";
+import { createJob, deleteJob, toggleJob, updateJob } from "../actions/job";
 import { queryClient } from "@/lib/tanstack-query/query-client";
 
 export const useCreateJobMutation = () => {
@@ -49,6 +49,23 @@ export const useDeleteJobMutation = () => {
         error?.response?.data.message
           ? "Error: " + error?.response?.data.message
           : "Failed to delete job",
+      );
+    },
+  });
+};
+
+export const useToggleJobMutation = () => {
+  return useMutation({
+    mutationFn: toggleJob,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-jobs"] });
+      toast.success("Job toggled successfully");
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(
+        error?.response?.data.message
+          ? "Error: " + error?.response?.data.message
+          : "Failed to toggle job",
       );
     },
   });
