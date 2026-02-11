@@ -14,6 +14,7 @@ import { NavLink, Outlet } from "react-router";
 let columns: ColumnDef<IJob>[] = [
   {
     accessorKey: "id",
+    id: "id",
     header: ({ column }) => {
       return (
         <Button
@@ -26,11 +27,6 @@ let columns: ColumnDef<IJob>[] = [
       );
     },
     cell: ({ row }) => <div className="pl-2">{row.original.id}</div>,
-    meta: {
-      filterVariant: "select",
-      bindLabel: "",
-      bindValue: "",
-    },
   },
   {
     header: "Title",
@@ -70,7 +66,6 @@ let columns: ColumnDef<IJob>[] = [
         {row.original.defaultHrEmail}
       </div>
     ),
-    enableSorting: false,
   },
   {
     header: "Created By",
@@ -161,12 +156,14 @@ const actionColumn: ColumnDef<IJob> = {
 export const JobsPage = () => {
   useFetchJobs();
   const canManageJob = useHasRole(["hr"]);
-  const { jobs } = useJob();
+  const { jobs, isLoading } = useJob();
 
   let newColumns: ColumnDef<IJob>[] = columns;
   if (canManageJob) {
     newColumns = [...columns, actionColumn];
   }
+
+  if (isLoading) return;
 
   return (
     <div className="flex flex-col gap-3">
