@@ -25,6 +25,5 @@ public class JobRequestDTO {
     @NotEmpty(message = "At least 1 reviewer is required")
     private Set<Long> reviewerIds;
 
-    @NotNull(message = "JD File id is required")
     private Long jdFileId;
 }
