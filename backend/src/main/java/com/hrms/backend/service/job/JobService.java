@@ -8,9 +8,10 @@ import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.job.JobRepo;
 import com.hrms.backend.repository.user.UserRepo;
 import com.hrms.backend.service.document.DocumentService;
+import com.hrms.backend.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -18,16 +19,29 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JobService {
     private final JobRepo jobRepo;
     private final UserRepo userRepo;
-    private final ModelMapper modelMapper;
+    private final UserService userService;
     private final DocumentService documentService;
 
     public JobResponseDTO convertToDTO(Job job) {
-        return modelMapper.map(job, JobResponseDTO.class);
+        JobResponseDTO response = new JobResponseDTO();
+        response.setId(job.getId());
+        response.setDescription(job.getDescription());
+
+        if (userService.hasRole("ROLE_HR")) response.setJobReviewers(job.getJobReviewers());
+
+        response.setTitle(job.getTitle());
+        response.setCreatedBy(job.getCreatedBy());
+        response.setCreatedAt(job.getCreatedAt());
+        response.setDescription(job.getDescription());
+        response.setDefaultHrEmail(job.getDefaultHrEmail());
+        response.setJdFilePath(job.getJdDocument().getFilePath());
+        return response;
     }
 
     public List<JobResponseDTO> convertToDTOList(List<Job> jobs) {
@@ -35,11 +49,16 @@ public class JobService {
     }
 
     public List<JobResponseDTO> getAllJobs() {
-        return convertToDTOList(jobRepo.findByIsDeletedFalse());
+        List<Job> jobs;
+        if (userService.hasRole("ROLE_HR")) {
+            jobs = jobRepo.findAllWithReviewers();
+        } else {
+            jobs = jobRepo.findByIsDeletedFalse();
+        }
+        return convertToDTOList(jobs);
     }
 
     public void createJob(User user, JobRequestDTO dto) throws BadRequestException {
-
         Job job = new Job();
         job.setTitle(dto.getTitle());
         job.setDescription(dto.getDescription());

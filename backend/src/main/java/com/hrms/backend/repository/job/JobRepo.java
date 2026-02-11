@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface JobRepo extends JpaRepository<Job, Long> {
-    @Query("SELECT j, jd from Job j JOIN FETCH j.jdDocument as jd WHERE j.isDeleted <> true")
+    @Query("SELECT j as jdFilePath from Job j WHERE j.isDeleted <> true")
     List<Job> findByIsDeletedFalse();
+
+    @Query("SELECT j as jdFilePath from Job j JOIN FETCH j.jobReviewers WHERE j.isDeleted <> true")
+    List<Job> findAllWithReviewers();
 }
