@@ -91,6 +91,16 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
   });
 
   useEffect(() => {
+    if (!isSuccess) return;
+    handleGoBack();
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (!isUpdateSuccess) return;
+    handleGoBack();
+  }, [isUpdateSuccess]);
+
+  useEffect(() => {
     if (!isPending && users && users?.length > 0) {
       const options = users?.map((user) =>
         createMultiSelectOption(user.userId.toString(), user.name),
@@ -109,16 +119,6 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
   }, [users]);
 
   useEffect(() => {
-    if (!isSuccess) return;
-    handleGoBack();
-  }, [isSuccess]);
-
-  useEffect(() => {
-    if (!isUpdateSuccess) return;
-    handleGoBack();
-  }, [isUpdateSuccess]);
-
-  useEffect(() => {
     if (jobId && !isLoading) {
       const singleJob = jobs.find(({ id }) => id === Number(jobId));
       if (!singleJob) handleGoBack();
@@ -128,6 +128,7 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
         description: singleJob?.description,
         reviewerIds: singleJob?.jobReviewers?.map(({ id }) => String(id)) || [],
         title: singleJob?.title,
+        jdFileId: null,
       });
     }
   }, [jobId, jobs, isLoading]);
@@ -139,19 +140,24 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
   };
 
   const onFormSubmit = async (values: JobSchemaType) => {
-    if (!files || files?.length < 0) {
-      setFileError("File is required");
-      return;
+    if (!jobId) {
+      if (!files || files?.length < 0) {
+        setFileError("File is required");
+        return;
+      }
     }
 
-    const data = await handleUploadAsync(files);
+    let data;
+    if (!jobId || (files && files?.length > 0))
+      data = await handleUploadAsync(files);
 
     if (jobId) {
       const newValue = {
         ...values,
         jobId: jobId,
-        jdFileId: data.id,
       };
+
+      if (data?.id) newValue.jdFileId = data.id;
       handleUpdateJob(newValue);
     } else {
       const newValue = {
@@ -168,50 +174,54 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
         <DialogTitle>Create Job</DialogTitle>
         <DialogDescription hidden></DialogDescription>
       </DialogHeader>
-
-      <ScrollArea className="max-h-[80vh] pr-1">
-        <FieldGroup className="flex items-center flex-col gap-3 px-1.5">
-          <CustomFormFields<JobSchemaType>
-            fieldClass="gap-1"
-            control={form.control}
-            formFields={fields}
-          />
-          <Field data-invalid={fileError} className="gap-1">
-            <FieldLabel htmlFor="picture">JD Document (.pdf)</FieldLabel>
-            <Input
-              onChange={(e) => {
-                setFileError("");
-                setFiles(e.target.files);
-              }}
-              id="picture"
-              type="file"
+      <form
+        onSubmit={form.handleSubmit(onFormSubmit)}
+        className="flex flex-col gap-2"
+      >
+        <ScrollArea className="max-h-[80vh] pr-1">
+          <FieldGroup className="flex items-center flex-col gap-3 px-1.5">
+            <CustomFormFields<JobSchemaType>
+              fieldClass="gap-1"
+              control={form.control}
+              formFields={fields}
             />
-            {fileError && <FieldError>{fileError}</FieldError>}
-          </Field>
-        </FieldGroup>
-      </ScrollArea>
-      <DialogFooter>
-        <DialogClose asChild>
-          <Button variant="outline" size={"sm"}>
-            Cancel
+            <Field data-invalid={fileError} className="gap-1">
+              <FieldLabel htmlFor="picture">JD Document (.pdf)</FieldLabel>
+              <Input
+                onChange={(e) => {
+                  setFileError("");
+                  setFiles(e.target.files);
+                }}
+                id="picture"
+                type="file"
+                accept=".pdf"
+              />
+              {fileError && <FieldError>{fileError}</FieldError>}
+            </Field>
+          </FieldGroup>
+        </ScrollArea>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline" size={"sm"}>
+              Cancel
+            </Button>
+          </DialogClose>
+          <Button
+            type="submit"
+            disabled={
+              isDocumentCreating ||
+              isJobCreating ||
+              isJobUpdating ||
+              (!form.formState.isDirty && !files?.length)
+            }
+            size={"sm"}
+          >
+            {isDocumentCreating || isJobCreating || isJobUpdating
+              ? "Please wait..."
+              : "Save changes"}
           </Button>
-        </DialogClose>
-        <Button
-          onClick={form.handleSubmit(onFormSubmit)}
-          type="submit"
-          disabled={
-            isDocumentCreating ||
-            isJobCreating ||
-            isJobUpdating ||
-            !form.formState.isDirty
-          }
-          size={"sm"}
-        >
-          {isDocumentCreating || isJobCreating || isJobUpdating
-            ? "Please wait..."
-            : "Save changes"}
-        </Button>
-      </DialogFooter>
+        </DialogFooter>
+      </form>
     </DialogContent>
   );
 };

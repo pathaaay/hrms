@@ -1,4 +1,3 @@
-import { useDeleteGameSlotMutation } from "@/api/mutations/game";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,16 +10,27 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import { Trash2Icon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { Button } from "../ui/button";
 
-export function DeleteDialog({ bookingId }: Readonly<{ bookingId: number }>) {
-  const {
-    mutate: handleDelete,
-    isPending,
-    isSuccess,
-  } = useDeleteGameSlotMutation();
+interface DeleteDialogProps {
+  trigger?: ReactNode;
+  title: string;
+  description: string;
+  isPending: boolean;
+  onDelete: () => void;
+  isSuccess: boolean;
+}
+
+export const DeleteDialog = ({
+  trigger,
+  title,
+  description,
+  onDelete,
+  isPending,
+  isSuccess,
+}: DeleteDialogProps) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -30,24 +40,19 @@ export function DeleteDialog({ bookingId }: Readonly<{ bookingId: number }>) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button
-          variant="destructive"
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          <Trash2Icon />
-        </Button>
+        {trigger || (
+          <Button variant="destructive">
+            <Trash2Icon />
+          </Button>
+        )}
       </AlertDialogTrigger>
       <AlertDialogContent size="sm">
         <AlertDialogHeader>
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
             <Trash2Icon />
           </AlertDialogMedia>
-          <AlertDialogTitle>Delete Booking?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Are you sure you want to delete the booking ?
-          </AlertDialogDescription>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
@@ -55,7 +60,7 @@ export function DeleteDialog({ bookingId }: Readonly<{ bookingId: number }>) {
             variant="destructive"
             onClick={(e) => {
               e.preventDefault();
-              handleDelete(bookingId);
+              onDelete();
             }}
             disabled={isPending}
           >
@@ -65,4 +70,4 @@ export function DeleteDialog({ bookingId }: Readonly<{ bookingId: number }>) {
       </AlertDialogContent>
     </AlertDialog>
   );
-}
+};

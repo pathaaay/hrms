@@ -12,10 +12,10 @@ import type {
 import {
   flexRender,
   getCoreRowModel,
-  getFacetedMinMaxValues,
   getFacetedRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -79,15 +79,15 @@ const DataTable = <T,>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
-    enableSortingRemoval: false,
   });
 
   return (
     <div className="w-full">
       <div className="rounded-md border">
         {filterColumns && (
-          <div className="flex flex-wrap gap-3 px-2 py-6">
+          <div className="flex flex-wrap gap-3 px-4 py-6">
             {filterColumns.map((name: string) => (
               <div key={name} className="min-w-44">
                 <Filter column={table.getColumn(name)!} />
@@ -146,12 +146,30 @@ const DataTable = <T,>({
             )}
           </TableBody>
         </Table>
+        <div className="flex items-center justify-end space-x-2 p-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
 
-function Filter({ column }: { column: Column<any, unknown> }) {
+function Filter({ column }: { readonly column: Column<any, unknown> }) {
   const id = useId();
   const [open, setOpen] = useState(false);
   const columnFilterValue = column.getFilterValue();
@@ -159,6 +177,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
   const { filterLabels } = column.columnDef.meta ?? {};
   const columnHeader =
     typeof column.columnDef.header === "string" ? column.columnDef.header : "";
+
   const sortedUniqueValues = useMemo(() => {
     const values = Array.from(column.getFacetedUniqueValues().keys());
     const flattenedValues = values.reduce((acc: string[], curr) => {
@@ -170,7 +189,6 @@ function Filter({ column }: { column: Column<any, unknown> }) {
     }, []);
 
     return Array.from(new Set(flattenedValues)).sort();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [column.getFacetedUniqueValues(), filterVariant]);
 
   if (filterVariant === "select") {
@@ -198,7 +216,6 @@ function Filter({ column }: { column: Column<any, unknown> }) {
       </div>
     );
   }
-
   if (filterVariant === "calendar") {
     return (
       <div className="*:not-first:mt-2">
@@ -208,13 +225,15 @@ function Filter({ column }: { column: Column<any, unknown> }) {
             <Button
               variant="outline"
               data-empty={!columnFilterValue}
-              className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
+              className="data-[empty=true]:text-muted-foreground w-50 justify-start text-left font-normal"
             >
               <CalendarIcon />
               {columnFilterValue ? (
                 format(new Date(columnFilterValue.toString()), "yyyy-MM-dd")
               ) : (
-                <span>Pick a date</span>
+                <span>
+                  {column?.columnDef?.header?.toString() || "Pick a date"}
+                </span>
               )}
             </Button>
           </PopoverTrigger>
@@ -246,7 +265,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
           className="peer pl-9"
           value={(columnFilterValue ?? "") as string}
           onChange={(e) => column.setFilterValue(e.target.value)}
-          placeholder={`Search ${columnHeader.toLowerCase()}`}
+          placeholder={`Search by ${columnHeader.toLowerCase()}`}
           type="text"
         />
         <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 peer-disabled:opacity-50">
