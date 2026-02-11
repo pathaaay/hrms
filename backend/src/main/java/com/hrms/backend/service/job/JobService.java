@@ -35,7 +35,6 @@ public class JobService {
         return response;
     }
 
-
     public List<JobResponseDTO> convertToDTOList(List<Job> jobs) {
         return jobs.stream().map(this::convertToDTO).toList();
     }
@@ -90,19 +89,14 @@ public class JobService {
 
     @Transactional
     public void updateJob(User user, Long jobId, JobRequestDTO dto) throws BadRequestException {
-
         Job old = findById(jobId);
-
         if (!user.getId().equals(old.getCreatedBy().getId()))
             throw new BadRequestException("You cannot update this job.");
-
         Job job = convertToEntity(dto);
         job.setCreatedBy(user);
         job.setId(old.getId());
-
         Set<User> reviewers = userService.findAllById(dto.getReviewerIds());
         job.setJobReviewers(reviewers);
-
         if (dto.getJdFileId() != null) {
             Document document = documentService.getDocument(dto.getJdFileId());
             job.setJdDocument(document);
@@ -111,27 +105,12 @@ public class JobService {
     }
 
     public void toggleJobActivation(Long jobId, User user) throws BadRequestException {
-        Job job = findById(jobId);
-
-        if (!Objects.equals(user.getId(), job.getCreatedBy().getId()))
-            throw new BadRequestException("You can only toggle jobs created by you.");
-
-        job.setIsActive(!job.getIsActive());
-
-        jobRepo.save(job);
+        int toggled = jobRepo.toggleJob(user.getId(), jobId);
+        if (toggled == 0) throw new BadRequestException("Failed to toggle job");
     }
 
     public void deleteJob(Long jobId, User user) throws BadRequestException {
-        Job job = findById(jobId);
-
-        if (!Objects.equals(user.getId(), job.getCreatedBy().getId()))
-            throw new BadRequestException("You can only delete jobs created by you.");
-
-        job.setIsDeleted(true);
-        jobRepo.save(job);
-    }
-
-    public void referJobToEmails(Long jobId, User user) throws BadRequestException {
-        Job job = findById(jobId, true);
+        int deleted = jobRepo.deleteJob(user.getId(), jobId);
+        if (deleted == 0) throw new BadRequestException("Failed to delete job");
     }
 }
