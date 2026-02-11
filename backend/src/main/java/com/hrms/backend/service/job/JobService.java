@@ -59,6 +59,8 @@ public class JobService {
     }
 
     public void createJob(User user, JobRequestDTO dto) throws BadRequestException {
+        if (dto.getJdFileId() == null) throw new BadRequestException("JD Document is required");
+
         Job job = new Job();
         job.setTitle(dto.getTitle());
         job.setDescription(dto.getDescription());
@@ -74,17 +76,25 @@ public class JobService {
 
     public void updateJob(User user, Long jobId, JobRequestDTO dto) throws BadRequestException {
         Job job = jobRepo.findById(jobId).orElseThrow(() -> new BadRequestException("Job not found"));
-        if (!Objects.equals(user.getId(), job.getCreatedBy().getId()))
-            throw new BadRequestException("You can only update jobs created by you.");
+
+        log.info("job:{}, user:{}", job.getCreatedBy().getId(), user.getId());
+
         if (Boolean.TRUE.equals(job.getIsDeleted()))
             throw new BadRequestException("Job not found");
+
+        if (!user.getId().equals(job.getCreatedBy().getId()))
+            throw new BadRequestException("You can only update jobs created by you.");
+
 
         job.setTitle(dto.getTitle());
         job.setDescription(dto.getDescription());
         job.setDefaultHrEmail(dto.getDefaultHrEmail());
         job.setCreatedBy(user);
-        Document document = documentService.getDocument(dto.getJdFileId());
-        job.setJdDocument(document);
+
+        if (dto.getJdFileId() != null) {
+            Document document = documentService.getDocument(dto.getJdFileId());
+            job.setJdDocument(document);
+        }
         Set<User> reviewers = new HashSet<>(userRepo.findAllById(dto.getReviewerIds()));
         job.setJobReviewers(reviewers);
         job.setIsDeleted(false);
