@@ -41,9 +41,16 @@ public class JobController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job updated successfully", null));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_HR')") // Only HR can deactivate job
+    @PatchMapping("/{jobId}/toggle-activation")
+    public ResponseEntity<ApiResponse> toggleJobActivation(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId) throws BadRequestException {
+        jobService.toggleJobActivation(jobId, user);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job toggled successfully", null));
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_HR')") // Only HR can delete a job
     @DeleteMapping("/{jobId}")
-    public ResponseEntity<ApiResponse> updateJob(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId) throws BadRequestException {
+    public ResponseEntity<ApiResponse> deleteJob(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId) throws BadRequestException {
         jobService.deleteJob(jobId, user);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job deleted successfully", null));
     }

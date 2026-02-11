@@ -48,4 +48,8 @@ public class Job {
             joinColumns = @JoinColumn(name = "job_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> jobReviewers;
+
+    @Column(name = "is_active")
+    @ColumnDefault("1")
+    private Boolean isActive;
 }
