@@ -1,15 +1,15 @@
 import { getAllJobs } from "@/api/actions/job";
-import type { IGame } from "@/lib/types/game";
 import { setJobs } from "@/store/slices/job-slice";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useUser } from "../user/use-user";
+import type { IJob } from "@/lib/types/job";
 
 export const useFetchJobs = () => {
   const dispatch = useDispatch();
   const { userProfile } = useUser();
-  const { data: jobs } = useQuery<IGame[]>({
+  const { data: jobs } = useQuery<IJob[]>({
     queryKey: ["all-jobs"],
     queryFn: getAllJobs,
   });
@@ -20,7 +20,7 @@ export const useFetchJobs = () => {
         ...job,
         userId: userProfile?.userId,
       }));
-      dispatch(setJobs([payload]));
+      dispatch(setJobs(payload));
     }
   }, [jobs, dispatch]);
 };

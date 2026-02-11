@@ -16,8 +16,8 @@ export const jobSlice = createSlice({
   initialState,
   reducers: {
     setJobs(state, { payload }) {
-      state.isLoading = false;
       state.jobs = payload;
+      state.isLoading = false;
     },
   },
 });
