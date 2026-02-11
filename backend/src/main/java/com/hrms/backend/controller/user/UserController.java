@@ -33,8 +33,8 @@ public class UserController {
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<UserProfileResponseDTO>>> getAllUsers(@RequestParam(required = false) Long gameId) {
         if (gameId != null)
-            return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userService.getAllUsers()));
-        return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userService.getAllUsersByGameId(gameId)));
+            return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userService.getAllUsersByGameId(gameId)));
+        return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userService.getAllUsers()));
     }
 
     @PostMapping("/update-games")

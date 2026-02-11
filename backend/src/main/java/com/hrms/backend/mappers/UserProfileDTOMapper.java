@@ -8,7 +8,7 @@ public class UserProfileDTOMapper {
     private UserProfileDTOMapper() {
     }
 
-    public static UserProfileResponseDTO convertToDto(UserProfile profile) {
+    public UserProfileResponseDTO convertToDTO(UserProfile profile) {
         UserProfileResponseDTO dto = new UserProfileResponseDTO();
 
         dto.setName(profile.getUser().getName());

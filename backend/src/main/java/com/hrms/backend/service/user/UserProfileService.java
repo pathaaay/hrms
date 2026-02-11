@@ -25,18 +25,16 @@ public class UserProfileService {
     private final GameService gameService;
     private final ModelMapper modelMapper;
     private final UserProfileRepo userProfileRepo;
+    private final UserProfileDTOMapper userProfileDTOMapper;
 
-    public UserProfileResponseDTO convertToDTO(UserProfile user) {
-        return modelMapper.map(user, UserProfileResponseDTO.class);
-    }
 
     public List<UserProfileResponseDTO> convertToDTOList(List<UserProfile> users) {
-        return users.stream().map(this::convertToDTO).toList();
+        return users.stream().map(userProfileDTOMapper::convertToDTO).toList();
     }
 
     public UserProfileResponseDTO getUserProfile(User user) throws BadRequestException {
         UserProfile profile = userProfileRepo.findByUserId(user.getId()).orElseThrow(() -> new BadRequestException("User not exists"));
-        return UserProfileDTOMapper.convertToDto(profile);
+        return userProfileDTOMapper.convertToDTO(profile);
     }
 
     public List<UserProfileResponseDTO> getAllUsers() {
