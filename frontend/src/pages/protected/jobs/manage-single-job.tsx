@@ -6,7 +6,7 @@ import { emitGoBack } from "@/lib/helpers/events/go-back-event";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
-export const ManageJob = () => {
+export const ManageSingleJob = () => {
   const canCreateJob = useHasRole(["hr"]);
   const { isAuthenticated } = useUser();
   const [open, setOpen] = useState(true);

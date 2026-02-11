@@ -14,7 +14,9 @@ import { GameLayout } from "@/pages/protected/games/game-layout";
 import { SingleGamePage } from "@/pages/protected/games/single-game";
 import BookGame from "@/pages/protected/games/single-game/book-game";
 import { UserGameBookingPage } from "@/pages/protected/games/bookings";
-import { ManageJob } from "@/pages/protected/jobs/manage-job";
+import { ManageAllJobsPage } from "@/pages/protected/jobs/manage-all-jobs";
+import { ManageSingleJob } from "@/pages/protected/jobs/manage-single-job";
+import { JobLayout } from "@/pages/protected/jobs/job-layout";
 
 export const appRouter = createBrowserRouter([
   {
@@ -62,15 +64,25 @@ export const appRouter = createBrowserRouter([
           },
           {
             path: "jobs",
-            element: <JobsPage />,
+            element: <JobLayout />,
             children: [
               {
-                path: "create",
-                element: <ManageJob />,
+                index: true,
+                element: <JobsPage />,
               },
               {
-                path: "update/:jobId",
-                element: <ManageJob />,
+                path: "manage",
+                element: <ManageAllJobsPage />,
+                children: [
+                  {
+                    path: "create",
+                    element: <ManageSingleJob />,
+                  },
+                  {
+                    path: "update/:jobId",
+                    element: <ManageSingleJob />,
+                  },
+                ],
               },
             ],
           },
