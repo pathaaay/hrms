@@ -57,6 +57,12 @@ const formFields: ICustomFormField<JobSchemaType> = [
     type: "multi-select",
     options: [],
   },
+  {
+    label: "Active",
+    key: "isActive",
+    type: "switch",
+    className: "border my-1 p-2 rounded-md",
+  },
 ];
 
 export const ManageJobForm = ({ jobId }: { jobId?: string }) => {

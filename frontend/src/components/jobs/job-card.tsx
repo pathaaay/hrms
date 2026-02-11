@@ -12,7 +12,6 @@ import {
   FileTextIcon,
   LinkIcon,
   UserIcon,
-  UsersIcon,
 } from "lucide-react";
 import { NavLink } from "react-router";
 import { CardContentRow } from "../shared/card-content-row";
@@ -35,7 +34,7 @@ export const JobCard = ({ job }: JobCardProps) => {
       userProfile?.name?.slice(0, 2) +
       userProfile?.email?.slice(0, 2);
 
-  const referLink = globalThis.window.location.href + `/apply?code=${code}`;
+  const referLink = `${globalThis.window.location.href}/${job.id}/apply?code=${code}`;
 
   return (
     <Card

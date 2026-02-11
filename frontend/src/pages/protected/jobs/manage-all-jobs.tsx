@@ -1,12 +1,14 @@
+import { useToggleJobMutation } from "@/api/mutations/job";
 import DataTable from "@/components/common/data-table";
 import { DeleteJobBtn } from "@/components/jobs/delete-job-btn";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
 import { Button } from "@/components/ui/button";
-import { useFetchJobs } from "@/hooks/job/use-fetch-jobs";
+import { Switch } from "@/components/ui/switch";
 import { useJob } from "@/hooks/job/use-job";
 import { useHasRole } from "@/hooks/user/use-has-role";
 import { useUser } from "@/hooks/user/use-user";
 import { ENV } from "@/lib/ENV";
+import { emitGoBack } from "@/lib/helpers/events/go-back-event";
 import type { IJob } from "@/lib/types/job";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
@@ -69,18 +71,19 @@ let columns: ColumnDef<IJob>[] = [
       </div>
     ),
   },
-  // {
-  //   header: "Is Active",
-  //   accessorKey: "isActive",
-  //   id: "isActive",
-  //   cell: ({ row }) => (
-  //     <div className="flex text-xs flex-col text-muted-foreground">
-  //       <span className="text-accent-foreground">
-  //         {/* {row.original?.isActive} */}
-  //       </span>
-  //     </div>
-  //   ),
-  // },
+  {
+    header: "Active",
+    accessorKey: "isActive",
+    id: "isActive",
+    cell: ({ row }) => (
+      <div className="flex text-xs flex-col text-muted-foreground">
+        <ToggleJobSwitch
+          jobId={row.original.id}
+          value={row.original.isActive}
+        />
+      </div>
+    ),
+  },
   {
     header: "JD Document",
     accessorKey: "JD",
@@ -154,17 +157,18 @@ export const ManageAllJobsPage = () => {
   );
 
   if (isLoading) return;
+
+  if (!canManageJob) emitGoBack("/jobs");
+
   return (
     <div className="flex flex-col items-center gap-2 relative">
       <GoBackBtn to={"/jobs"} />
       <div className="flex flex-col gap-3 w-full mt-20">
         <div className="flex items-center justify-between">
           <div className="text-xl font-medium">Jobs</div>
-          {canManageJob && (
-            <Button variant={"secondary"} asChild>
-              <NavLink to={"create"}>Create Job</NavLink>
-            </Button>
-          )}
+          <Button variant={"secondary"} asChild>
+            <NavLink to={"create"}>Create Job</NavLink>
+          </Button>
         </div>
         <div className="flex items-center">
           {/* Job table here */}
@@ -178,4 +182,15 @@ export const ManageAllJobsPage = () => {
       </div>
     </div>
   );
+};
+
+const ToggleJobSwitch = ({
+  jobId,
+  value,
+}: {
+  jobId: number;
+  value: boolean;
+}) => {
+  const { mutate: toggleJob } = useToggleJobMutation();
+  return <Switch checked={value} onCheckedChange={() => toggleJob(jobId)} />;
 };

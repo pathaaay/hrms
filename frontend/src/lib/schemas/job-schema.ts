@@ -8,6 +8,7 @@ export const JobSchema = z.object({
   jdFileId: z.number().nullable(),
   description: z.string().nonempty({ error: "Job description is required" }),
   title: z.string().nonempty({ error: "Job title is required" }),
+  isActive: z.boolean(),
 });
 
 export type JobSchemaType = z.infer<typeof JobSchema>;
