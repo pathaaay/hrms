@@ -9,5 +9,6 @@ export interface IJob {
   createdAt: string;
   jobReviewers: IUser[];
   userId: number;
-  jdFilePath:string;
+  jdFilePath: string;
+  isActive: boolean;
 }
