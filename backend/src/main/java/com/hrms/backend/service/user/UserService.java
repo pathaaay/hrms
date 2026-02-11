@@ -12,8 +12,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +57,11 @@ public class UserService {
         Set<Game> games = new HashSet<>(gameRepo.findAllById(dto.getGameIds()));
         profile.setInterestedGames(games);
         userProfileRepo.save(profile);
+    }
+
+    public boolean hasRole(String roleName) {
+        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        return authorities.stream().anyMatch(authority -> authority.getAuthority().equals(roleName));
     }
 
 
