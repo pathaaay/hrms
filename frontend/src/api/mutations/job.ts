@@ -8,6 +8,7 @@ export const useCreateJobMutation = () => {
   return useMutation({
     mutationFn: createJob,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-jobs"] });
       toast.success("Job created successfullu");
     },
     onError: (error: AxiosError<{ message: string }>) => {
