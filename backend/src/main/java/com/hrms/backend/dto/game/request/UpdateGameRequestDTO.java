@@ -1,4 +1,4 @@
-package com.hrms.backend.dto.request;
+package com.hrms.backend.dto.game.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

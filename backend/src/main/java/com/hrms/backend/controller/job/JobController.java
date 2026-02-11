@@ -1,7 +1,7 @@
 package com.hrms.backend.controller.job;
 
-import com.hrms.backend.dto.request.JobRequestDTO;
-import com.hrms.backend.dto.response.JobResponseDTO;
+import com.hrms.backend.dto.job.request.JobRequestDTO;
+import com.hrms.backend.dto.job.response.JobResponseDTO;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.service.job.JobService;
 import com.hrms.backend.utilities.ApiResponse;
@@ -53,5 +53,11 @@ public class JobController {
     public ResponseEntity<ApiResponse> deleteJob(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId) throws BadRequestException {
         jobService.deleteJob(jobId, user);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job deleted successfully", null));
+    }
+
+    @PostMapping("/{jobId}/refer-emails")
+    public ResponseEntity<ApiResponse> referByEmails(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId) throws BadRequestException {
+        jobService.referJobToEmails(jobId, user);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job referred to emails successfully", null));
     }
 }

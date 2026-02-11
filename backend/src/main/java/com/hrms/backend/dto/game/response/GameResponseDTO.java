@@ -1,4 +1,4 @@
-package com.hrms.backend.dto.response;
+package com.hrms.backend.dto.game.response;
 
 import lombok.Getter;
 import lombok.Setter;

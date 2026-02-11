@@ -1,4 +1,4 @@
-package com.hrms.backend.dto.response;
+package com.hrms.backend.dto.job.response;
 
 import com.hrms.backend.entities.user.User;
 import lombok.Getter;

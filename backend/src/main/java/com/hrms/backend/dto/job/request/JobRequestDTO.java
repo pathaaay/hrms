@@ -1,7 +1,6 @@
-package com.hrms.backend.dto.request;
+package com.hrms.backend.dto.job.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +18,6 @@ public class JobRequestDTO {
     @NotBlank(message = "Default HR email is required")
     private String defaultHrEmail;
 
-    @NotEmpty(message = "At least 1 reviewer is required")
     private Set<Long> reviewerIds;
 
     private Long jdFileId;

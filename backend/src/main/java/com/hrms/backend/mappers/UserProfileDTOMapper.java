@@ -1,6 +1,6 @@
 package com.hrms.backend.mappers;
 
-import com.hrms.backend.dto.response.UserProfileResponseDTO;
+import com.hrms.backend.dto.user.response.UserProfileResponseDTO;
 import com.hrms.backend.entities.user.UserProfile;
 
 public class UserProfileDTOMapper {
@@ -25,8 +25,7 @@ public class UserProfileDTOMapper {
         dto.setCity(profile.getCity().getName());
         dto.setState(profile.getCity().getState().getName());
         dto.setCountry(profile.getCity().getState().getCountry().getName());
-
-
+        
         return dto;
     }
 }
