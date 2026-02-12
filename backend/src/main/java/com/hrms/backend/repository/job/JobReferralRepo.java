@@ -16,9 +16,4 @@ public interface JobReferralRepo extends JpaRepository<JobReferral, Long> {
 
     @Query(value = "SELECT jr from JobReferral jr JOIN jr.job.jobReviewers jrv WHERE jr.job.isActive=true AND jr.isDeleted=false AND jrv.id=:id")
     List<JobReferral> findAssignedJobReferrals(@Param("id") Long id);
-
-    @Modifying
-    @Transactional
-    @Query("UPDATE JobReferral jr SET jr.status= :status where jr.id=:id")
-    int updateStatus(@Param("id") Long id, @Param("status") JobReferralReviewStatus status);
 }

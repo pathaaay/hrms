@@ -1,4 +1,4 @@
-package com.hrms.backend.service.job;
+package com.hrms.backend.service.job.referral;
 
 import com.hrms.backend.entities.jobs.referral.JobReferralReviewStatus;
 import com.hrms.backend.entities.jobs.referral.ReferralReviewStatus;

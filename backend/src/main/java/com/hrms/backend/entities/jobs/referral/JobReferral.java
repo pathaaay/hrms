@@ -50,10 +50,4 @@ public class JobReferral {
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "referral_status_logs",
-            joinColumns = @JoinColumn(name = "referral_id"),
-            inverseJoinColumns = @JoinColumn(name = "status_id"))
-    private Set<JobReferralReviewStatus> jobReferralReviewStatuses;
 }

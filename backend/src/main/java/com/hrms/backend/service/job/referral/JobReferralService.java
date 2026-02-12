@@ -1,4 +1,4 @@
-package com.hrms.backend.service.job;
+package com.hrms.backend.service.job.referral;
 
 import com.hrms.backend.dto.job.request.JobReferralEmailRequestDTO;
 import com.hrms.backend.dto.job.request.JobReferralRequestDTO;
@@ -11,6 +11,7 @@ import com.hrms.backend.entities.jobs.referral.ReferralReviewStatus;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.job.JobReferralRepo;
 import com.hrms.backend.service.document.DocumentService;
+import com.hrms.backend.service.job.JobService;
 import com.hrms.backend.service.mail.MailService;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
@@ -33,6 +34,7 @@ public class JobReferralService {
     private final JobReferralRepo jobReferralRepo;
     private final DocumentService documentService;
     private final JobReviewStatusService jobReviewStatusService;
+    private final JobReferralStatusLogService jobReferralStatusLogService;
 
 
     private JobReferral convertToEntity(User user, String email, Job job) {
@@ -70,10 +72,13 @@ public class JobReferralService {
     }
 
     @Transactional
-    public void changeStatus(Long referralId, User user, ReferralReviewStatus value) {
-        JobReferralReviewStatus status = jobReviewStatusService.findStatusByName(value);
-        log.info("status {}",status.getName());
-        jobReferralRepo.updateStatus(referralId, status);
+    public void changeStatus(Long referralId, User user, ReferralReviewStatus value) throws BadRequestException {
+        JobReferral referral = jobReferralRepo.findById(referralId).orElseThrow(() -> new BadRequestException("Referral not found"));
+        JobReferralReviewStatus oldStatus = referral.getStatus();
+        JobReferralReviewStatus newStatus = jobReviewStatusService.findStatusByName(value);
+        referral.setStatus(newStatus);
+        jobReferralRepo.save(referral);
+        jobReferralStatusLogService.changeStatus(referral, user, oldStatus, newStatus);
     }
 
     @Transactional

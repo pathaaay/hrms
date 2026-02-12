@@ -1903,13 +1903,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/referrals/review-referrals",
+              "raw": "{{base_url}}/referrals/review",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "referrals",
-                "review-referrals"
+                "review"
               ]
             }
           },
@@ -2005,13 +2005,13 @@
             "method": "PATCH",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/referrals/7/change-status?status=IN_REVIEW",
+              "raw": "{{base_url}}/referrals/8/change-status?status=IN_REVIEW",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "referrals",
-                "7",
+                "8",
                 "change-status"
               ],
               "query": [
