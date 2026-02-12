@@ -31,11 +31,16 @@ public class MailService {
         Resource file = fileService.getFile(document.getFilePath());
         if (!file.exists()) throw new BadRequestException("File not found");
 
+        String fileName = document.getFilePath();
+        if (document.getFileOriginalName() != null) {
+            fileName = document.getFileOriginalName();
+        }
+
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(to);
         helper.setFrom("Aayush Pathak <aayush.pathak@roimaint.com>");
-        helper.addAttachment(document.getFileOriginalName(), file);
+        helper.addAttachment(fileName, file);
         helper.setSubject(subject);
         helper.setText(body, true);
         mailSender.send(message);
