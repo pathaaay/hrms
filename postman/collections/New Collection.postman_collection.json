@@ -16,7 +16,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"aayush.pathak@roimaint.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"jhar26960@gmail.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1790,6 +1790,333 @@
         }
       ],
       "id": "83b48c42-c4d2-4518-b14d-cac45a45a17d"
+    },
+    {
+      "name": "Referrals",
+      "item": [
+        {
+          "name": "get referrals",
+          "id": "f86564b7-d894-4fba-b27f-b2efc3c1079b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/referrals/my-referrals",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "referrals",
+                "my-referrals"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0b4302a6-d825-443a-ad88-fd203b979956",
+              "name": "get referrals",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/jobs/my-referrals",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "jobs",
+                    "my-referrals"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 12 Feb 2026 13:45:19 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-12T13:50:26.355Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Referrals get successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"email\": \"\",\n            \"job\": {\n                \"id\": 12,\n                \"title\": \"new job\",\n                \"description\": \"new job desc\",\n                \"createdBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                },\n                \"jdDocument\": {\n                    \"id\": 24,\n                    \"fileType\": \"application/pdf\",\n                    \"fileOriginalName\": null,\n                    \"filePath\": \"12341650-7b6c-4897-a3a0-c88df5007140HRMS_Internship_Assignment.pdf\",\n                    \"uploadedBy\": {\n                        \"id\": 3,\n                        \"name\": \"HR\",\n                        \"email\": \"jhar26960@gmail.com\",\n                        \"role\": {\n                            \"id\": 1,\n                            \"name\": \"hr\"\n                        }\n                    }\n                },\n                \"defaultHrEmail\": \"hr@gmail.com\",\n                \"createdAt\": \"2026-02-10T18:30:00.000+00:00\",\n                \"jobReviewers\": [\n                    {\n                        \"id\": 7,\n                        \"name\": \"CEO\",\n                        \"email\": \"ayush010pathak@gmail.com\",\n                        \"role\": {\n                            \"id\": 2,\n                            \"name\": \"manager\"\n                        }\n                    }\n                ],\n                \"isActive\": true\n            },\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"4d3b1ad6-825b-4383-81d3-5ce1e6451a8aHRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:13:20.984+00:00\"\n        },\n        {\n            \"id\": 2,\n            \"email\": \"\",\n            \"job\": {\n                \"id\": 12,\n                \"title\": \"new job\",\n                \"description\": \"new job desc\",\n                \"createdBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                },\n                \"jdDocument\": {\n                    \"id\": 24,\n                    \"fileType\": \"application/pdf\",\n                    \"fileOriginalName\": null,\n                    \"filePath\": \"12341650-7b6c-4897-a3a0-c88df5007140HRMS_Internship_Assignment.pdf\",\n                    \"uploadedBy\": {\n                        \"id\": 3,\n                        \"name\": \"HR\",\n                        \"email\": \"jhar26960@gmail.com\",\n                        \"role\": {\n                            \"id\": 1,\n                            \"name\": \"hr\"\n                        }\n                    }\n                },\n                \"defaultHrEmail\": \"hr@gmail.com\",\n                \"createdAt\": \"2026-02-10T18:30:00.000+00:00\",\n                \"jobReviewers\": [\n                    {\n                        \"id\": 7,\n                        \"name\": \"CEO\",\n                        \"email\": \"ayush010pathak@gmail.com\",\n                        \"role\": {\n                            \"id\": 2,\n                            \"name\": \"manager\"\n                        }\n                    }\n                ],\n                \"isActive\": true\n            },\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"06904095-b4a7-4f07-9dbe-625d169c6a16HRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:16:39.122+00:00\"\n        },\n        {\n            \"id\": 3,\n            \"email\": \"\",\n            \"job\": {\n                \"id\": 12,\n                \"title\": \"new job\",\n                \"description\": \"new job desc\",\n                \"createdBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                },\n                \"jdDocument\": {\n                    \"id\": 24,\n                    \"fileType\": \"application/pdf\",\n                    \"fileOriginalName\": null,\n                    \"filePath\": \"12341650-7b6c-4897-a3a0-c88df5007140HRMS_Internship_Assignment.pdf\",\n                    \"uploadedBy\": {\n                        \"id\": 3,\n                        \"name\": \"HR\",\n                        \"email\": \"jhar26960@gmail.com\",\n                        \"role\": {\n                            \"id\": 1,\n                            \"name\": \"hr\"\n                        }\n                    }\n                },\n                \"defaultHrEmail\": \"hr@gmail.com\",\n                \"createdAt\": \"2026-02-10T18:30:00.000+00:00\",\n                \"jobReviewers\": [\n                    {\n                        \"id\": 7,\n                        \"name\": \"CEO\",\n                        \"email\": \"ayush010pathak@gmail.com\",\n                        \"role\": {\n                            \"id\": 2,\n                            \"name\": \"manager\"\n                        }\n                    }\n                ],\n                \"isActive\": true\n            },\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"714cf081-9ab6-4733-ac08-15825453eec1HRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:16:49.390+00:00\"\n        },\n        {\n            \"id\": 4,\n            \"email\": \"\",\n            \"job\": {\n                \"id\": 12,\n                \"title\": \"new job\",\n                \"description\": \"new job desc\",\n                \"createdBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                },\n                \"jdDocument\": {\n                    \"id\": 24,\n                    \"fileType\": \"application/pdf\",\n                    \"fileOriginalName\": null,\n                    \"filePath\": \"12341650-7b6c-4897-a3a0-c88df5007140HRMS_Internship_Assignment.pdf\",\n                    \"uploadedBy\": {\n                        \"id\": 3,\n                        \"name\": \"HR\",\n                        \"email\": \"jhar26960@gmail.com\",\n                        \"role\": {\n                            \"id\": 1,\n                            \"name\": \"hr\"\n                        }\n                    }\n                },\n                \"defaultHrEmail\": \"hr@gmail.com\",\n                \"createdAt\": \"2026-02-10T18:30:00.000+00:00\",\n                \"jobReviewers\": [\n                    {\n                        \"id\": 7,\n                        \"name\": \"CEO\",\n                        \"email\": \"ayush010pathak@gmail.com\",\n                        \"role\": {\n                            \"id\": 2,\n                            \"name\": \"manager\"\n                        }\n                    }\n                ],\n                \"isActive\": true\n            },\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"38897663-e232-42a4-a7e5-1b5239aee0a9HRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:16:51.187+00:00\"\n        },\n        {\n            \"id\": 5,\n            \"email\": \"\",\n            \"job\": {\n                \"id\": 12,\n                \"title\": \"new job\",\n                \"description\": \"new job desc\",\n                \"createdBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                },\n                \"jdDocument\": {\n                    \"id\": 24,\n                    \"fileType\": \"application/pdf\",\n                    \"fileOriginalName\": null,\n                    \"filePath\": \"12341650-7b6c-4897-a3a0-c88df5007140HRMS_Internship_Assignment.pdf\",\n                    \"uploadedBy\": {\n                        \"id\": 3,\n                        \"name\": \"HR\",\n                        \"email\": \"jhar26960@gmail.com\",\n                        \"role\": {\n                            \"id\": 1,\n                            \"name\": \"hr\"\n                        }\n                    }\n                },\n                \"defaultHrEmail\": \"hr@gmail.com\",\n                \"createdAt\": \"2026-02-10T18:30:00.000+00:00\",\n                \"jobReviewers\": [\n                    {\n                        \"id\": 7,\n                        \"name\": \"CEO\",\n                        \"email\": \"ayush010pathak@gmail.com\",\n                        \"role\": {\n                            \"id\": 2,\n                            \"name\": \"manager\"\n                        }\n                    }\n                ],\n                \"isActive\": true\n            },\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"80193365-a8ae-411a-a7c6-8c7281952982HRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:16:51.889+00:00\"\n        },\n        {\n            \"id\": 6,\n            \"email\": \"\",\n            \"job\": {\n                \"id\": 12,\n                \"title\": \"new job\",\n                \"description\": \"new job desc\",\n                \"createdBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                },\n                \"jdDocument\": {\n                    \"id\": 24,\n                    \"fileType\": \"application/pdf\",\n                    \"fileOriginalName\": null,\n                    \"filePath\": \"12341650-7b6c-4897-a3a0-c88df5007140HRMS_Internship_Assignment.pdf\",\n                    \"uploadedBy\": {\n                        \"id\": 3,\n                        \"name\": \"HR\",\n                        \"email\": \"jhar26960@gmail.com\",\n                        \"role\": {\n                            \"id\": 1,\n                            \"name\": \"hr\"\n                        }\n                    }\n                },\n                \"defaultHrEmail\": \"hr@gmail.com\",\n                \"createdAt\": \"2026-02-10T18:30:00.000+00:00\",\n                \"jobReviewers\": [\n                    {\n                        \"id\": 7,\n                        \"name\": \"CEO\",\n                        \"email\": \"ayush010pathak@gmail.com\",\n                        \"role\": {\n                            \"id\": 2,\n                            \"name\": \"manager\"\n                        }\n                    }\n                ],\n                \"isActive\": true\n            },\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"c1778130-6944-4f2d-8916-cf852d99e5f3HRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:16:56.421+00:00\"\n        },\n        {\n            \"id\": 7,\n            \"email\": \"\",\n            \"job\": {\n                \"id\": 12,\n                \"title\": \"new job\",\n                \"description\": \"new job desc\",\n                \"createdBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                },\n                \"jdDocument\": {\n                    \"id\": 24,\n                    \"fileType\": \"application/pdf\",\n                    \"fileOriginalName\": null,\n                    \"filePath\": \"12341650-7b6c-4897-a3a0-c88df5007140HRMS_Internship_Assignment.pdf\",\n                    \"uploadedBy\": {\n                        \"id\": 3,\n                        \"name\": \"HR\",\n                        \"email\": \"jhar26960@gmail.com\",\n                        \"role\": {\n                            \"id\": 1,\n                            \"name\": \"hr\"\n                        }\n                    }\n                },\n                \"defaultHrEmail\": \"hr@gmail.com\",\n                \"createdAt\": \"2026-02-10T18:30:00.000+00:00\",\n                \"jobReviewers\": [\n                    {\n                        \"id\": 7,\n                        \"name\": \"CEO\",\n                        \"email\": \"ayush010pathak@gmail.com\",\n                        \"role\": {\n                            \"id\": 2,\n                            \"name\": \"manager\"\n                        }\n                    }\n                ],\n                \"isActive\": true\n            },\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"8b2a0408-393c-4194-a7e4-9f464683a18fHRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:17:41.644+00:00\"\n        },\n        {\n            \"id\": 8,\n            \"email\": \"\",\n            \"job\": {\n                \"id\": 12,\n                \"title\": \"new job\",\n                \"description\": \"new job desc\",\n                \"createdBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                },\n                \"jdDocument\": {\n                    \"id\": 24,\n                    \"fileType\": \"application/pdf\",\n                    \"fileOriginalName\": null,\n                    \"filePath\": \"12341650-7b6c-4897-a3a0-c88df5007140HRMS_Internship_Assignment.pdf\",\n                    \"uploadedBy\": {\n                        \"id\": 3,\n                        \"name\": \"HR\",\n                        \"email\": \"jhar26960@gmail.com\",\n                        \"role\": {\n                            \"id\": 1,\n                            \"name\": \"hr\"\n                        }\n                    }\n                },\n                \"defaultHrEmail\": \"hr@gmail.com\",\n                \"createdAt\": \"2026-02-10T18:30:00.000+00:00\",\n                \"jobReviewers\": [\n                    {\n                        \"id\": 7,\n                        \"name\": \"CEO\",\n                        \"email\": \"ayush010pathak@gmail.com\",\n                        \"role\": {\n                            \"id\": 2,\n                            \"name\": \"manager\"\n                        }\n                    }\n                ],\n                \"isActive\": true\n            },\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"7f7deefd-2458-4a06-8d60-055d71e441b2HRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:17:43.137+00:00\"\n        },\n        {\n            \"id\": 12,\n            \"email\": \"\",\n            \"job\": {\n                \"id\": 12,\n                \"title\": \"new job\",\n                \"description\": \"new job desc\",\n                \"createdBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                },\n                \"jdDocument\": {\n                    \"id\": 24,\n                    \"fileType\": \"application/pdf\",\n                    \"fileOriginalName\": null,\n                    \"filePath\": \"12341650-7b6c-4897-a3a0-c88df5007140HRMS_Internship_Assignment.pdf\",\n                    \"uploadedBy\": {\n                        \"id\": 3,\n                        \"name\": \"HR\",\n                        \"email\": \"jhar26960@gmail.com\",\n                        \"role\": {\n                            \"id\": 1,\n                            \"name\": \"hr\"\n                        }\n                    }\n                },\n                \"defaultHrEmail\": \"hr@gmail.com\",\n                \"createdAt\": \"2026-02-10T18:30:00.000+00:00\",\n                \"jobReviewers\": [\n                    {\n                        \"id\": 7,\n                        \"name\": \"CEO\",\n                        \"email\": \"ayush010pathak@gmail.com\",\n                        \"role\": {\n                            \"id\": 2,\n                            \"name\": \"manager\"\n                        }\n                    }\n                ],\n                \"isActive\": true\n            },\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"e71db3de-e705-435b-8a15-e5df5f57350fHRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:45:43.112+00:00\"\n        },\n        {\n            \"id\": 15,\n            \"email\": \"\",\n            \"job\": {\n                \"id\": 12,\n                \"title\": \"new job\",\n                \"description\": \"new job desc\",\n                \"createdBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                },\n                \"jdDocument\": {\n                    \"id\": 24,\n                    \"fileType\": \"application/pdf\",\n                    \"fileOriginalName\": null,\n                    \"filePath\": \"12341650-7b6c-4897-a3a0-c88df5007140HRMS_Internship_Assignment.pdf\",\n                    \"uploadedBy\": {\n                        \"id\": 3,\n                        \"name\": \"HR\",\n                        \"email\": \"jhar26960@gmail.com\",\n                        \"role\": {\n                            \"id\": 1,\n                            \"name\": \"hr\"\n                        }\n                    }\n                },\n                \"defaultHrEmail\": \"hr@gmail.com\",\n                \"createdAt\": \"2026-02-10T18:30:00.000+00:00\",\n                \"jobReviewers\": [\n                    {\n                        \"id\": 7,\n                        \"name\": \"CEO\",\n                        \"email\": \"ayush010pathak@gmail.com\",\n                        \"role\": {\n                            \"id\": 2,\n                            \"name\": \"manager\"\n                        }\n                    }\n                ],\n                \"isActive\": true\n            },\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"a5e272e4-5b59-4886-8c25-de99763ffec4HRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T12:55:30.997+00:00\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "assigned referrals to review",
+          "id": "ceb712f5-b0d9-42e0-ad2e-2d2f39c50d2a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/referrals/review",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "referrals",
+                "review"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cdb9e7e0-09c7-4dc3-9501-f3ee9c13cf10",
+              "name": "assigned referrals to review",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/jobs/review-referrals",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "jobs",
+                    "review-referrals"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 12 Feb 2026 14:15:47 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-12T14:16:06.019Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Assigned Referrals get successfully\",\n    \"data\": [\n        {\n            \"id\": 7,\n            \"email\": \"\",\n            \"jobTitle\": \"Frontend developer\",\n            \"jdFilePath\": \"094bb536-71d2-4aa5-b5cd-99eec3110392HRMS_Internship_Assignment.pdf\",\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"8b2a0408-393c-4194-a7e4-9f464683a18fHRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:17:41.644+00:00\"\n        },\n        {\n            \"id\": 8,\n            \"email\": \"\",\n            \"jobTitle\": \"Frontend developer\",\n            \"jdFilePath\": \"094bb536-71d2-4aa5-b5cd-99eec3110392HRMS_Internship_Assignment.pdf\",\n            \"shortNote\": \"\",\n            \"cvFilePath\": \"7f7deefd-2458-4a06-8d60-055d71e441b2HRMS_Internship_Assignment.pdf\",\n            \"status\": \"NEW\",\n            \"createdAt\": \"2026-02-12T11:17:43.137+00:00\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "change referral status",
+          "id": "7abcbb0f-d2fb-44cc-83ff-f783064f2b14",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/referrals/8/change-status?status=IN_REVIEW",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "referrals",
+                "8",
+                "change-status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "IN_REVIEW",
+                  "uuid": "2bbdff98-23bb-4928-a02b-42f5138ebd74"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ed45c914-11b3-454b-833b-b0f28e5a9ad7",
+              "name": "change status",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/referrals/7/change-status?status=IN_REVIEW",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "referrals",
+                    "7",
+                    "change-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "IN_REVIEW"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 12 Feb 2026 14:54:09 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-12T14:54:14.826Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Status changed successfully\"\n}"
+            }
+          ]
+        }
+      ],
+      "id": "b76b9609-4361-4e31-ab77-5d274729981c"
     },
     {
       "name": "Home",
