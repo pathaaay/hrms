@@ -21,6 +21,7 @@ import { ENV } from "@/lib/ENV";
 import { CopyToClipboardButton } from "../ui/copy-to-clipboard";
 import { useUser } from "@/hooks/user/use-user";
 import toast from "react-hot-toast";
+import { ReferByEmailsDialogForm } from "./refer-email-dialog-form";
 
 interface JobCardProps {
   job: IJob;
@@ -85,9 +86,7 @@ export const JobCard = ({ job }: JobCardProps) => {
           btnText={<LinkIcon />}
           btnTextCopied={<ClipboardCheckIcon />}
         />
-        <Button className="rounded-xl flex-1" variant={"default"}>
-          Refer a friend
-        </Button>
+        <ReferByEmailsDialogForm jobId={job.id} />
       </CardFooter>
     </Card>
   );

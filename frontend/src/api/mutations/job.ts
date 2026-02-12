@@ -1,7 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import toast from "react-hot-toast";
-import { createJob, deleteJob, toggleJob, updateJob } from "../actions/job";
+import {
+  createJob,
+  deleteJob,
+  referFriendByEmails,
+  toggleJob,
+  updateJob,
+} from "../actions/job";
 import { queryClient } from "@/lib/tanstack-query/query-client";
 
 export const useCreateJobMutation = () => {
@@ -67,6 +73,23 @@ export const useToggleJobMutation = () => {
         error?.response?.data.message
           ? "Error: " + error?.response?.data.message
           : "Failed to toggle job",
+      );
+    },
+  });
+};
+
+export const useReferFriendByEmailsMutation = () => {
+  return useMutation({
+    mutationFn: referFriendByEmails,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-referrals"] });
+      toast.success("Friends referred successfully");
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(
+        error?.response?.data.message
+          ? "Error: " + error?.response?.data.message
+          : "Failed to refer friend",
       );
     },
   });
