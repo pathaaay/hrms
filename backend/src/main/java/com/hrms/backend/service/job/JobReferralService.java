@@ -1,12 +1,15 @@
 package com.hrms.backend.service.job;
 
 import com.hrms.backend.dto.job.request.JobReferralEmailRequestDTO;
+import com.hrms.backend.dto.job.request.JobReferralRequestDTO;
+import com.hrms.backend.entities.document.Document;
 import com.hrms.backend.entities.jobs.Job;
 import com.hrms.backend.entities.jobs.JobReferral;
 import com.hrms.backend.entities.jobs.JobReviewStatus;
 import com.hrms.backend.entities.jobs.ReferralReviewStatus;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.job.JobReferralRepo;
+import com.hrms.backend.service.document.DocumentService;
 import com.hrms.backend.service.mail.MailService;
 import com.hrms.backend.utilities.Helper;
 import jakarta.mail.MessagingException;
@@ -25,29 +28,42 @@ public class JobReferralService {
     private final Helper helper;
     private final JobService jobService;
     private final MailService mailService;
+    private final DocumentService documentService;
     private final JobReferralRepo jobReferralRepo;
     private final JobReviewStatusService jobReviewStatusService;
 
     @Value("${frontend.url}")
     private String frontendUrl;
 
+    private JobReferral convertToEntity(User user, String email, Job job) {
+        JobReviewStatus status = jobReviewStatusService.findStatusByName(ReferralReviewStatus.NEW);
+        JobReferral referral = new JobReferral();
+        referral.setEmail(email);
+        referral.setSharedBy(user);
+        referral.setStatus(status);
+        referral.setJob(job);
+        referral.setIsDeleted(false);
+        return referral;
+    }
+
     @Transactional
     public void referJobToEmails(Long jobId, User user, JobReferralEmailRequestDTO emails) throws BadRequestException, MessagingException {
         Job job = jobService.findById(jobId, true);
-        JobReviewStatus status = jobReviewStatusService.findStatusByName(ReferralReviewStatus.NEW);
         List<JobReferral> referrals =
-                emails.getEmails().stream().map(email -> {
-                    JobReferral referral = new JobReferral();
-                    referral.setEmail(email);
-                    referral.setSharedBy(user);
-                    referral.setStatus(status);
-                    referral.setJob(job);
-                    referral.setIsDeleted(false);
-                    return referral;
-                }).toList();
+                emails.getEmails().stream().map(email -> convertToEntity(user, email, job)).toList();
 
         sendJobMail(emails.getEmails(), user, job);
         jobReferralRepo.saveAll(referrals);
+    }
+
+    @Transactional
+    public void createReferral(Long jobId, User user, JobReferralRequestDTO dto) throws BadRequestException {
+        Job job = jobService.findById(jobId, true);
+        Document document = documentService.getDocument(dto.getCvFileId());
+        JobReferral referral = convertToEntity(user, dto.getEmail(), job);
+        referral.setCvFile(document);
+        referral.setShortNote(dto.getShortNote());
+        jobReferralRepo.save(referral);
     }
 
     public void sendJobMail(Set<String> emails, User user, Job job) throws MessagingException, BadRequestException {
