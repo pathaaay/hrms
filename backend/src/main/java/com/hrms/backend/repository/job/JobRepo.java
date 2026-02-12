@@ -27,4 +27,7 @@ public interface JobRepo extends JpaRepository<Job, Long> {
             "SET j.isActive = CASE WHEN j.isActive= true then false ELSE true " +
             "END where j.createdBy.id=:userId and j.id=:id")
     int toggleJob(@Param("userId") Long userId, @Param("id") Long id);
+
+    @Query(value = "SELECT u.email from job_reviewers jr JOIN users u ON u.id = jr.user_id WHERE jr.job_id=:id", nativeQuery = true)
+    List<String> getReviewerEmails(@Param("id") Long id);
 }
