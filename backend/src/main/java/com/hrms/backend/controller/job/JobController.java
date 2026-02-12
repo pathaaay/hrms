@@ -3,6 +3,7 @@ package com.hrms.backend.controller.job;
 import com.hrms.backend.dto.job.request.JobReferralEmailRequestDTO;
 import com.hrms.backend.dto.job.request.JobReferralRequestDTO;
 import com.hrms.backend.dto.job.request.JobRequestDTO;
+import com.hrms.backend.dto.job.response.JobReferralResponseDTO;
 import com.hrms.backend.dto.job.response.JobResponseDTO;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.service.job.JobReferralService;

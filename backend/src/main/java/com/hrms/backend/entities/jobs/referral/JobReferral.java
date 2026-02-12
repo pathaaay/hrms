@@ -1,7 +1,8 @@
-package com.hrms.backend.entities.jobs;
+package com.hrms.backend.entities.jobs.referral;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hrms.backend.entities.document.Document;
+import com.hrms.backend.entities.jobs.Job;
 import com.hrms.backend.entities.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -26,13 +28,13 @@ public class JobReferral {
 
     @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
-    private JobReviewStatus status;
+    private JobReferralReviewStatus status;
 
     @ManyToOne
     @JoinColumn(name = "shared_by_id", nullable = false)
     private User sharedBy;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
@@ -47,4 +49,11 @@ public class JobReferral {
     @JsonIgnore
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "referral_status_logs",
+            joinColumns = @JoinColumn(name = "referral_id"),
+            inverseJoinColumns = @JoinColumn(name = "status_id"))
+    private Set<JobReferralReviewStatus> jobReferralReviewStatuses;
 }
