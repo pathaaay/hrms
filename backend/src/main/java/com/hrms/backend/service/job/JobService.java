@@ -112,4 +112,8 @@ public class JobService {
         int deleted = jobRepo.deleteJob(user.getId(), jobId);
         if (deleted == 0) throw new BadRequestException("Failed to delete job");
     }
+
+    public String[] getReviewerEmails(Long jobId){
+        return jobRepo.getReviewerEmails(jobId).toArray(new String[0]);
+    }
 }
