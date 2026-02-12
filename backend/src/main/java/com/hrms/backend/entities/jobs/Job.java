@@ -1,11 +1,11 @@
 package com.hrms.backend.entities.jobs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hrms.backend.entities.document.Document;
 import com.hrms.backend.entities.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -38,8 +38,8 @@ public class Job {
     @Column(name = "created_at", columnDefinition = "DATE")
     private Date createdAt;
 
-    @Column(name = "is_deleted")
-    @ColumnDefault("0")
+    @JsonIgnore
+    @Column(name = "is_deleted",nullable = false)
     private Boolean isDeleted;
 
     @ManyToMany(fetch = FetchType.LAZY)

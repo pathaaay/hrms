@@ -2,6 +2,7 @@ package com.hrms.backend.dto.user.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hrms.backend.entities.game.Game;
+import com.hrms.backend.entities.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +17,7 @@ public class UserProfileResponseDTO {
     private Long profileId;
     private String name;
     private String email;
-    private Long managerId;
+    private User manager;
     private String role;
     private String department;
     private String city;

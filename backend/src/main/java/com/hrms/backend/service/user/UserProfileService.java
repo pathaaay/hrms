@@ -23,16 +23,14 @@ import java.util.Set;
 public class UserProfileService {
     private final GameService gameService;
     private final UserProfileRepo userProfileRepo;
-    private final UserProfileDTOMapper userProfileDTOMapper;
-
 
     public List<UserProfileResponseDTO> convertToDTOList(List<UserProfile> users) {
-        return users.stream().map(userProfileDTOMapper::convertToDTO).toList();
+        return users.stream().map(UserProfileDTOMapper::convertToDTO).toList();
     }
 
     public UserProfileResponseDTO getUserProfile(User user) throws BadRequestException {
         UserProfile profile = userProfileRepo.findByUserId(user.getId()).orElseThrow(() -> new BadRequestException("User not exists"));
-        return userProfileDTOMapper.convertToDTO(profile);
+        return UserProfileDTOMapper.convertToDTO(profile);
     }
 
     public List<UserProfileResponseDTO> getAllUsers() {

@@ -21,9 +21,8 @@ public class User {
     private String name;
     private String email;
 
-    @Column(nullable = false,name = "is_deleted")
-    @ColumnDefault("0")
     @JsonIgnore
+    @Column(nullable = false, name = "is_deleted")
     private Boolean isDeleted;
 
     @OneToOne

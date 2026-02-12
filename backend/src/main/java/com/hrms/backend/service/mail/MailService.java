@@ -1,27 +1,41 @@
 package com.hrms.backend.service.mail;
 
+import com.hrms.backend.entities.document.Document;
+import com.hrms.backend.service.file.FileService;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
+import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class MailService {
-
-    @Autowired
-    private JavaMailSender mailSender;
-    @Value("${MAIL_USER}")
-    private String sender;
+    private final JavaMailSender mailSender;
+    private final FileService fileService;
 
     public void sendEmail(String[] to, String subject, String body) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(to);
-        helper.setFrom(sender);
+        helper.setFrom("Aayush Pathak <aayush.pathak@roimaint.com>");
+        helper.setSubject(subject);
+        helper.setText(body, true);
+        mailSender.send(message);
+    }
+
+    public void sendEmail(String[] to, String subject, String body, Document document) throws MessagingException, BadRequestException {
+        Resource file = fileService.getFile(document.getFilePath());
+        if (!file.exists()) throw new BadRequestException("File not found");
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(to);
+        helper.setFrom("Aayush Pathak <aayush.pathak@roimaint.com>");
+        helper.addAttachment(document.getFileOriginalName(), file);
         helper.setSubject(subject);
         helper.setText(body, true);
         mailSender.send(message);
