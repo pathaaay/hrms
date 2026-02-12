@@ -12,3 +12,18 @@ export const JobSchema = z.object({
 });
 
 export type JobSchemaType = z.infer<typeof JobSchema>;
+
+export const ReferFriendByEmailsSchema = z.object({
+  jobId: z.number(),
+  emails: z
+    .array(
+      z.object({
+        email: z.email("Enter a valid email address."),
+      }),
+    )
+    .min(1, "Add at least one email address."),
+});
+
+export type ReferFriendByEmailsSchemaType = z.infer<
+  typeof ReferFriendByEmailsSchema
+>;

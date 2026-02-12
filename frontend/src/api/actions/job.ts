@@ -1,5 +1,8 @@
 import { apiService } from "@/lib/axios";
-import type { JobSchemaType } from "@/lib/schemas/job-schema";
+import type {
+  JobSchemaType,
+  ReferFriendByEmailsSchemaType,
+} from "@/lib/schemas/job-schema";
 
 const JOBS_ENDPOINT = "/jobs";
 
@@ -29,5 +32,14 @@ export const deleteJob = async (jobId: number) => {
 
 export const toggleJob = async (jobId: number) => {
   const res = await apiService.patch(`${JOBS_ENDPOINT}/${jobId}/toggle`);
+  return res.data;
+};
+
+export const referFriendByEmails = async (
+  data: ReferFriendByEmailsSchemaType,
+) => {
+  const res = await apiService.post(
+    `${JOBS_ENDPOINT}/${data.jobId}/refer-by-emails`,
+  );
   return res.data;
 };
