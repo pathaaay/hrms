@@ -12,7 +12,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserProfileService {
     private final GameService gameService;
-    private final ModelMapper modelMapper;
     private final UserProfileRepo userProfileRepo;
     private final UserProfileDTOMapper userProfileDTOMapper;
 
