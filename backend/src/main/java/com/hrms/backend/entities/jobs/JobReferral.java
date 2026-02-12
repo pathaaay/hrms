@@ -23,13 +23,17 @@ public class JobReferral {
     @Column(name = "short_note")
     private String shortNote;
 
-    @ManyToOne
-    @JoinColumn(name = "status_id")
-    private JobReviewStatus status;
+    @Enumerated(EnumType.STRING)
+    @Column(name="status")
+    private JobStatus status;
 
     @ManyToOne
     @JoinColumn(name = "shared_by")
     private User sharedBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_id")
+    private Job job;
 
     @OneToOne
     @JoinColumn(name = "cv_document_id")
