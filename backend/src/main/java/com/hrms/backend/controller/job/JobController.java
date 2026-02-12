@@ -5,7 +5,7 @@ import com.hrms.backend.dto.job.request.JobReferralRequestDTO;
 import com.hrms.backend.dto.job.request.JobRequestDTO;
 import com.hrms.backend.dto.job.response.JobResponseDTO;
 import com.hrms.backend.entities.user.User;
-import com.hrms.backend.service.job.JobReferralService;
+import com.hrms.backend.service.job.referral.JobReferralService;
 import com.hrms.backend.service.job.JobService;
 import com.hrms.backend.utilities.ApiResponse;
 import jakarta.mail.MessagingException;

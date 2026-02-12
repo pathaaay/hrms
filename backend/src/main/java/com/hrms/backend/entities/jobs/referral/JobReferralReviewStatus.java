@@ -1,4 +1,4 @@
-package com.hrms.backend.entities.jobs;
+package com.hrms.backend.entities.jobs.referral;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "job_review_statuses")
-public class JobReviewStatus {
+public class JobReferralReviewStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

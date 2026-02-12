@@ -1,42 +1,44 @@
-package com.hrms.backend.service.job;
+package com.hrms.backend.service.job.referral;
 
 import com.hrms.backend.dto.job.request.JobReferralEmailRequestDTO;
 import com.hrms.backend.dto.job.request.JobReferralRequestDTO;
+import com.hrms.backend.dto.job.response.JobReferralResponseDTO;
 import com.hrms.backend.entities.document.Document;
 import com.hrms.backend.entities.jobs.Job;
-import com.hrms.backend.entities.jobs.JobReferral;
-import com.hrms.backend.entities.jobs.JobReviewStatus;
-import com.hrms.backend.entities.jobs.ReferralReviewStatus;
+import com.hrms.backend.entities.jobs.referral.JobReferral;
+import com.hrms.backend.entities.jobs.referral.JobReferralReviewStatus;
+import com.hrms.backend.entities.jobs.referral.ReferralReviewStatus;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.job.JobReferralRepo;
 import com.hrms.backend.service.document.DocumentService;
+import com.hrms.backend.service.job.JobService;
 import com.hrms.backend.service.mail.MailService;
-import com.hrms.backend.utilities.Helper;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
-import org.springframework.beans.factory.annotation.Value;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JobReferralService {
-    private final Helper helper;
     private final JobService jobService;
     private final MailService mailService;
-    private final DocumentService documentService;
+    private final ModelMapper modelMapper;
     private final JobReferralRepo jobReferralRepo;
+    private final DocumentService documentService;
     private final JobReviewStatusService jobReviewStatusService;
+    private final JobReferralStatusLogService jobReferralStatusLogService;
 
-    @Value("${frontend.url}")
-    private String frontendUrl;
 
     private JobReferral convertToEntity(User user, String email, Job job) {
-        JobReviewStatus status = jobReviewStatusService.findStatusByName(ReferralReviewStatus.NEW);
+        JobReferralReviewStatus status = jobReviewStatusService.findStatusByName(ReferralReviewStatus.NEW);
         JobReferral referral = new JobReferral();
         referral.setEmail(email);
         referral.setSharedBy(user);
@@ -44,6 +46,39 @@ public class JobReferralService {
         referral.setJob(job);
         referral.setIsDeleted(false);
         return referral;
+    }
+
+    public JobReferralResponseDTO convertToDTO(JobReferral referral) {
+        JobReferralResponseDTO dto = modelMapper.map(referral, JobReferralResponseDTO.class);
+        if (referral.getCvFile() != null) {
+            dto.setCvFilePath(referral.getCvFile().getFilePath());
+        }
+        dto.setStatus(referral.getStatus().getName());
+        dto.setJobTitle(referral.getJob().getTitle());
+        dto.setJdFilePath(referral.getJob().getJdDocument().getFilePath());
+        return dto;
+    }
+
+    public List<JobReferralResponseDTO> convertToDTOList(List<JobReferral> referrals) {
+        return referrals.stream().map(this::convertToDTO).toList();
+    }
+
+    public List<JobReferralResponseDTO> getMyReferrals(User user) {
+        return convertToDTOList(jobReferralRepo.findMyReferrals(user.getId()));
+    }
+
+    public List<JobReferralResponseDTO> getAssignedReferrals(User user) {
+        return convertToDTOList(jobReferralRepo.findAssignedJobReferrals(user.getId()));
+    }
+
+    @Transactional
+    public void changeStatus(Long referralId, User user, ReferralReviewStatus value) throws BadRequestException {
+        JobReferral referral = jobReferralRepo.findById(referralId).orElseThrow(() -> new BadRequestException("Referral not found"));
+        JobReferralReviewStatus oldStatus = referral.getStatus();
+        JobReferralReviewStatus newStatus = jobReviewStatusService.findStatusByName(value);
+        referral.setStatus(newStatus);
+        jobReferralRepo.save(referral);
+        jobReferralStatusLogService.changeStatus(referral, user, oldStatus, newStatus);
     }
 
     @Transactional
@@ -69,15 +104,14 @@ public class JobReferralService {
 
     public void sendMailToHR(User user, JobReferral referral, Job job) throws MessagingException, BadRequestException {
         String[] reviewerEmails = jobService.getReviewerEmails(job.getId());
-        String[] toEmails = new String[reviewerEmails.length + 2];
+
         int i = 0;
-        if (!job.getDefaultHrEmail().isEmpty())
-            toEmails[i++] = job.getDefaultHrEmail();
+        String[] toEmails = new String[reviewerEmails.length + 2];
         toEmails[i++] = job.getCreatedBy().getEmail();
+        if (!job.getDefaultHrEmail().isEmpty()) toEmails[i++] = job.getDefaultHrEmail();
         for (String email : reviewerEmails) {
             toEmails[i++] = email;
         }
-
 
         String htmlBody = """
                 <div>

@@ -10,10 +10,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface JobRepo extends JpaRepository<Job, Long> {
-    @Query("SELECT j as jdFilePath from Job j WHERE j.isDeleted <> true AND j.isActive = true")
+    @Query("SELECT j from Job j WHERE j.isDeleted <> true AND j.isActive = true")
     List<Job> findByIsDeletedFalse();
 
-    @Query("SELECT j as jdFilePath from Job j JOIN FETCH j.jobReviewers WHERE j.isDeleted <> true")
+    @Query("SELECT j from Job j JOIN FETCH j.jobReviewers WHERE j.isDeleted <> true")
     List<Job> findAllWithReviewers();
 
     @Modifying
