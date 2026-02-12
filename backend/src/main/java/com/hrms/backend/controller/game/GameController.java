@@ -1,10 +1,10 @@
 package com.hrms.backend.controller.game;
 
-import com.hrms.backend.dto.request.BookGameSlotRequestDTO;
-import com.hrms.backend.dto.request.ConfigureGameRequestDTO;
-import com.hrms.backend.dto.request.GetBookedGameSlotsRequestDTO;
-import com.hrms.backend.dto.response.BookedGameSlotsResponseDTO;
-import com.hrms.backend.dto.response.GameResponseDTO;
+import com.hrms.backend.dto.game.request.BookGameSlotRequestDTO;
+import com.hrms.backend.dto.game.request.ConfigureGameRequestDTO;
+import com.hrms.backend.dto.game.request.GetBookedGameSlotsRequestDTO;
+import com.hrms.backend.dto.game.response.BookedGameSlotsResponseDTO;
+import com.hrms.backend.dto.game.response.GameResponseDTO;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.service.game.GameBookingService;
 import com.hrms.backend.service.game.GameService;
@@ -27,8 +27,8 @@ public class GameController {
     private final GameBookingService gameBookingService;
 
     @GetMapping()
-    public ResponseEntity<ApiResponse<List<GameResponseDTO>>> getAllGames(@AuthenticationPrincipal  User user) {
-        return ResponseEntity.ok(new ApiResponse<>(true, "Game get successfully", gameService.getAllGames(user)));
+    public ResponseEntity<ApiResponse<List<GameResponseDTO>>> getAllGames() {
+        return ResponseEntity.ok(new ApiResponse<>(true, "Game get successfully", gameService.getAllGames()));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_HR')")

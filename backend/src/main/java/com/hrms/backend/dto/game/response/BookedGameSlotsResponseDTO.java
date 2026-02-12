@@ -1,8 +1,7 @@
-package com.hrms.backend.dto.response;
+package com.hrms.backend.dto.game.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hrms.backend.entities.game.GameTeam;
-import com.hrms.backend.entities.user.User;
 import lombok.Getter;
 import lombok.Setter;
 

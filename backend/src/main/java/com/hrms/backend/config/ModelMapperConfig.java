@@ -15,7 +15,6 @@ public class ModelMapperConfig {
                 .setMatchingStrategy(MatchingStrategies.STRICT)
                 .setSkipNullEnabled(true)
                 .setPropertyCondition(context -> {
-                    // Skip uninitialized Hibernate lazy proxies and collections
                     return Hibernate.isInitialized(context.getSource());
                 });
         return modelMapper;

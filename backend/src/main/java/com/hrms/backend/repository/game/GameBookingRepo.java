@@ -1,7 +1,9 @@
 package com.hrms.backend.repository.game;
 
 import com.hrms.backend.entities.game.GameBooking;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -27,4 +29,9 @@ public interface GameBookingRepo extends JpaRepository<GameBooking, Long> {
 
     @Query("SELECT gb from GameBooking gb JOIN FETCH gb.team WHERE gb.isDeleted <> true AND gb.team.user.id=:userId")
     List<GameBooking> getBookingsByUserId(@Param("userId") Long userId);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE GameBooking b SET b.isDeleted=true where b.team.user.id=:userId and b.id=:bookingId")
+    int deleteBooking(@Param("userId") Long userId, @Param("bookingId") Long bookingId);
 }

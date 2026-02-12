@@ -1,137 +1,101 @@
 package com.hrms.backend.service.game;
 
-import com.hrms.backend.dto.request.BookGameSlotRequestDTO;
-import com.hrms.backend.dto.request.ConfigureGameRequestDTO;
-import com.hrms.backend.dto.response.GameResponseDTO;
+import com.hrms.backend.dto.game.request.BookGameSlotRequestDTO;
+import com.hrms.backend.dto.game.request.ConfigureGameRequestDTO;
+import com.hrms.backend.dto.game.response.GameResponseDTO;
 import com.hrms.backend.entities.game.Game;
 import com.hrms.backend.entities.game.GameBooking;
 import com.hrms.backend.entities.game.GameTeam;
 import com.hrms.backend.entities.user.User;
-import com.hrms.backend.repository.user.UserRepo;
-import com.hrms.backend.repository.game.GameBookingRepo;
 import com.hrms.backend.repository.game.GameRepo;
-import com.hrms.backend.repository.game.GameTeamRepo;
 import com.hrms.backend.service.mail.MailService;
+import com.hrms.backend.service.user.UserService;
 import com.hrms.backend.utilities.Constants;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class GameService {
-    private static final Logger log = LoggerFactory.getLogger(GameService.class);
     private final GameRepo gameRepo;
-    private final UserRepo userRepo;
-    private final ModelMapper modelMapper;
-    private final GameTeamRepo gameTeamRepo;
-    private final GameBookingRepo gameBookingRepo;
-    private final FairPlayAlgorithmService fairPlayAlgorithmService;
     private final MailService mailService;
+    private final UserService userService;
+    private final ModelMapper modelMapper;
+    private final GameTeamService gameTeamService;
+    private final GameBookingService gameBookingService;
+    private final FairPlayAlgorithmService fairPlayAlgorithmService;
 
     public GameResponseDTO convertToDTO(Game game) {
         return modelMapper.map(game, GameResponseDTO.class);
+    }
+
+    public Game convertToEntity(ConfigureGameRequestDTO dto) {
+        return modelMapper.map(dto, Game.class);
     }
 
     public List<GameResponseDTO> convertToDTOList(List<Game> games) {
         return games.stream().map(this::convertToDTO).toList();
     }
 
-    public List<GameResponseDTO> getAllGames(User user) {
+    public Set<Game> findAllbyId(Set<Long> gameIds) {
+        return new HashSet<>(gameRepo.findAllById(gameIds));
+    }
+
+    public Game findById(Long gameId) throws BadRequestException {
+        return gameRepo.findById(gameId).orElseThrow(() -> new BadRequestException("Game not found"));
+    }
+
+    public List<GameResponseDTO> getAllGames() {
         List<Game> games;
-
-        // If user role is hr or manager they will get all the games whether it is active or not
-        if (user.getRole().getName().equals("hr") || user.getRole().getName().equals("manager"))
+        if (userService.hasRole("hr") || userService.hasRole("manager")) {
             games = gameRepo.findAll();
-
-        else games = gameRepo.findByIsActiveTrue();
+        } else {
+            games = gameRepo.findByIsActiveTrue();
+        }
         return convertToDTOList(games);
     }
 
+
     @Transactional
-    public GameResponseDTO updateGameConfig(Long gameId, ConfigureGameRequestDTO dto) throws BadRequestException {
-        Game game = gameRepo.findById(gameId).orElseThrow(() -> new BadRequestException("Game not found"));
-        game.setName(dto.getName());
-        game.setEndTime(dto.getEndTime());
-        game.setStartTime(dto.getStartTime());
-        game.setBookingCycleHours(dto.getBookingCycleHours());
-        game.setMaxPlayersPerSlot(dto.getMaxPlayersPerSlot());
-        game.setMaxSlotDurationInMinutes(dto.getMaxSlotDurationInMinutes());
-        game.setIsActive(dto.getIsActive());
-        gameRepo.save(game);
-        return convertToDTO(game);
+    public GameResponseDTO updateGameConfig(Long gameId, ConfigureGameRequestDTO dto) {
+        Game game = convertToEntity(dto);
+        game.setId(gameId);
+        return convertToDTO(gameRepo.save(game));
     }
 
     @Transactional
     public void bookGameSlot(User user, BookGameSlotRequestDTO bookingDetails) throws BadRequestException, MessagingException {
 
         // If the members in booking is less than 2 then throw error
-        if (bookingDetails.getUserIds().stream().count() < 2)
-            throw new BadRequestException("Minimum 2 player is required to book a slot");
-
-        Date bookingDate = bookingDetails.getBookingDate();
-
-        Calendar today = Calendar.getInstance();
-        today.setTime(new Date());
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(bookingDate);
-        calendar.set(Calendar.HOUR_OF_DAY, bookingDetails.getStartTime() / 60);
-        calendar.set(Calendar.MINUTE, bookingDetails.getStartTime() % 60);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        // If the booking date is less than current date then throw error
-        if (calendar.compareTo(today) < 0) throw new BadRequestException("You cannot book past date slot.");
-
-        // Get the game from db
-        Game game = gameRepo.findById(bookingDetails.getGameId()).orElseThrow(() -> new BadRequestException("Game not found"));
-
-        // now find all the users with provided id
-        Set<User> users = userRepo.findAllById(bookingDetails.getUserIds()).stream().collect(Collectors.toSet());
-
-        // Create a team first
-        GameTeam team = new GameTeam();
-        team.setGame(game);
-        team.setUser(user);
-        team.setGameTeamMembers(users);
-        // save the team in db
-        GameTeam createdTeam = gameTeamRepo.save(team);
-
-
-        // Throw an error if the count less than 2 of team members
-        if (users.size() < 2) throw new BadRequestException("Minimum 2 player is required to book a slot");
-
+        checkRequiredMembers(bookingDetails.getUserIds().size());
+        validateDate(bookingDetails.getBookingDate(), bookingDetails.getStartTime());
+        Game game = findById(bookingDetails.getGameId());
+        Set<User> members = userService.findAllById(bookingDetails.getUserIds());
+        GameTeam createdTeam = gameTeamService.createTeam(game, user, members);
+        checkRequiredMembers(members.size());
         Constants.GameBookingStatusType status = fairPlayAlgorithmService.getStatus(createdTeam);
+        GameBooking newBooking = gameBookingService.createBooking(createdTeam, status, bookingDetails);
+        sendBookingEmail(members, user, newBooking, game);
 
-        // Create a new Booking
-        GameBooking newBooking = new GameBooking();
-        newBooking.setTeam(createdTeam);
-        newBooking.setIsConfirmed(status == Constants.GameBookingStatusType.CONFIRMED);
-        newBooking.setStartTime(bookingDetails.getStartTime());
-        newBooking.setEndTime(bookingDetails.getEndTime());
-        newBooking.setBookedSlotDate(bookingDetails.getBookingDate());
-        newBooking.setIsDeleted(false);
-        // Save the Booking to db
-        gameBookingRepo.save(newBooking);
+    }
 
-        String[] toEmails = new String[users.size() + 1];
+    public void checkRequiredMembers(int count) throws BadRequestException {
+        if (count < 2) throw new BadRequestException("Minimum 2 player is required to book a slot");
+    }
+
+    public void sendBookingEmail(Set<User> members, User user, GameBooking newBooking, Game game) throws MessagingException {
+        String[] toEmails = new String[members.size() + 1];
 
         int i = 0;
-        for (User singleUser : users) {
+        for (User singleUser : members) {
             toEmails[i++] = singleUser.getEmail();
         }
         toEmails[i] = user.getEmail();
@@ -158,6 +122,18 @@ public class GameService {
                 Boolean.TRUE.equals(newBooking.getIsConfirmed()) ? "Confirmed" : "Pending");
 
         mailService.sendEmail(toEmails, game.getName() + " game slot is booked", htmlBody);
+    }
+
+    public void validateDate(Date date, int startTime) throws BadRequestException {
+        Calendar today = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        today.setTime(new Date());
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, startTime / 60);
+        calendar.set(Calendar.MINUTE, startTime % 60);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        if (calendar.compareTo(today) < 0) throw new BadRequestException("You cannot book past date slot.");
     }
 
 }

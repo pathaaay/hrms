@@ -1,10 +1,13 @@
 package com.hrms.backend.service.game;
 
-import com.hrms.backend.dto.request.GetBookedGameSlotsRequestDTO;
-import com.hrms.backend.dto.response.BookedGameSlotsResponseDTO;
+import com.hrms.backend.dto.game.request.BookGameSlotRequestDTO;
+import com.hrms.backend.dto.game.request.GetBookedGameSlotsRequestDTO;
+import com.hrms.backend.dto.game.response.BookedGameSlotsResponseDTO;
 import com.hrms.backend.entities.game.GameBooking;
+import com.hrms.backend.entities.game.GameTeam;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.game.GameBookingRepo;
+import com.hrms.backend.utilities.Constants;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -37,15 +40,20 @@ public class GameBookingService {
         return convertToDTOList(bookedGameSlots);
     }
 
+    public GameBooking createBooking(GameTeam createdTeam, Constants.GameBookingStatusType status, BookGameSlotRequestDTO bookingDetails) {
+        GameBooking newBooking = new GameBooking();
+        newBooking.setTeam(createdTeam);
+        newBooking.setIsConfirmed(status == Constants.GameBookingStatusType.CONFIRMED);
+        newBooking.setStartTime(bookingDetails.getStartTime());
+        newBooking.setEndTime(bookingDetails.getEndTime());
+        newBooking.setBookedSlotDate(bookingDetails.getBookingDate());
+        newBooking.setIsDeleted(false);
+        return gameBookingRepo.save(newBooking);
+    }
+
     @Transactional
     public void deleteBooking(Long bookingId, User user) throws BadRequestException {
-        GameBooking booking = gameBookingRepo.findById(bookingId).orElseThrow(() -> new BadRequestException("Booking not found"));
-
-        // Check if the user is not the leader then throw error
-        if (!booking.getTeam().getUser().getId().equals(user.getId()))
-            throw new BadRequestException("You cannot delete other user bookings");
-
-        booking.setIsDeleted(true);
-        gameBookingRepo.save(booking);
+        int deleted = gameBookingRepo.deleteBooking(user.getId(), bookingId);
+        if (deleted == 0) throw new BadRequestException("Failed to delete booking");
     }
 }

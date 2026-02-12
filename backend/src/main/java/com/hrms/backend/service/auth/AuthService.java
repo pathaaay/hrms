@@ -18,19 +18,13 @@ public class AuthService {
 
     public String login(String email, String password) throws BadRequestException {
         User user = userRepo.findByEmail(email).orElse(null);
-
         if (user == null) {
-            log.error("User not found, email: {}", email);
             throw new BadRequestException("User not found with this email: " + email);
         }
-
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            log.error("Invalid Credentials - email: {}", email);
             throw new BadRequestException("Invalid credentials");
         }
-
         String token = jwtService.generateToken(user.getId(), user.getEmail());
-
         log.info("User logged in - email: {}", email);
         return token;
     }

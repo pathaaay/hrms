@@ -13,7 +13,7 @@ import { useParams, useSearchParams } from "react-router";
 import { useUser } from "@/hooks/user/use-user";
 import { Label } from "../ui/label";
 import { createMultiSelectOption, formatMinutesToHours } from "@/lib/utils";
-import toast from "react-hot-toast";
+import toast, { LoaderIcon } from "react-hot-toast";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { useBookGameSlotMutation } from "@/api/mutations/game";
@@ -29,7 +29,7 @@ export const GameBookingDialog = ({
   date: string;
 }) => {
   const { gameId } = useParams();
-  const { userProfile } = useUser();
+  const { userProfile, isAuthenticated } = useUser();
   const { mutate: bookSlot, isPending, isSuccess } = useBookGameSlotMutation();
   const [searchParams] = useSearchParams();
   const startTime = searchParams.get("startTime");
@@ -52,10 +52,6 @@ export const GameBookingDialog = ({
     ({ id }) => id === Number(gameId),
   );
 
-  const options = users?.map((user) =>
-    createMultiSelectOption(user.userId.toString(), user.name),
-  );
-
   const handleSelectChange = (values: string[]) => {
     if (values.length < singleGame?.maxPlayersPerSlot!) {
       setSelectedValues(values);
@@ -66,8 +62,8 @@ export const GameBookingDialog = ({
   };
 
   const handleSubmit = () => {
-    if (selectedValues.length < 2) {
-      toast.error("Minimum 2 player is required to book a slot");
+    if (selectedValues.length < 1) {
+      toast.error("Minimum 1 player is required to book a slot");
       return;
     }
 
@@ -82,6 +78,11 @@ export const GameBookingDialog = ({
     bookSlot(data);
   };
 
+  if (!isAuthenticated) return <LoaderIcon className="animate-spin size-6" />;
+
+  const options = users
+    ?.filter(({ userId }) => userId != userProfile?.userId)
+    ?.map((user) => createMultiSelectOption(user.userId.toString(), user.name));
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetContent>
@@ -131,7 +132,7 @@ export const GameBookingDialog = ({
         <SheetFooter>
           <Button
             onClick={handleSubmit}
-            disabled={isPending || selectedValues.length < 2}
+            disabled={isPending || selectedValues.length < 1}
           >
             {isPending ? "Please wait..." : "Book Now"}
           </Button>

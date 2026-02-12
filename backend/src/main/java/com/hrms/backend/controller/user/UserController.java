@@ -1,12 +1,11 @@
 package com.hrms.backend.controller.user;
 
-import com.hrms.backend.dto.request.UpdateGameRequestDTO;
-import com.hrms.backend.dto.response.BookedGameSlotsResponseDTO;
-import com.hrms.backend.dto.response.UserProfileResponseDTO;
+import com.hrms.backend.dto.game.request.UpdateGameRequestDTO;
+import com.hrms.backend.dto.game.response.BookedGameSlotsResponseDTO;
+import com.hrms.backend.dto.user.response.UserProfileResponseDTO;
 import com.hrms.backend.entities.user.User;
-import com.hrms.backend.entities.user.UserProfile;
 import com.hrms.backend.service.game.GameBookingService;
-import com.hrms.backend.service.user.UserService;
+import com.hrms.backend.service.user.UserProfileService;
 import com.hrms.backend.utilities.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -17,14 +16,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
 @RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserProfileService userService;
     private final GameBookingService gameBookingService;
 
     @GetMapping()
@@ -34,7 +32,9 @@ public class UserController {
 
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<UserProfileResponseDTO>>> getAllUsers(@RequestParam(required = false) Long gameId) {
-        return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userService.getAllUsers(gameId)));
+        if (gameId != null)
+            return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userService.getAllUsersByGameId(gameId)));
+        return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userService.getAllUsers()));
     }
 
     @PostMapping("/update-games")
