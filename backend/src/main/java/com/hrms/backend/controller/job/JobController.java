@@ -55,7 +55,7 @@ public class JobController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job deleted successfully", null));
     }
 
-    @PostMapping("/{jobId}/refer-emails")
+    @PostMapping("/{jobId}/refer-by-emails")
     public ResponseEntity<ApiResponse> referByEmails(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId) throws BadRequestException {
 //        jobService.referJobToEmails(jobId, user);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job referred to emails successfully", null));
