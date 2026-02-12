@@ -29,8 +29,9 @@ export type ReferFriendByEmailsSchemaType = z.infer<
 >;
 
 export const ReferFriendSchema = z.object({
+  jobId: z.number(),
   name: z.string(),
-  email: z.email(),
+  email: z.email().optional().or(z.literal("")),
   cvFileId: z.number().nullable(),
   shortNote: z.string(),
 });
