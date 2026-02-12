@@ -67,7 +67,7 @@ public class JobController {
     }
 
     @PostMapping("/{jobId}/refer-friend")
-    public ResponseEntity<ApiResponse> referFriend(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId, @Valid @RequestBody JobReferralRequestDTO dto) throws BadRequestException, MessagingException {
+    public ResponseEntity<ApiResponse> referFriend(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId, @Valid @RequestBody JobReferralRequestDTO dto) throws BadRequestException {
         jobReferralService.createReferral(jobId, user, dto);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job referred to emails successfully", null));
     }
