@@ -26,7 +26,7 @@ import {
   ReferFriendSchema,
   type ReferFriendSchemaType,
 } from "@/lib/schemas/job-schema";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useDocumentMutation } from "@/api/mutations/document";
 import { useCreateJobReferralMutation } from "@/api/mutations/job";
@@ -37,12 +37,12 @@ const formFields: ICustomFormField<ReferFriendSchemaType> = [
   {
     label: "Name",
     key: "name",
-    placeholder: "Enter name (optional)",
+    placeholder: "Enter name",
   },
   {
-    label: "email",
+    label: "Email (recommended)",
     key: "email",
-    placeholder: "Enter email",
+    placeholder: "Enter email (optional)",
   },
   {
     label: "Short Note",
@@ -52,15 +52,21 @@ const formFields: ICustomFormField<ReferFriendSchemaType> = [
 ];
 
 export const ReferFriendDialogForm = ({ jobId }: { jobId: number }) => {
+  const [open, setOpen] = useState(false);
   const [files, setFiles] = useState<FileList | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
+  const {
+    mutateAsync: referFriend,
+    isPending,
+    isSuccess,
+  } = useCreateJobReferralMutation();
   const { mutateAsync: handlFileUpload, isPending: isFileUploading } =
     useDocumentMutation();
-  const { mutate: referFriend, isPending } = useCreateJobReferralMutation();
 
   const form = useForm({
     resolver: zodResolver(ReferFriendSchema),
     defaultValues: {
+      jobId,
       name: "",
       email: "",
       shortNote: "",
@@ -68,9 +74,15 @@ export const ReferFriendDialogForm = ({ jobId }: { jobId: number }) => {
     },
   });
 
+  useEffect(() => {
+    if (!isSuccess) return;
+    form.reset();
+    setOpen(false);
+  }, [isSuccess]);
+
   const onFormSubmit = async (values: ReferFriendSchemaType) => {
     if (!files || files?.length < 0) {
-      setFileError("CV is required");
+      setFileError("CV file is required");
       return;
     }
 
@@ -79,13 +91,15 @@ export const ReferFriendDialogForm = ({ jobId }: { jobId: number }) => {
 
     const newValue = {
       ...values,
-      jdFileId: data.id,
+      cvFileId: data.id,
     };
-    referFriend(newValue);
+    const created = await referFriend(newValue);
+    console.log(created);
+    form.reset();
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="flex-1 rounded-xl">
           <UserPlusIcon />
@@ -132,7 +146,11 @@ export const ReferFriendDialogForm = ({ jobId }: { jobId: number }) => {
             </DialogClose>
             <Button
               type="submit"
-              disabled={isFileUploading || isPending || !form.formState.isDirty}
+              disabled={
+                isFileUploading ||
+                isPending ||
+                (!form.formState.isDirty && !files)
+              }
               size={"sm"}
             >
               {isFileUploading || isPending

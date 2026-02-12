@@ -52,16 +52,21 @@ export const ReferByEmailsDialogForm = ({ jobId }: { jobId: number }) => {
     },
   });
 
-  useEffect(() => {
-    if (isSuccess) setOpen(false);
-    form.reset(form.getValues());
-  }, [isSuccess]);
 
   useEffect(() => {
-    [1, 2, 3, 4, 5].forEach(() => {
-      append({ email: "" });
-    });
-  }, []);
+    if (open) {
+      form.reset();
+      [1, 2, 3].forEach(() => {
+        append({ email: "" });
+      });
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (!isSuccess) return;
+    setOpen(false);
+    form.reset();
+  }, [isSuccess]);
 
   const onFormSubmit = (values: ReferFriendByEmailsSchemaType) => {
     referFriend(values);
@@ -84,7 +89,10 @@ export const ReferByEmailsDialogForm = ({ jobId }: { jobId: number }) => {
       ?.filter((ele) => !ele.includes("\n"))
       .map((ele) => ele.trim());
 
-    let finalValues: string[] = [];
+    let finalValues: string[] = form
+      .getValues()
+      .emails.filter(({ email }) => email)
+      .map(({ email }) => email.trim());
     if (newLineValues?.length) {
       finalValues = newLineValues.flat();
     }
@@ -115,7 +123,7 @@ export const ReferByEmailsDialogForm = ({ jobId }: { jobId: number }) => {
               <DialogDescription hidden></DialogDescription>
             </DialogHeader>
 
-            <ScrollArea className="max-h-[50vh] min-h-[50vh] pr-1">
+            <ScrollArea className="max-h-72 min-h-72 pr-1">
               <FieldSet className="gap-4">
                 <FieldLegend variant="label">Email Addresses</FieldLegend>
                 <FieldDescription>

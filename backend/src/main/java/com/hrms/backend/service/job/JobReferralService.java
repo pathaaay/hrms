@@ -68,7 +68,6 @@ public class JobReferralService {
 
     public void sendJobMail(Set<String> emails, User user, Job job) throws MessagingException, BadRequestException {
         String[] toEmails = new String[emails.size()];
-        String applyLink = frontendUrl + "/jobs/" + job.getId() + "/apply?code=" + helper.generateReferCode(user);
         String htmlBody = """
                 <div>
                 <div>You have got a job referral</div>
@@ -78,9 +77,8 @@ public class JobReferralService {
                 </div>
                 <div>Job Title: %s</div>
                 <div>Job Summary: %s</div>
-                <div>Apply : <a href='%s'>Click here</a></div>
                 </div>
-                """.formatted(user.getName(), user.getEmail(), job.getTitle(), job.getDescription(), applyLink);
+                """.formatted(user.getName(), user.getEmail(), job.getTitle(), job.getDescription());
 
         mailService.sendEmail(emails.toArray(toEmails), "New Job referral by " + user.getName(), htmlBody, job.getJdDocument());
     }
