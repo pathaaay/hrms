@@ -16,7 +16,7 @@ export const useCreateJobMutation = () => {
     mutationFn: createJob,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["all-jobs"] });
-      toast.success("Job created successfullu");
+      toast.success("Job created successfully");
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(
@@ -100,14 +100,14 @@ export const useCreateJobReferralMutation = () => {
   return useMutation({
     mutationFn: createJobReferral,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["all-jobs"] });
-      toast.success("Job created successfullu");
+      queryClient.invalidateQueries({ queryKey: ["all-referrals"] });
+      toast.success("Referral added successfully");
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(
         error?.response?.data.message
           ? "Error: " + error?.response?.data.message
-          : "Failed to create job",
+          : "Failed to add referral",
       );
     },
   });
