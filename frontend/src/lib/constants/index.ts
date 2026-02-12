@@ -22,9 +22,23 @@ export const navLinks = [
     icon: DicesIcon,
   },
   {
-    url: "/jobs",
+    url: "",
     label: "Jobs",
     icon: BriefcaseBusinessIcon,
+    items: [
+      {
+        url: "/jobs",
+        label: "All",
+      },
+      {
+        url: "/jobs/referrals",
+        label: "Referrals",
+      },
+      {
+        url: "/jobs/review-referrals",
+        label: "Review Details",
+      },
+    ],
   },
 ];
 
