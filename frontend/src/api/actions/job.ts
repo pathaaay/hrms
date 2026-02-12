@@ -51,7 +51,7 @@ export const referFriendByEmails = async (
 };
 
 export const createJobReferral = async (values: ReferFriendSchemaType) => {
-  const res = await apiService.post(`${JOBS_ENDPOINT}/refer-friend`, {
+  const res = await apiService.post(`${JOBS_ENDPOINT}/${values.jobId}/refer-friend`, {
     ...values,
   });
   return res.data;

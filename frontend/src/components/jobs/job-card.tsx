@@ -81,14 +81,14 @@ export const JobCard = ({ job }: JobCardProps) => {
         />
       </CardContent>
       <CardFooter className="flex items-center gap-1">
+        <ReferFriendDialogForm jobId={job.id}/>
+        <ReferByEmailsDialogForm jobId={job.id} />
         <CopyToClipboardButton
           text={referLink}
           onCopy={() => toast.success("Referral link copied to clipboard!")}
           btnText={<LinkIcon />}
           btnTextCopied={<ClipboardCheckIcon />}
         />
-        <ReferByEmailsDialogForm jobId={job.id} />
-        <ReferFriendDialogForm jobId={job.id}/>
       </CardFooter>
     </Card>
   );
