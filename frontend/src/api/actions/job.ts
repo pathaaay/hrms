@@ -38,8 +38,13 @@ export const toggleJob = async (jobId: number) => {
 export const referFriendByEmails = async (
   data: ReferFriendByEmailsSchemaType,
 ) => {
+  const emails = data.emails.map(({ email }) => email);
+
   const res = await apiService.post(
     `${JOBS_ENDPOINT}/${data.jobId}/refer-by-emails`,
+    {
+      emails,
+    },
   );
   return res.data;
 };
