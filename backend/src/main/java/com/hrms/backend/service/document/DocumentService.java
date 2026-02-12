@@ -50,6 +50,7 @@ public class DocumentService {
             document.setUploadedBy(user);
             document.setFilePath(fileName);
             document.setFileType(fileType);
+            document.setFileOriginalName(file.getOriginalFilename());
 
             documentRepo.save(document);
             return document;

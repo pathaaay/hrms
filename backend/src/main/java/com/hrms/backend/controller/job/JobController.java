@@ -7,6 +7,7 @@ import com.hrms.backend.entities.user.User;
 import com.hrms.backend.service.job.JobReferralService;
 import com.hrms.backend.service.job.JobService;
 import com.hrms.backend.utilities.ApiResponse;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -59,8 +60,8 @@ public class JobController {
     }
 
     @PostMapping("/{jobId}/refer-by-emails")
-    public ResponseEntity<ApiResponse> referByEmails(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId, @Valid @RequestBody JobReferralEmailRequestDTO emails) throws BadRequestException {
-        jobReferralService.referJobToEmails(jobId, user,emails);
+    public ResponseEntity<ApiResponse> referByEmails(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId, @Valid @RequestBody JobReferralEmailRequestDTO emails) throws BadRequestException, MessagingException {
+        jobReferralService.referJobToEmails(jobId, user, emails);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job referred to emails successfully", null));
     }
 }

@@ -6,7 +6,6 @@ import com.hrms.backend.entities.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -47,8 +46,7 @@ public class JobReferral {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @Column(name = "is_deleted")
-    @ColumnDefault("0")
     @JsonIgnore
+    @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
 }

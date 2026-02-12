@@ -19,6 +19,9 @@ public class Document {
     @Column(name = "file_type")
     private String fileType;
 
+    @Column(name = "file_original_name", columnDefinition = "nvarchar(500)")
+    private String fileOriginalName;
+
     @Column(name = "file_path", columnDefinition = "nvarchar(500)")
     private String filePath;
 

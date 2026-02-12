@@ -4,13 +4,12 @@ import com.hrms.backend.dto.user.response.UserProfileResponseDTO;
 import com.hrms.backend.entities.user.UserProfile;
 import org.springframework.stereotype.Component;
 
-@Component
 public class UserProfileDTOMapper {
 
     private UserProfileDTOMapper() {
     }
 
-    public UserProfileResponseDTO convertToDTO(UserProfile profile) {
+    public static UserProfileResponseDTO convertToDTO(UserProfile profile) {
         UserProfileResponseDTO dto = new UserProfileResponseDTO();
 
         dto.setName(profile.getUser().getName());
@@ -21,7 +20,7 @@ public class UserProfileDTOMapper {
         dto.setDepartment(profile.getDepartment().getName());
         dto.setInterestedGames(profile.getInterestedGames());
         dto.setTimezone(profile.getTimezone().getName());
-        dto.setManagerId(profile.getManager().getId());
+        dto.setManager(profile.getManager());
         dto.setDateOfBirth(profile.getDateOfBirth());
         dto.setDateOfJoining(profile.getDateOfJoining());
         dto.setCity(profile.getCity().getName());

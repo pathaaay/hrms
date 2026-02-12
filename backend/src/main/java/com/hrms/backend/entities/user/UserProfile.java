@@ -26,7 +26,7 @@ public class UserProfile {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "manager_id")
     private User manager;
 

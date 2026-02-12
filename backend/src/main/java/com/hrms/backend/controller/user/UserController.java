@@ -22,24 +22,24 @@ import java.util.List;
 @RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
-    private final UserProfileService userService;
+    private final UserProfileService userProfileService;
     private final GameBookingService gameBookingService;
 
     @GetMapping()
     public ResponseEntity<ApiResponse<UserProfileResponseDTO>> getUserProfile(@AuthenticationPrincipal User user) throws BadRequestException {
-        return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userService.getUserProfile(user)));
+        return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userProfileService.getUserProfile(user)));
     }
 
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<UserProfileResponseDTO>>> getAllUsers(@RequestParam(required = false) Long gameId) {
         if (gameId != null)
-            return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userService.getAllUsersByGameId(gameId)));
-        return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userService.getAllUsers()));
+            return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userProfileService.getAllUsersByGameId(gameId)));
+        return ResponseEntity.ok(new ApiResponse<>(true, "User get successfully", userProfileService.getAllUsers()));
     }
 
     @PostMapping("/update-games")
     public ResponseEntity<ApiResponse> updateGameIds(@AuthenticationPrincipal User user, @Valid @RequestBody UpdateGameRequestDTO dto) throws BadRequestException {
-        userService.updateUserInterestedGames(user, dto);
+        userProfileService.updateUserInterestedGames(user, dto);
         return ResponseEntity.ok(new ApiResponse(true, "Games updated successfully", null));
     }
 

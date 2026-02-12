@@ -42,7 +42,7 @@ public class GameBooking {
     @Column(name = "booked_slot_date")
     private Date bookedSlotDate;
 
-    @Column(name = "is_deleted")
+    @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
 
 }
