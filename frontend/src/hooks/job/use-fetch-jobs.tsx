@@ -15,7 +15,7 @@ export const useFetchJobs = () => {
   });
 
   useEffect(() => {
-    if (jobs?.length && jobs?.length > 0) {
+    if (jobs) {
       const payload = jobs.map((job) => ({
         ...job,
         userId: userProfile?.userId,

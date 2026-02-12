@@ -13,7 +13,7 @@ export const useFetchGames = () => {
     queryFn: getAllGames,
   });
   useEffect(() => {
-    if (games?.length && games?.length > 0) dispatch(setGames(games));
+    if (games) dispatch(setGames(games));
     return () => {};
   }, [games, dispatch]);
 };

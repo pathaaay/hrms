@@ -1,4 +1,4 @@
-package com.hrms.backend.dto.request;
+package com.hrms.backend.dto.user.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

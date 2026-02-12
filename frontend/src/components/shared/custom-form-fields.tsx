@@ -50,6 +50,7 @@ export const CustomFormFields = <T extends FieldValues>({
                   <MultiSelect
                     options={options || []}
                     defaultValue={field.value}
+                    className="dark:bg-input/30"
                     onValueChange={(value) => {
                       field.onChange(value);
                     }}

@@ -708,7 +708,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"gameId\": 1,\r\n    \"userIds\": [\r\n        1,2\r\n    ],\r\n    \"startTime\": 1,\r\n    \"endTime\": 2,\r\n    \"leaderId\": 1,\r\n    \"bookingDate\": \"2026-02-10\"\r\n}",
+              "raw": "{\r\n    \"gameId\": 1,\r\n    \"userIds\": [\r\n        1,2\r\n    ],\r\n    \"startTime\": 1,\r\n    \"endTime\": 2,\r\n    \"leaderId\": 1,\r\n    \"bookingDate\": \"2026-02-15\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -948,7 +948,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"Pool\",\r\n    \"startTime\": 10,\r\n    \"endTime\": 22,\r\n    \"bookingCycleHours\": 24,\r\n    \"maxSlotDurationInMinutes\": 60,\r\n    \"maxPlayersPerSlot\": 4\r\n}",
+              "raw": "{\r\n    \"name\": \"Pool\",\r\n    \"startTime\": 10,\r\n    \"endTime\": 22,\r\n    \"bookingCycleHours\": 24,\r\n    \"maxSlotDurationInMinutes\": 60,\r\n    \"maxPlayersPerSlot\": 4,\r\n    \"isActive\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1249,14 +1249,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/games/delete-slot/3",
+              "raw": "{{base_url}}/games/delete-slot/20004",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "games",
                 "delete-slot",
-                "3"
+                "20004"
               ]
             }
           },
@@ -1645,7 +1645,7 @@
               ],
               "cookie": [],
               "responseTime": "2026-02-10T13:41:14.236Z",
-              "body": "{\n    \"success\": true,\n    \"message\": \"Jobs get successfully\",\n    \"data\": [\n        {\n            \"id\": 5,\n            \"title\": \"Software Engineer updated\",\n            \"description\": \"Hello job desc updated\",\n            \"createdBy\": {\n                \"id\": 1,\n                \"name\": \"Aayush Pathak\",\n                \"email\": \"aayush.pathak@roimaint.com\",\n                \"role\": {\n                    \"id\": 4,\n                    \"name\": \"intern\"\n                }\n            },\n            \"jdDocument\": {\n                \"id\": 2,\n                \"fileType\": \"\",\n                \"filePath\": \"f97b236a-b18a-42ce-925d-cdad05384745Readme.md\",\n                \"uploadedBy\": {\n                    \"id\": 1,\n                    \"name\": \"Aayush Pathak\",\n                    \"email\": \"aayush.pathak@roimaint.com\",\n                    \"role\": {\n                        \"id\": 4,\n                        \"name\": \"intern\"\n                    }\n                }\n            },\n            \"defaultHrEmail\": \"ayush@gmail.com\",\n            \"createdAt\": \"2026-02-09T18:30:00.000+00:00\"\n        }\n    ]\n}"
+              "body": "{\n    \"success\": true,\n    \"message\": \"Jobs get successfully\",\n    \"data\": [\n        {\n            \"id\": 5,\n            \"title\": \"Software Engineer updated\",\n            \"description\": \"Hello job desc updated\",\n            \"createdBy\": {\n                \"id\": 1,\n                \"name\": \"Aayush Pathak\",\n                \"email\": \"aayush.pathak@roimaint.com\",\n                \"role\": {\n                    \"id\": 4,\n                    \"name\": \"intern\"\n                }\n            },\n            \"jdDocument\": {\n                \"id\": 2,\n                \"fileType\": \"\",\n                \"filePath\": \"f97b236a-b18a-42ce-925d-cdad05384745Readme.md\",\n                \"uploadedBy\": {\n                    \"id\": 1,\n                    \"name\": \"Aayush Pathak\",\n                    \"email\": \"aayush.pathak@roimaint.com\",\n                    \"role\": {\n                        \"id\": 4,\n                        \"name\": \"intern\"\n                    }\n                }\n            },\n            \"defaultHrEmail\": \"ayush@gmail.com\",\n            \"   \": \"2026-02-09T18:30:00.000+00:00\"\n        }\n    ]\n}"
             }
           ]
         },

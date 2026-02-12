@@ -35,6 +35,12 @@ import { useJob } from "@/hooks/job/use-job";
 
 const formFields: ICustomFormField<JobSchemaType> = [
   {
+    label: "Active",
+    key: "isActive",
+    type: "switch",
+    className: "border my-1 p-2 rounded-md flex! flex-row! dark:bg-input/30",
+  },
+  {
     label: "Job Title",
     key: "title",
     placeholder: "Enter job title",
@@ -87,6 +93,7 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
       description: "",
       jdFileId: null,
       reviewerIds: [],
+      isActive: true,
     },
   });
 

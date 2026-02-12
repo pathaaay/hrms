@@ -1,14 +1,16 @@
 package com.hrms.backend.mappers;
 
-import com.hrms.backend.dto.response.UserProfileResponseDTO;
+import com.hrms.backend.dto.user.response.UserProfileResponseDTO;
 import com.hrms.backend.entities.user.UserProfile;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserProfileDTOMapper {
 
     private UserProfileDTOMapper() {
     }
 
-    public static UserProfileResponseDTO convertToDto(UserProfile profile) {
+    public UserProfileResponseDTO convertToDTO(UserProfile profile) {
         UserProfileResponseDTO dto = new UserProfileResponseDTO();
 
         dto.setName(profile.getUser().getName());
@@ -25,8 +27,7 @@ public class UserProfileDTOMapper {
         dto.setCity(profile.getCity().getName());
         dto.setState(profile.getCity().getState().getName());
         dto.setCountry(profile.getCity().getState().getCountry().getName());
-
-
+        
         return dto;
     }
 }

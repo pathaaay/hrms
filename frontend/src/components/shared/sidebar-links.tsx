@@ -1,4 +1,3 @@
-
 import {
   SidebarGroup,
   SidebarMenu,
@@ -16,7 +15,7 @@ export function SidebarLinks() {
           <SidebarMenuItem key={item.label}>
             <SidebarMenuButton tooltip={item.label} asChild>
               <NavLink
-                className={"[.active]:bg-secondary [.active]:text-primary"}
+                className={"[.active]:bg-primary/20 [.active]:text-primary"}
                 to={item.url}
               >
                 <item.icon />

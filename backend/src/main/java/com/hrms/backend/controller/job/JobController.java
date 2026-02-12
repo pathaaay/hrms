@@ -1,7 +1,7 @@
 package com.hrms.backend.controller.job;
 
-import com.hrms.backend.dto.request.JobRequestDTO;
-import com.hrms.backend.dto.response.JobResponseDTO;
+import com.hrms.backend.dto.job.request.JobRequestDTO;
+import com.hrms.backend.dto.job.response.JobResponseDTO;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.service.job.JobService;
 import com.hrms.backend.utilities.ApiResponse;

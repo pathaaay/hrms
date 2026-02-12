@@ -26,3 +26,8 @@ export const deleteJob = async (jobId: number) => {
   const res = await apiService.delete(`${JOBS_ENDPOINT}/${jobId}`);
   return res.data;
 };
+
+export const toggleJob = async (jobId: number) => {
+  const res = await apiService.patch(`${JOBS_ENDPOINT}/${jobId}/toggle`);
+  return res.data;
+};

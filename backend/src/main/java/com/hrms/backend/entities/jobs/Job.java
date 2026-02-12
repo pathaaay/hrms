@@ -50,6 +50,5 @@ public class Job {
     private Set<User> jobReviewers;
 
     @Column(name = "is_active")
-    @ColumnDefault("1")
     private Boolean isActive;
 }
