@@ -1,6 +1,7 @@
 package com.hrms.backend.controller.job;
 
 import com.hrms.backend.dto.job.request.JobReferralEmailRequestDTO;
+import com.hrms.backend.dto.job.request.JobReferralRequestDTO;
 import com.hrms.backend.dto.job.request.JobRequestDTO;
 import com.hrms.backend.dto.job.response.JobResponseDTO;
 import com.hrms.backend.entities.user.User;
@@ -62,6 +63,12 @@ public class JobController {
     @PostMapping("/{jobId}/refer-by-emails")
     public ResponseEntity<ApiResponse> referByEmails(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId, @Valid @RequestBody JobReferralEmailRequestDTO emails) throws BadRequestException, MessagingException {
         jobReferralService.referJobToEmails(jobId, user, emails);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job referred to emails successfully", null));
+    }
+
+    @PostMapping("/{jobId}/refer-friend")
+    public ResponseEntity<ApiResponse> referFriend(@AuthenticationPrincipal User user, @PathVariable("jobId") Long jobId, @Valid @RequestBody JobReferralRequestDTO dto) throws BadRequestException, MessagingException {
+        jobReferralService.createReferral(jobId, user, dto);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Job referred to emails successfully", null));
     }
 }

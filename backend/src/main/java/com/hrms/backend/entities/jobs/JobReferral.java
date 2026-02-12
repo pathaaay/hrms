@@ -19,8 +19,6 @@ public class JobReferral {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
-    @Column(nullable = false)
     private String email;
 
     @Column(name = "short_note")
@@ -31,7 +29,7 @@ public class JobReferral {
     private JobReviewStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "shared_by", nullable = false)
+    @JoinColumn(name = "shared_by_id", nullable = false)
     private User sharedBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,7 +38,7 @@ public class JobReferral {
 
     @OneToOne
     @JoinColumn(name = "cv_document_id")
-    private Document cvDocumentId;
+    private Document cvFile;
 
     @CreationTimestamp
     @Column(name = "created_at")
