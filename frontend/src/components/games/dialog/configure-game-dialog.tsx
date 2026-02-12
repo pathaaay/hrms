@@ -103,7 +103,7 @@ export function ConfigureGameDialog({ gameId }: { readonly gameId: number }) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen} modal={true}>
       <form onSubmit={form.handleSubmit(onFormSubmit)}>
         <DialogTrigger asChild>
           <Button variant="outline" className="flex-1 rounded-xl">

@@ -22,6 +22,7 @@ import { CopyToClipboardButton } from "../ui/copy-to-clipboard";
 import { useUser } from "@/hooks/user/use-user";
 import toast from "react-hot-toast";
 import { ReferByEmailsDialogForm } from "./refer-email-dialog-form";
+import { ReferFriendDialogForm } from "./refer-friend-dialog-form";
 
 interface JobCardProps {
   job: IJob;
@@ -87,6 +88,7 @@ export const JobCard = ({ job }: JobCardProps) => {
           btnTextCopied={<ClipboardCheckIcon />}
         />
         <ReferByEmailsDialogForm jobId={job.id} />
+        <ReferFriendDialogForm jobId={job.id}/>
       </CardFooter>
     </Card>
   );

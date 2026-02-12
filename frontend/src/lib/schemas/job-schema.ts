@@ -27,3 +27,12 @@ export const ReferFriendByEmailsSchema = z.object({
 export type ReferFriendByEmailsSchemaType = z.infer<
   typeof ReferFriendByEmailsSchema
 >;
+
+export const ReferFriendSchema = z.object({
+  name: z.string(),
+  email: z.email(),
+  cvFileId: z.number().nullable(),
+  shortNote: z.string(),
+});
+
+export type ReferFriendSchemaType = z.infer<typeof ReferFriendSchema>;

@@ -2,6 +2,7 @@ import { apiService } from "@/lib/axios";
 import type {
   JobSchemaType,
   ReferFriendByEmailsSchemaType,
+  ReferFriendSchemaType,
 } from "@/lib/schemas/job-schema";
 
 const JOBS_ENDPOINT = "/jobs";
@@ -46,5 +47,12 @@ export const referFriendByEmails = async (
       emails,
     },
   );
+  return res.data;
+};
+
+export const createJobReferral = async (values: ReferFriendSchemaType) => {
+  const res = await apiService.post(`${JOBS_ENDPOINT}/refer-friend`, {
+    ...values,
+  });
   return res.data;
 };
