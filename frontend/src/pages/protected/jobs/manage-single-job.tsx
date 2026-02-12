@@ -7,16 +7,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 export const ManageSingleJob = () => {
-  const canCreateJob = useHasRole(["hr"]);
+  const canManageJob = useHasRole(["hr"]);
   const { isAuthenticated } = useUser();
   const [open, setOpen] = useState(true);
   const { jobId } = useParams();
 
   useEffect(() => {
-    if (isAuthenticated && !canCreateJob) {
+    if (isAuthenticated && !canManageJob) {
       emitGoBack("/jobs");
     }
-  }, [isAuthenticated, canCreateJob]);
+  }, [isAuthenticated, canManageJob]);
 
   useEffect(() => {
     if (!open) {
@@ -26,10 +26,9 @@ export const ManageSingleJob = () => {
     }
   }, [open]);
 
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-        <ManageJobForm jobId={jobId} />
+      <ManageJobForm jobId={jobId} />
     </Dialog>
   );
 };

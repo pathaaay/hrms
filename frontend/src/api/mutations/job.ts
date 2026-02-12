@@ -3,6 +3,7 @@ import type { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import {
   createJob,
+  createJobReferral,
   deleteJob,
   referFriendByEmails,
   toggleJob,
@@ -90,6 +91,23 @@ export const useReferFriendByEmailsMutation = () => {
         error?.response?.data.message
           ? "Error: " + error?.response?.data.message
           : "Failed to refer friend",
+      );
+    },
+  });
+};
+
+export const useCreateJobReferralMutation = () => {
+  return useMutation({
+    mutationFn: createJobReferral,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-jobs"] });
+      toast.success("Job created successfullu");
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(
+        error?.response?.data.message
+          ? "Error: " + error?.response?.data.message
+          : "Failed to create job",
       );
     },
   });

@@ -193,7 +193,7 @@ export const ManageJobForm = ({ jobId }: { jobId?: string }) => {
               formFields={fields}
             />
             <Field data-invalid={fileError} className="gap-1">
-              <FieldLabel htmlFor="picture">JD Document (.pdf)</FieldLabel>
+              <FieldLabel data-invalid={fileError} htmlFor="picture">JD Document (.pdf)</FieldLabel>
               <Input
                 onChange={(e) => {
                   setFileError("");
