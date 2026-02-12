@@ -5,7 +5,8 @@ import com.hrms.backend.entities.game.Game;
 import com.hrms.backend.entities.game.GameBooking;
 import com.hrms.backend.entities.jobs.Job;
 import com.hrms.backend.entities.jobs.JobReferral;
-import com.hrms.backend.entities.jobs.JobStatus;
+import com.hrms.backend.entities.jobs.JobReviewStatus;
+import com.hrms.backend.entities.jobs.ReferralReviewStatus;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.job.JobReferralRepo;
 import com.hrms.backend.service.mail.MailService;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,17 +25,19 @@ import java.util.Set;
 public class JobReferralService {
     private final JobService jobService;
     private final MailService mailService;
+    private final JobReviewStatusService jobReviewStatusService;
     private final JobReferralRepo jobReferralRepo;
 
     public void referJobToEmails(Long jobId, User user, JobReferralEmailRequestDTO emails) throws BadRequestException {
         Job job = jobService.findById(jobId, true);
+        JobReviewStatus status = jobReviewStatusService.findStatusByName(ReferralReviewStatus.NEW);
 
         List<JobReferral> referrals =
                 emails.getEmails().stream().map(email -> {
                     JobReferral referral = new JobReferral();
                     referral.setEmail(email);
                     referral.setSharedBy(user);
-                    referral.setStatus(JobStatus.NEW);
+                    referral.setStatus(status);
                     referral.setJob(job);
                     return referral;
                 }).toList();

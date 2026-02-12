@@ -1,10 +1,12 @@
 package com.hrms.backend.entities.jobs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hrms.backend.entities.document.Document;
 import com.hrms.backend.entities.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -18,21 +20,23 @@ public class JobReferral {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Column(nullable = false)
     private String email;
 
     @Column(name = "short_note")
     private String shortNote;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name="status")
-    private JobStatus status;
+    @ManyToOne
+    @JoinColumn(name = "status_id", nullable = false)
+    private JobReviewStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "shared_by")
+    @JoinColumn(name = "shared_by", nullable = false)
     private User sharedBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_id")
+    @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
     @OneToOne
@@ -43,6 +47,8 @@ public class JobReferral {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @Column(name = "is_deleted", nullable = false, columnDefinition = "BIT DEFAULT 0")
+    @Column(name = "is_deleted")
+    @ColumnDefault("0")
+    @JsonIgnore
     private Boolean isDeleted;
 }
