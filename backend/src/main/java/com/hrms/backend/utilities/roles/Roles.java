@@ -1,4 +1,4 @@
-package com.hrms.backend.utilities;
+package com.hrms.backend.utilities.roles;
 
 public enum Roles {
     MANAGER,
