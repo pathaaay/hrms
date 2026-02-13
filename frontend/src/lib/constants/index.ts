@@ -56,8 +56,8 @@ export const navLinks = [
         label: "Referrals",
       },
       {
-        url: "/review-referrals",
-        label: "Review Details",
+        url: "/assigned-referrals",
+        label: "Assinged Referrals",
       },
     ],
   },
