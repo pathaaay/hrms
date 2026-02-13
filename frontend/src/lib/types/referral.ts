@@ -1,3 +1,5 @@
+import type { IUser } from "./user";
+
 export type ReferralStatusType = "NEW" | "IN_REVIEW" | "APPROVED" | "REJECTED";
 
 export const ReferralStatusTypes = {
@@ -16,4 +18,12 @@ export interface IReferral {
   createdAt: string;
   jobTitle: string;
   jdFilePath: string;
+}
+
+export interface IReferralStatusHistory {
+  id: number;
+  oldStatus: string;
+  newStatus: string;
+  changedBy: IUser;
+  createdAt: Date;
 }

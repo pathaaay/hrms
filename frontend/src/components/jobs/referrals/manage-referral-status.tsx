@@ -8,6 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { queryClient } from "@/lib/tanstack-query/query-client";
 import {
   ReferralStatusTypes,
   type IReferral,
@@ -18,14 +19,19 @@ import { Loader, PencilIcon } from "lucide-react";
 import { useState } from "react";
 
 export const ManageReferralStatus = ({ referral }: { referral: IReferral }) => {
-  console.log(referral);
+  const [open, setOpen] = useState(false);
+
   const { mutateAsync: changeStatus, isPending } =
     useChangeReferralStatusMutation();
-  const [open, setOpen] = useState(false);
+
   const onStatusClick = async (status: ReferralStatusType) => {
     await changeStatus({ referralId: referral.id, status });
+    queryClient.invalidateQueries({
+      queryKey: [`referral-history-${referral.id}`],
+    });
     setOpen(false);
   };
+
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>

@@ -8,6 +8,13 @@ export const getAllReferrals = async () => {
   return res.data;
 };
 
+export const getReferralStatusHistory = async (referralId: number) => {
+  const res = await apiService.get(
+    `${REFERRALS_ENDPOINT}/${referralId}/status-logs`,
+  );
+  return res.data;
+};
+
 export const getAllReferralsAssignedForReview = async () => {
   const res = await apiService.get(`${REFERRALS_ENDPOINT}/assigned-for-review`);
   return res.data;
