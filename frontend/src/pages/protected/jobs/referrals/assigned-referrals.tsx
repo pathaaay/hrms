@@ -4,13 +4,15 @@ import { Button } from "@/components/ui/button";
 import { ENV } from "@/lib/ENV";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, HistoryIcon } from "lucide-react";
 import { NavLink } from "react-router";
 import { ReferralStatusTypes, type IReferral } from "@/lib/types/referral";
 import { Badge } from "@/components/ui/badge";
 import { useFetchAssignedReferrals } from "@/hooks/job/referral/use-fetch-assigned-referrals";
 import { cn } from "@/lib/utils";
 import { ManageReferralStatus } from "@/components/jobs/referrals/manage-referral-status";
+import { ReferralStatusHistory } from "@/components/jobs/referrals/status-history";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 let columns: ColumnDef<IReferral>[] = [
   {
@@ -154,6 +156,16 @@ let columns: ColumnDef<IReferral>[] = [
             {status.split("_").join(" ").toLowerCase()}
           </Badge>
           <ManageReferralStatus referral={row.original} />
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" size={"xs"}>
+                <HistoryIcon />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="w-full">
+              <ReferralStatusHistory referral={row.original} />
+            </DialogContent>
+          </Dialog>
         </div>
       );
     },
