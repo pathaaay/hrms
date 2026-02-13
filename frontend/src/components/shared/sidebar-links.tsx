@@ -30,6 +30,7 @@ export function SidebarLinks() {
                 key={item.label}
                 asChild
                 className="group/collapsible"
+                defaultOpen={pathname.startsWith(item.url)}
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
