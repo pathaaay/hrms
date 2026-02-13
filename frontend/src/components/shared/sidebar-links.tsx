@@ -41,7 +41,12 @@ export function SidebarLinks() {
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.label}>
                           <SidebarMenuSubButton asChild>
-                            <NavLink className={"[.active]:bg-secondary [.active]:text-primary"} to={subItem.url}>
+                            <NavLink
+                              className={
+                                "[.active]:bg-secondary [.active]:text-primary"
+                              }
+                              to={subItem.url}
+                            >
                               <span>{subItem.label}</span>
                             </NavLink>
                           </SidebarMenuSubButton>
