@@ -2114,6 +2114,25 @@
               "body": "{\n    \"success\": true,\n    \"message\": \"Status changed successfully\"\n}"
             }
           ]
+        },
+        {
+          "name": "New Request",
+          "id": "18557f55-5323-4d86-a6cf-519d35546773",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/referrals/1tatus-logs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "referrals",
+                "1tatus-logs"
+              ]
+            }
+          },
+          "response": []
         }
       ],
       "id": "b76b9609-4361-4e31-ab77-5d274729981c"
