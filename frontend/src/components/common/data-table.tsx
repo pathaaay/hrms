@@ -137,7 +137,7 @@ const DataTable = <T,>({
                   <CustomLoader />
                 </TableCell>
               </TableRow>
-            )}{" "}
+            )}
             {isLoading || table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

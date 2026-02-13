@@ -1,5 +1,3 @@
-import { useFetchReferrals } from "@/hooks/job/referral/use-fetch-referrals";
-
 import DataTable from "@/components/common/data-table";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
 import { Button } from "@/components/ui/button";
@@ -8,9 +6,11 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ArrowUpDown } from "lucide-react";
 import { NavLink } from "react-router";
-import type { IReferral } from "@/lib/types/referral";
+import { ReferralStatusTypes, type IReferral } from "@/lib/types/referral";
 import { Badge } from "@/components/ui/badge";
 import { useFetchAssignedReferrals } from "@/hooks/job/referral/use-fetch-assigned-referrals";
+import { cn } from "@/lib/utils";
+import { ManageReferralStatus } from "@/components/jobs/referrals/manage-referral-status";
 
 let columns: ColumnDef<IReferral>[] = [
   {
@@ -54,26 +54,6 @@ let columns: ColumnDef<IReferral>[] = [
         {row.original.email || "-"}
       </div>
     ),
-  },
-  {
-    header: "Status",
-    accessorKey: "status",
-    id: "status",
-    cell: ({ row }) => (
-      <Badge
-        variant={
-          (row.original.status == "NEW" && "secondary") ||
-          (row.original.status == "REJECTED" && "destructive") ||
-          "outline"
-        }
-        className="font-medium"
-      >
-        {row.original.status.split("_").join(" ")}
-      </Badge>
-    ),
-    meta: {
-      filterVariant: "select",
-    },
   },
   {
     header: "Cv File",
@@ -151,11 +131,40 @@ let columns: ColumnDef<IReferral>[] = [
       return false;
     },
   },
+  {
+    header: "Status",
+    accessorKey: "status",
+    id: "status",
+    cell: ({ row }) => {
+      const status = row.original.status;
+      return (
+        <div className="flex items-center gap-1">
+          <Badge
+            variant={"secondary"}
+            className={cn(
+              "capitalize text-xs!",
+              status == ReferralStatusTypes.ACCEPT &&
+                "bg-green-500/20 text-green-500",
+              status == ReferralStatusTypes.REJECT &&
+                "bg-destructive/20 text-destructive",
+              status == ReferralStatusTypes.IN_REVIEW &&
+                "bg-yellow-500/20 text-yellow-500",
+            )}
+          >
+            {status.split("_").join(" ").toLowerCase()}
+          </Badge>
+          <ManageReferralStatus referral={row.original} />
+        </div>
+      );
+    },
+    meta: {
+      filterVariant: "select",
+    },
+  },
 ];
 
 export const AssignedReferrals = () => {
   const { referrals, isPending } = useFetchAssignedReferrals();
-
   return (
     <div className="flex flex-col items-center gap-2 relative">
       <GoBackBtn to={"/jobs"} />

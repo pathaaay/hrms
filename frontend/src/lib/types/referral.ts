@@ -3,8 +3,8 @@ export type ReferralStatusType = "NEW" | "IN_REVIEW" | "APPROVED" | "REJECTED";
 export const ReferralStatusTypes = {
   NEW: "NEW",
   IN_REVIEW: "IN_REVIEW",
-  APPROVED: "APPROVED",
-  REJECTED: "REJECTED",
+  ACCEPT: "ACCEPTED",
+  REJECT: "REJECTED",
 };
 
 export interface IReferral {
