@@ -2116,23 +2116,108 @@
           ]
         },
         {
-          "name": "New Request",
+          "name": "get referral status logs",
           "id": "18557f55-5323-4d86-a6cf-519d35546773",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/referrals/1tatus-logs",
+              "raw": "{{base_url}}/referrals/8/status-logs",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "referrals",
-                "1tatus-logs"
+                "8",
+                "status-logs"
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "id": "a17381a4-7fa8-49ee-b01a-231c5e79fc2f",
+              "name": "get referral status logs",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/referrals/8/status-logs",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "referrals",
+                    "8",
+                    "status-logs"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 13 Feb 2026 09:56:05 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-02-13T09:56:06.892Z",
+              "body": "{\n    \"success\": true,\n    \"message\": \"Assigned Referrals get successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"oldStatus\": \"NEW\",\n            \"newStatus\": \"IN_REVIEW\",\n            \"changedBy\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                }\n            },\n            \"createdAt\": \"2026-02-12T15:20:26.001+00:00\"\n        },\n        {\n            \"id\": 2,\n            \"oldStatus\": \"IN_REVIEW\",\n            \"newStatus\": \"ACCEPTED\",\n            \"changedBy\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                }\n            },\n            \"createdAt\": \"2026-02-13T07:57:06.924+00:00\"\n        },\n        {\n            \"id\": 3,\n            \"oldStatus\": \"ACCEPTED\",\n            \"newStatus\": \"IN_REVIEW\",\n            \"changedBy\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                }\n            },\n            \"createdAt\": \"2026-02-13T07:58:19.472+00:00\"\n        },\n        {\n            \"id\": 4,\n            \"oldStatus\": \"IN_REVIEW\",\n            \"newStatus\": \"ACCEPTED\",\n            \"changedBy\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                }\n            },\n            \"createdAt\": \"2026-02-13T07:58:21.334+00:00\"\n        },\n        {\n            \"id\": 5,\n            \"oldStatus\": \"ACCEPTED\",\n            \"newStatus\": \"REJECTED\",\n            \"changedBy\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                }\n            },\n            \"createdAt\": \"2026-02-13T07:58:23.904+00:00\"\n        },\n        {\n            \"id\": 6,\n            \"oldStatus\": \"REJECTED\",\n            \"newStatus\": \"ACCEPTED\",\n            \"changedBy\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                }\n            },\n            \"createdAt\": \"2026-02-13T08:09:06.754+00:00\"\n        },\n        {\n            \"id\": 7,\n            \"oldStatus\": \"ACCEPTED\",\n            \"newStatus\": \"REJECTED\",\n            \"changedBy\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                }\n            },\n            \"createdAt\": \"2026-02-13T08:09:43.574+00:00\"\n        },\n        {\n            \"id\": 12,\n            \"oldStatus\": \"REJECTED\",\n            \"newStatus\": \"IN_REVIEW\",\n            \"changedBy\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                }\n            },\n            \"createdAt\": \"2026-02-13T09:07:59.941+00:00\"\n        },\n        {\n            \"id\": 13,\n            \"oldStatus\": \"IN_REVIEW\",\n            \"newStatus\": \"ACCEPTED\",\n            \"changedBy\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                }\n            },\n            \"createdAt\": \"2026-02-13T09:29:57.439+00:00\"\n        }\n    ]\n}"
+            }
+          ]
         }
       ],
       "id": "b76b9609-4361-4e31-ab77-5d274729981c"
