@@ -1,9 +1,11 @@
 package com.hrms.backend.controller.job;
 
 import com.hrms.backend.dto.job.response.JobReferralResponseDTO;
+import com.hrms.backend.dto.job.response.JobReferralStatusLogResponseDTO;
 import com.hrms.backend.entities.jobs.referral.ReferralReviewStatus;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.service.job.referral.JobReferralService;
+import com.hrms.backend.service.job.referral.JobReferralStatusLogService;
 import com.hrms.backend.utilities.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReferralController {
     private final JobReferralService jobReferralService;
+    private final JobReferralStatusLogService jobReferralStatusLogService;
 
     @GetMapping()
     public ResponseEntity<ApiResponse<List<JobReferralResponseDTO>>> getAllReferrals(@AuthenticationPrincipal User user) {
@@ -30,6 +33,11 @@ public class ReferralController {
     @GetMapping("/assigned-for-review")
     public ResponseEntity<ApiResponse<List<JobReferralResponseDTO>>> getAllAssignedReferrals(@AuthenticationPrincipal User user) {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Assigned Referrals get successfully", jobReferralService.getAssignedReferrals(user)));
+    }
+
+    @GetMapping("/{referralId}/status-logs")
+    public ResponseEntity<ApiResponse<List<JobReferralStatusLogResponseDTO>>> getAllStatusLogsByReferralId(@PathVariable("referralId") Long referralId) {
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Assigned Referrals get successfully", jobReferralStatusLogService.getStatusLogsByReferralId(referralId)));
     }
 
     @PatchMapping("/{referralId}/change-status")
