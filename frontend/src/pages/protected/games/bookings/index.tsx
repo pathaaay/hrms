@@ -1,3 +1,4 @@
+import { CustomLoader } from "@/components/common/custol-loader";
 import DataTable from "@/components/common/data-table";
 import { DeleteBookingBtn } from "@/components/games/delete-booking-btn";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
@@ -163,7 +164,7 @@ const columns: ColumnDef<IGameBooking>[] = [
 
 export const UserGameBookingPage = () => {
   const { bookings, isPending } = useFetchUserGameBookings();
-  if (isPending) return;
+  if (isPending) return <CustomLoader />;
 
   return (
     <div className="flex flex-col items-center gap-2 relative">

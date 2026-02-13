@@ -17,6 +17,8 @@ import { UserGameBookingPage } from "@/pages/protected/games/bookings";
 import { ManageAllJobsPage } from "@/pages/protected/jobs/manage-all-jobs";
 import { ManageSingleJob } from "@/pages/protected/jobs/manage-single-job";
 import { JobLayout } from "@/pages/protected/jobs/job-layout";
+import { MyReferrals } from "@/pages/protected/jobs/referrals/my-referrals";
+import { ReviewReferrals } from "@/pages/protected/jobs/referrals/review-referrals";
 
 export const appRouter = createBrowserRouter([
   {
@@ -83,6 +85,14 @@ export const appRouter = createBrowserRouter([
                     element: <ManageSingleJob />,
                   },
                 ],
+              },
+              {
+                path: "referrals",
+                element: <MyReferrals />,
+              },
+              {
+                path: "review-referrals",
+                element: <ReviewReferrals />,
               },
             ],
           },

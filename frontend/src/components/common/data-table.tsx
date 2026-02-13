@@ -41,6 +41,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
+import { Skeleton } from "../ui/skeleton";
+import { CustomLoader } from "./custol-loader";
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -57,10 +59,12 @@ const DataTable = <T,>({
   data,
   columns,
   filterColumns,
+  isLoading,
 }: {
   data: T[];
   columns: ColumnDef<T>[];
   filterColumns?: string[];
+  isLoading?: boolean;
 }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -88,11 +92,20 @@ const DataTable = <T,>({
       <div className="rounded-md border">
         {filterColumns && (
           <div className="flex flex-wrap gap-3 px-4 py-6">
-            {filterColumns.map((name: string) => (
-              <div key={name} className="min-w-44">
-                <Filter column={table.getColumn(name)!} />
-              </div>
-            ))}
+            {filterColumns.map((name: string) => {
+              if (isLoading)
+                return (
+                  <div key={name} className="flex flex-col gap-1">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-9 w-44" />
+                  </div>
+                );
+              return (
+                <div key={name} className="min-w-44">
+                  <Filter column={table.getColumn(name)!} />
+                </div>
+              );
+            })}
           </div>
         )}
         <Table>
@@ -118,7 +131,14 @@ const DataTable = <T,>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={table.getAllColumns().length}>
+                  <CustomLoader />
+                </TableCell>
+              </TableRow>
+            )}{" "}
+            {isLoading || table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

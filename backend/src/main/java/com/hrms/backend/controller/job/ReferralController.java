@@ -27,7 +27,7 @@ public class ReferralController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Referrals get successfully", jobReferralService.getMyReferrals(user)));
     }
 
-    @GetMapping("/review")
+    @GetMapping("/assigned-for-review")
     public ResponseEntity<ApiResponse<List<JobReferralResponseDTO>>> getAllAssignedReferrals(@AuthenticationPrincipal User user) {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "Assigned Referrals get successfully", jobReferralService.getAssignedReferrals(user)));
     }

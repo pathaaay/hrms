@@ -4,6 +4,7 @@ import {
   LayoutDashboardIcon,
   WalletIcon,
 } from "lucide-react";
+import { ROLES } from "../types/user";
 
 export const navLinks = [
   {
@@ -20,22 +21,42 @@ export const navLinks = [
     url: "/games",
     label: "Games",
     icon: DicesIcon,
+    items: [
+      {
+        url: "",
+        label: "All",
+      },
+      {
+        url: "/bookings",
+        label: "View Bookings",
+      },
+    ],
   },
   {
-    url: "",
+    url: "/jobs",
     label: "Jobs",
     icon: BriefcaseBusinessIcon,
     items: [
       {
-        url: "/jobs",
+        url: "/",
         label: "All",
       },
       {
-        url: "/jobs/referrals",
+        url: "/manage",
+        label: "Manage",
+        requiredRoles: [ROLES.HR],
+      },
+      {
+        url: "/manage/create",
+        label: "Create Job",
+        requiredRoles: [ROLES.HR],
+      },
+      {
+        url: "/referrals",
         label: "Referrals",
       },
       {
-        url: "/jobs/review-referrals",
+        url: "/review-referrals",
         label: "Review Details",
       },
     ],

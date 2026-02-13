@@ -50,12 +50,12 @@ public class JobReferralService {
 
     public JobReferralResponseDTO convertToDTO(JobReferral referral) {
         JobReferralResponseDTO dto = modelMapper.map(referral, JobReferralResponseDTO.class);
-        if (referral.getCvFile() != null) {
-            dto.setCvFilePath(referral.getCvFile().getFilePath());
-        }
+        if (referral.getCvFile() != null) dto.setCvFilePath(referral.getCvFile().getFilePath());
+
         dto.setStatus(referral.getStatus().getName());
         dto.setJobTitle(referral.getJob().getTitle());
-        dto.setJdFilePath(referral.getJob().getJdDocument().getFilePath());
+        if (referral.getJob().getJdDocument() != null)
+            dto.setJdFilePath(referral.getJob().getJdDocument().getFilePath());
         return dto;
     }
 

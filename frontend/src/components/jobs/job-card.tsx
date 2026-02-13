@@ -6,21 +6,12 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Button } from "../ui/button";
-import {
-  BriefcaseBusinessIcon,
-  ClipboardCheckIcon,
-  FileTextIcon,
-  LinkIcon,
-  UserIcon,
-} from "lucide-react";
+import { BriefcaseBusinessIcon, FileTextIcon, UserIcon } from "lucide-react";
 import { NavLink } from "react-router";
 import { CardContentRow } from "../shared/card-content-row";
 import { cn } from "@/lib/utils";
 import type { IJob } from "@/lib/types/job";
 import { ENV } from "@/lib/ENV";
-import { CopyToClipboardButton } from "../ui/copy-to-clipboard";
-import { useUser } from "@/hooks/user/use-user";
-import toast from "react-hot-toast";
 import { ReferByEmailsDialogForm } from "./refer-email-dialog-form";
 import { ReferFriendDialogForm } from "./refer-friend-dialog-form";
 
@@ -29,15 +20,6 @@ interface JobCardProps {
 }
 
 export const JobCard = ({ job }: JobCardProps) => {
-  const { userProfile } = useUser();
-  const code =
-    userProfile &&
-    userProfile?.userId +
-      userProfile?.name?.slice(0, 2) +
-      userProfile?.email?.slice(0, 2);
-
-  const referLink = `${globalThis.window.location.href}/${job.id}/apply?code=${code}`;
-
   return (
     <Card
       className={cn(
@@ -81,14 +63,8 @@ export const JobCard = ({ job }: JobCardProps) => {
         />
       </CardContent>
       <CardFooter className="flex items-center gap-1">
-        <ReferFriendDialogForm jobId={job.id}/>
+        <ReferFriendDialogForm jobId={job.id} />
         <ReferByEmailsDialogForm jobId={job.id} />
-        <CopyToClipboardButton
-          text={referLink}
-          onCopy={() => toast.success("Referral link copied to clipboard!")}
-          btnText={<LinkIcon />}
-          btnTextCopied={<ClipboardCheckIcon />}
-        />
       </CardFooter>
     </Card>
   );

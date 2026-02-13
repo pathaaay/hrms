@@ -8,15 +8,18 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { navLinks } from "@/lib/constants";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "../ui/collapsible";
 import { ChevronRight } from "lucide-react";
+import { useUser } from "@/hooks/user/use-user";
 
 export function SidebarLinks() {
+  const { pathname } = useLocation();
+  const { userRole } = useUser();
   return (
     <SidebarGroup>
       <SidebarMenu>
@@ -38,15 +41,32 @@ export function SidebarLinks() {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <SidebarMenuSub>
-                      {item.items?.map((subItem) => (
-                        <SidebarMenuSubItem key={subItem.label}>
-                          <SidebarMenuSubButton asChild>
-                            <NavLink className={"[.active]:bg-secondary [.active]:text-primary"} to={subItem.url}>
-                              <span>{subItem.label}</span>
-                            </NavLink>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      ))}
+                      {item.items?.map((subItem) => {
+                        if (
+                          subItem?.requiredRoles?.length &&
+                          userRole &&
+                          !subItem.requiredRoles?.includes(userRole)
+                        )
+                          return;
+                        const link = item.url + subItem.url;
+                        return (
+                          <SidebarMenuSubItem key={subItem.label}>
+                            <SidebarMenuSubButton
+                              asChild
+                              isActive={pathname == link}
+                            >
+                              <NavLink
+                                className={
+                                  "data-[active=true]:bg-secondary data-[active=true]:text-primary!"
+                                }
+                                to={link}
+                              >
+                                <span>{subItem.label}</span>
+                              </NavLink>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </SidebarMenuItem>
