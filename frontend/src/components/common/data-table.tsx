@@ -131,13 +131,18 @@ const DataTable = <T,>({
             ))}
           </TableHeader>
           <TableBody>
-            {isLoading && (
-              <TableRow>
-                <TableCell colSpan={table.getAllColumns().length}>
-                  <CustomLoader />
-                </TableCell>
-              </TableRow>
-            )}
+            {isLoading &&
+              [1, 2, 3, 4, 5].map((ele) => (
+                <TableRow key={ele}>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="w-full"
+                  >
+                    <Skeleton className="h-10 w-full" />
+                  </TableCell>
+                </TableRow>
+              ))}
+
             {isLoading || table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
