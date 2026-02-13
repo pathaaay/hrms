@@ -10,6 +10,7 @@ import { ArrowUpDown } from "lucide-react";
 import { NavLink } from "react-router";
 import type { IReferral } from "@/lib/types/referral";
 import { Badge } from "@/components/ui/badge";
+import { useFetchAssignedReferrals } from "@/hooks/job/referral/use-fetch-assigned-referrals";
 
 let columns: ColumnDef<IReferral>[] = [
   {
@@ -88,7 +89,7 @@ let columns: ColumnDef<IReferral>[] = [
           to={`${ENV.DOCUMENT_PUBLIC_URL}/${row.original.cvFilePath}`}
           target="_blank"
         >
-          View
+          View CV
         </NavLink>
       </Button>
     ),
@@ -103,6 +104,28 @@ let columns: ColumnDef<IReferral>[] = [
       >
         {row.original.jobTitle}
       </div>
+    ),
+    meta: {
+      filterVariant: "select",
+    },
+  },
+  {
+    header: "JD File",
+    accessorKey: "jdFilePath",
+    cell: ({ row }) => (
+      <Button
+        variant={"outline"}
+        size={"xs"}
+        asChild
+        className="flex text-xs text-muted-foreground"
+      >
+        <NavLink
+          to={`${ENV.DOCUMENT_PUBLIC_URL}/${row.original.jdFilePath}`}
+          target="_blank"
+        >
+          View JD
+        </NavLink>
+      </Button>
     ),
     meta: {
       filterVariant: "select",
@@ -130,15 +153,15 @@ let columns: ColumnDef<IReferral>[] = [
   },
 ];
 
-export const MyReferrals = () => {
-  const { referrals, isPending } = useFetchReferrals();
+export const AssignedReferrals = () => {
+  const { referrals, isPending } = useFetchAssignedReferrals();
 
   return (
     <div className="flex flex-col items-center gap-2 relative">
       <GoBackBtn to={"/jobs"} />
       <div className="flex flex-col gap-3 w-full mt-20">
         <div className="flex items-center justify-between">
-          <div className="text-xl font-medium">Your Referrals</div>
+          <div className="text-xl font-medium">Assigned Referrals</div>
         </div>
         <div className="flex items-center">
           <DataTable
