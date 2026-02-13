@@ -15,4 +15,5 @@ export interface IReferral {
   cvFilePath: string;
   createdAt: string;
   jobTitle: string;
+  jdFilePath: string;
 }
