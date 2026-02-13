@@ -166,7 +166,7 @@ export const ManageAllJobsPage = () => {
       <GoBackBtn to={"/jobs"} />
       <div className="flex flex-col gap-3 w-full mt-20">
         <div className="flex items-center justify-between">
-          <div className="text-xl font-medium">Jobs</div>
+          <div className="text-xl font-medium">Manage Jobs</div>
           <Button variant={"secondary"} asChild>
             <NavLink to={"create"}>Create Job</NavLink>
           </Button>
