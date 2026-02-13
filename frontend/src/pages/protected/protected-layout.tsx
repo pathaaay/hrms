@@ -3,16 +3,11 @@ import { AppSidebar } from "@/components/common/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
 import { useFetchUser } from "@/hooks/user/use-fetch-user";
-import { LoaderIcon } from "react-hot-toast";
+import { CustomLoader } from "@/components/common/custol-loader";
 const ProtectedLayout = () => {
   const { isPending } = useFetchUser();
 
-  if (isPending)
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <LoaderIcon className="size-10! animate-spin" />
-      </div>
-    );
+  if (isPending) return <CustomLoader />;
 
   return (
     <SidebarProvider>

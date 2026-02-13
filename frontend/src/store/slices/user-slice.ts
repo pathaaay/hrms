@@ -1,15 +1,17 @@
-import type { IUserProfile } from "@/lib/types/user";
+import type { IUserProfile, ROLE } from "@/lib/types/user";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IInitialState {
   isAuthenticated: boolean;
   userProfile: IUserProfile | null;
+  userRole: ROLE | null;
   interestedGameIds: Array<number>;
 }
 
 const initialState = {
   isAuthenticated: false,
   userProfile: null,
+  userRole: null,
   interestedGameIds: [],
 } as IInitialState;
 
@@ -20,10 +22,11 @@ export const userSlice = createSlice({
     setUser(state, { payload }: { payload: IUserProfile }) {
       state.isAuthenticated = true;
       state.userProfile = payload;
+      state.userRole = payload.role;
       state.interestedGameIds = payload?.interestedGames?.map(({ id }) => id);
     },
   },
 });
 
 export const { setUser } = userSlice.actions;
-export const userReducer =  userSlice.reducer;
+export const userReducer = userSlice.reducer;

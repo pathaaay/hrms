@@ -12,7 +12,6 @@ import { CardContentRow } from "../shared/card-content-row";
 import { cn } from "@/lib/utils";
 import type { IJob } from "@/lib/types/job";
 import { ENV } from "@/lib/ENV";
-import { useUser } from "@/hooks/user/use-user";
 import { ReferByEmailsDialogForm } from "./refer-email-dialog-form";
 import { ReferFriendDialogForm } from "./refer-friend-dialog-form";
 
@@ -21,15 +20,6 @@ interface JobCardProps {
 }
 
 export const JobCard = ({ job }: JobCardProps) => {
-  const { userProfile } = useUser();
-  const code =
-    userProfile &&
-    userProfile?.userId +
-      userProfile?.name?.slice(0, 2) +
-      userProfile?.email?.slice(0, 2);
-
-  const referLink = `${globalThis.window.location.href}/${job.id}/apply?code=${code}`;
-
   return (
     <Card
       className={cn(

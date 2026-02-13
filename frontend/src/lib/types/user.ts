@@ -2,6 +2,13 @@ import type { IGame } from "./game";
 
 export type ROLE = "manager" | "hr" | "intern" | "employee";
 
+export const ROLES = {
+  MANAGER: "manager",
+  HR: "hr",
+  INTERN: "intern",
+  EMPLOYEE: "employee",
+};
+
 export interface IUser {
   id: number;
   name: string;

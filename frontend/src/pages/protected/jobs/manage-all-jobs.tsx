@@ -1,4 +1,5 @@
 import { useToggleJobMutation } from "@/api/mutations/job";
+import { CustomLoader } from "@/components/common/custol-loader";
 import DataTable from "@/components/common/data-table";
 import { DeleteJobBtn } from "@/components/jobs/delete-job-btn";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
@@ -156,7 +157,7 @@ export const ManageAllJobsPage = () => {
     ({ createdBy }) => createdBy.id === userProfile?.userId,
   );
 
-  if (isLoading) return;
+  if (isLoading) return <CustomLoader />;
 
   if (!canManageJob) emitGoBack("/jobs");
 
