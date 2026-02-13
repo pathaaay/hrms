@@ -1,6 +1,7 @@
 package com.hrms.backend.config;
 
 import com.hrms.backend.filters.auth.JWTFilter;
+import com.hrms.backend.utilities.roles.Roles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +21,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+        http.authorizeHttpRequests(auth ->
+                        auth.requestMatchers("/travels/**").hasAnyRole(Roles.HR.toString())
+                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/document/get/**").permitAll()
+                                .anyRequest().authenticated()
+                )
                 .cors(cors -> cors.configurationSource(request -> corsConfiguration()))
                 .csrf(csrf -> csrf.disable())
-
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

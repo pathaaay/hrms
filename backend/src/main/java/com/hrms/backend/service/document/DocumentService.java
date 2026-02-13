@@ -2,7 +2,7 @@ package com.hrms.backend.service.document;
 
 import com.hrms.backend.entities.document.Document;
 import com.hrms.backend.entities.user.User;
-import com.hrms.backend.repository.DocumentRepo;
+import com.hrms.backend.repository.document.DocumentRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
