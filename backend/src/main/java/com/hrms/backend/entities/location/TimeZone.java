@@ -1,16 +1,17 @@
-package com.hrms.backend.entities.localization;
+package com.hrms.backend.entities.location;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @Setter
 @Getter
 @Entity
 @ToString
-@Table(name = "countries")
-public class Country {
+@Table(name = "timezones")
+public class TimeZone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,7 +1,6 @@
 package com.hrms.backend.entities.travel;
 
-import com.hrms.backend.entities.game.Game;
-import com.hrms.backend.entities.localization.City;
+import com.hrms.backend.entities.location.City;
 import com.hrms.backend.entities.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
