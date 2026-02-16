@@ -4,7 +4,6 @@ import { emitGoBack } from "@/lib/helpers/events/go-back-event";
 import { ROLES } from "@/lib/types/user";
 import { CustomLoader } from "@/components/common/custol-loader";
 import DataTable from "@/components/common/data-table";
-import { DeleteJobBtn } from "@/components/jobs/delete-job-btn";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
 import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -19,8 +18,45 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { DeleteTravelBtn } from "@/components/travels/delete-travel-btn";
 
-let columns: ColumnDef<ITravel>[] = [
+export const ManageAllTravelsPage = () => {
+  const canManageJob = useHasRole([ROLES.HR]);
+  const { userProfile } = useUser();
+  const { createdTravels, isCreatedTravelsLoading } = useTravel();
+
+  let data = createdTravels.filter(
+    ({ createdBy }) => createdBy.id === userProfile?.userId,
+  );
+
+  if (isCreatedTravelsLoading) return <CustomLoader />;
+
+  if (!canManageJob) emitGoBack("/travels");
+
+  return (
+    <div className="flex flex-col items-center gap-2 relative">
+      <GoBackBtn to={"/travels"} />
+      <div className="flex flex-col gap-3 w-full mt-20">
+        <div className="flex items-center justify-between">
+          <div className="text-xl font-medium">Manage Travels</div>
+          <Button variant={"secondary"} asChild>
+            <NavLink to={"create"}>Create Travel</NavLink>
+          </Button>
+        </div>
+        <div className="flex items-center">
+          <DataTable
+            columns={columns}
+            data={data || []}
+            filterColumns={["title", "startDate", "endDate"]}
+          />
+        </div>
+        <Outlet context={{ canManageJob }} />
+      </div>
+    </div>
+  );
+};
+
+const columns: ColumnDef<ITravel>[] = [
   {
     header: "Title",
     accessorKey: "title",
@@ -77,9 +113,6 @@ let columns: ColumnDef<ITravel>[] = [
         </PopoverContent>
       </Popover>
     ),
-    meta: {
-      filterVariant: "select",
-    },
   },
   {
     header: "Start Date",
@@ -153,7 +186,7 @@ let columns: ColumnDef<ITravel>[] = [
       <div className="flex items-center gap-2">
         {
           <>
-            <DeleteJobBtn id={row.original.id} />
+            <DeleteTravelBtn id={row.original.id} />
             <Button asChild variant={"outline"} size={"icon"}>
               <NavLink to={`update/${row.original.id}`}>
                 <PencilIcon />
@@ -165,39 +198,3 @@ let columns: ColumnDef<ITravel>[] = [
     ),
   },
 ];
-
-export const ManageAllTravelsPage = () => {
-  const canManageJob = useHasRole([ROLES.HR]);
-  const { userProfile } = useUser();
-  const { createdTravels, isCreatedTravelsLoading } = useTravel();
-
-  let data = createdTravels.filter(
-    ({ createdBy }) => createdBy.id === userProfile?.userId,
-  );
-
-  if (isCreatedTravelsLoading) return <CustomLoader />;
-
-  if (!canManageJob) emitGoBack("/travels");
-
-  return (
-    <div className="flex flex-col items-center gap-2 relative">
-      <GoBackBtn to={"/travels"} />
-      <div className="flex flex-col gap-3 w-full mt-20">
-        <div className="flex items-center justify-between">
-          <div className="text-xl font-medium">Manage Travels</div>
-          <Button variant={"secondary"} asChild>
-            <NavLink to={"create"}>Create Travel</NavLink>
-          </Button>
-        </div>
-        <div className="flex items-center">
-          <DataTable
-            columns={columns}
-            data={data || []}
-            filterColumns={["title", "startDate", "endDate"]}
-          />
-        </div>
-        <Outlet context={{ canManageJob }} />
-      </div>
-    </div>
-  );
-};

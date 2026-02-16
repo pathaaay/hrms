@@ -21,3 +21,8 @@ export const updateTravel = async (values: TravelSchemaType) => {
   });
   return res.data;
 };
+
+export const deleteTravel = async (travelId: number) => {
+  const res = await apiService.delete(`${TRAVELS_ENDPOINT}/${travelId}`);
+  return res.data;
+};
