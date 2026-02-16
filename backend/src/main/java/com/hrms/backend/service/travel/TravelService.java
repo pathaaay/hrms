@@ -3,7 +3,6 @@ package com.hrms.backend.service.travel;
 import com.hrms.backend.dto.travel.request.TravelRequestDTO;
 import com.hrms.backend.dto.travel.response.TravelResponseDTO;
 import com.hrms.backend.entities.localization.City;
-import com.hrms.backend.entities.notification.Notification;
 import com.hrms.backend.entities.travel.Travel;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.travel.TravelRepo;
