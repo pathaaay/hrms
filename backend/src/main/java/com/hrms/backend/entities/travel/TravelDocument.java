@@ -28,7 +28,7 @@ public class TravelDocument {
     @JoinColumn(name = "travel_id")
     private Travel travel;
 
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "document_id")
     private Document document;
 

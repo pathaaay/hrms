@@ -3,9 +3,11 @@ package com.hrms.backend.service.travel;
 import com.hrms.backend.dto.travel.documents.request.TravelDocumentRequestDTO;
 import com.hrms.backend.dto.travel.documents.response.TravelDocumentResponseDTO;
 import com.hrms.backend.entities.travel.TravelDocument;
+import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.travel.TravelDocumentRepo;
 import com.hrms.backend.service.document.DocumentService;
 import com.hrms.backend.service.user.UserService;
+import com.hrms.backend.utilities.roles.Roles;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
@@ -30,7 +32,7 @@ public class TravelDocumentService {
         TravelDocument travelDocument = new TravelDocument();
         travelDocument.setTitle(dto.getTitle());
         travelDocument.setTravel(travelService.findById(travelId));
-        travelDocument.setAddedFor(userService.findById(dto.getAddedForUserId()));
+        if (dto.getAddedForId() != null) travelDocument.setAddedFor(userService.findById(dto.getAddedForId()));
         travelDocument.setDocument(documentService.findById(dto.getDocumentId()));
         travelDocument.setIsDeleted(false);
         return travelDocument;
@@ -40,21 +42,31 @@ public class TravelDocumentService {
         return documents.stream().map(this::convertToDTO).toList();
     }
 
-    public List<TravelDocumentResponseDTO> getDocuments(Long travelId) {
-        return convertToDTOList(travelDocumentRepo.findByIdAndIsDeleted(travelId, false));
+    public List<TravelDocumentResponseDTO> getDocuments(Long travelId, User user) {
+        if (userService.hasRole(Roles.ROLE_HR))
+            return convertToDTOList(travelDocumentRepo.findByTravel_IdAndIsDeleted(travelId, false));
+
+        return convertToDTOList(travelDocumentRepo.findByTravel_IdAndIsDeletedAndAddedFor_IdOrDocument_UploadedBy_IdOrAddedForIsNull(travelId, false, user.getId(), user.getId()));
     }
 
     public void createDocument(Long travelId, TravelDocumentRequestDTO dto) throws BadRequestException {
         travelDocumentRepo.save(convertToEntity(dto, travelId));
     }
 
+    public TravelDocument findById(Long id) throws BadRequestException {
+        return travelDocumentRepo.findByIdAndIsDeleted(id, false).orElseThrow(() -> new BadRequestException("Travel document not found"));
+    }
+
     public void updateDocument(Long travelId, Long travelDocumentId, TravelDocumentRequestDTO dto) throws BadRequestException {
+        TravelDocument oldDocument = findById(travelDocumentId);
         TravelDocument travelDocument = convertToEntity(dto, travelId);
         travelDocument.setId(travelDocumentId);
+        travelDocument.setAddedFor(oldDocument.getAddedFor());
+        travelDocument.setCreatedAt(oldDocument.getCreatedAt());
         travelDocumentRepo.save(travelDocument);
     }
 
-    public void deleteDocument(Long travelDocumentId) {
-        travelDocumentRepo.findAndDeleteById(travelDocumentId);
+    public void deleteDocument(Long travelDocumentId, User user) {
+        travelDocumentRepo.findAndDeleteById(travelDocumentId, user.getId());
     }
 }
