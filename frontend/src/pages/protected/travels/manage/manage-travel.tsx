@@ -9,28 +9,18 @@ import { GoBackBtn } from "@/components/shared/go-back-btn";
 import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { ArrowUpDown, PencilIcon } from "lucide-react";
+import { PencilIcon } from "lucide-react";
 import { NavLink, Outlet } from "react-router";
 import type { ITravel } from "@/lib/types/travel";
 import { useTravel } from "@/hooks/travel/use-travel";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
 
 let columns: ColumnDef<ITravel>[] = [
-  {
-    accessorKey: "id",
-    id: "id",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          #Id
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="pl-2">{row.original.id}</div>,
-  },
   {
     header: "Title",
     accessorKey: "title",
@@ -56,6 +46,40 @@ let columns: ColumnDef<ITravel>[] = [
         {row.original.description}
       </div>
     ),
+  },
+  {
+    header: "Members",
+    accessorKey: "team.gameTeamMembers",
+    cell: ({ row }) => (
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            id="date-picker-optional"
+            className="w-max justify-between font-normal"
+          >
+            {row.original.travelMembers.length}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+          {row?.original?.travelMembers?.map((member) => (
+            <>
+              <div
+                className="flex flex-col gap-1 p-3 text-xs text-muted-foreground"
+                key={member.id}
+              >
+                <div className="text-foreground">{member.name}</div>
+                <div>{member.email}</div>
+              </div>
+              <Separator />
+            </>
+          ))}
+        </PopoverContent>
+      </Popover>
+    ),
+    meta: {
+      filterVariant: "select",
+    },
   },
   {
     header: "Start Date",

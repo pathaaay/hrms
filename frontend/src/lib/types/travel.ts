@@ -5,13 +5,16 @@ export interface ITravel {
   id: number;
   title: string;
   description: string;
-  maxAmountPerDay: 500;
+  maxAmountPerDay: number;
   startDate: string;
   endDate: string;
   createdBy: IUser;
   city: string;
   state: string;
   country: string;
+  countryId: number;
+  stateId: number;
+  cityId: number;
   travelMembers: IUser[];
   createdAt: string;
 }
