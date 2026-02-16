@@ -46,7 +46,7 @@ public class TravelDocumentService {
         if (userService.hasRole(Roles.ROLE_HR))
             return convertToDTOList(travelDocumentRepo.findByTravel_IdAndIsDeleted(travelId, false));
 
-        return convertToDTOList(travelDocumentRepo.findByTravel_IdAndIsDeletedAndAddedFor_IdOrDocument_UploadedBy_IdOrAddedForIsNull(travelId, false, user.getId(), user.getId()));
+        return convertToDTOList(travelDocumentRepo.findAllByTravelIdAndIsDeleted(travelId,user.getId()));
     }
 
     public void createDocument(Long travelId, TravelDocumentRequestDTO dto) throws BadRequestException {

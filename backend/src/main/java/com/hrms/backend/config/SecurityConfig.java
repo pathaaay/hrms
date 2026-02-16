@@ -26,6 +26,7 @@ public class SecurityConfig {
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/health").permitAll()
                                 .requestMatchers("/document/get/**").permitAll()
+                                .requestMatchers("/document/download/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(request -> corsConfiguration()))

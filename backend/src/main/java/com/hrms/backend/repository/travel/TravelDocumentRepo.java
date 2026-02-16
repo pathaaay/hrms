@@ -15,9 +15,11 @@ import java.util.Optional;
 public interface TravelDocumentRepo extends JpaRepository<TravelDocument, Long> {
     List<TravelDocument> findByTravel_IdAndIsDeleted(Long id, Boolean isDeleted);
 
+    @Query("SELECT td from TravelDocument td WHERE td.travel.id=:travelId AND td.isDeleted=false AND (td.addedFor.id=:userId OR td.addedFor IS NULL OR td.document.uploadedBy.id=:userId)")
+    List<TravelDocument> findAllByTravelIdAndIsDeleted(@Param("travelId") Long travelId, @Param("userId") Long userId);
+
     Optional<TravelDocument> findByIdAndIsDeleted(Long id, Boolean isDeleted);
 
-    List<TravelDocument> findByTravel_IdAndIsDeletedAndAddedFor_IdOrDocument_UploadedBy_IdOrAddedForIsNull(Long travelId, Boolean isDeleted, Long addedById, Long addedForId);
 
     @Modifying
     @Transactional
