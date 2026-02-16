@@ -39,7 +39,7 @@ public class TravelController {
 
     @GetMapping("/{travelId}")
     public ResponseEntity<ApiResponse<TravelResponseDTO>> getTravelById(@PathVariable("travelId") Long travelId) throws BadRequestException {
-        return ResponseEntity.ok(new ApiResponse<>(true, "Travels get successfully", travelService.getTravelById(travelId)));
+        return ResponseEntity.ok(new ApiResponse<>(true, "Travel get successfully", travelService.getTravelById(travelId)));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_HR')")

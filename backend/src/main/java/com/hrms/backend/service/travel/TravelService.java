@@ -43,8 +43,11 @@ public class TravelService {
     private TravelResponseDTO convertToDTO(Travel travel) {
         TravelResponseDTO dto = modelMapper.map(travel, TravelResponseDTO.class);
         dto.setCity(travel.getCity().getName());
+        dto.setCityId(travel.getCity().getId());
         dto.setState(travel.getCity().getState().getName());
+        dto.setStateId(travel.getCity().getState().getId());
         dto.setCountry(travel.getCity().getState().getCountry().getName());
+        dto.setCountryId(travel.getCity().getState().getCountry().getId());
         if (travel.getTravelMembers() != null) dto.setTravelMembers(travel.getTravelMembers());
         return dto;
     }
