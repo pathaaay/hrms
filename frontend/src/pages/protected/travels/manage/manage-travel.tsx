@@ -1,23 +1,20 @@
-import { useToggleJobMutation } from "@/api/mutations/jobs/job";
+import { useHasRole } from "@/hooks/user/use-has-role";
+import { useUser } from "@/hooks/user/use-user";
+import { emitGoBack } from "@/lib/helpers/events/go-back-event";
+import { ROLES } from "@/lib/types/user";
 import { CustomLoader } from "@/components/common/custol-loader";
 import DataTable from "@/components/common/data-table";
 import { DeleteJobBtn } from "@/components/jobs/delete-job-btn";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { useJob } from "@/hooks/job/use-job";
-import { useHasRole } from "@/hooks/user/use-has-role";
-import { useUser } from "@/hooks/user/use-user";
-import { ENV } from "@/lib/ENV";
-import { emitGoBack } from "@/lib/helpers/events/go-back-event";
-import type { IJob } from "@/lib/types/job";
-import { ROLES } from "@/lib/types/user";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ArrowUpDown, PencilIcon } from "lucide-react";
 import { NavLink, Outlet } from "react-router";
+import type { ITravel } from "@/lib/types/travel";
+import { useTravel } from "@/hooks/travel/use-travel";
 
-let columns: ColumnDef<IJob>[] = [
+let columns: ColumnDef<ITravel>[] = [
   {
     accessorKey: "id",
     id: "id",
@@ -61,52 +58,49 @@ let columns: ColumnDef<IJob>[] = [
     ),
   },
   {
-    header: "HR Email",
-    accessorKey: "defaultHrEmail",
-    id: "defaultHrEmail",
+    header: "Start Date",
+    accessorKey: "startDate",
+    id: "startDate",
     cell: ({ row }) => (
-      <div
-        className="text-sm overflow-hidden text-ellipsis max-w-30"
-        title={row.original.defaultHrEmail}
-      >
-        {row.original.defaultHrEmail}
+      <div className="max-w-30">
+        {new Date(row.original.startDate).toLocaleDateString()}
       </div>
-    ),
-  },
-  {
-    header: "Active",
-    accessorKey: "isActive",
-    id: "isActive",
-    cell: ({ row }) => (
-      <div className="flex text-xs flex-col text-muted-foreground">
-        <ToggleJobSwitch
-          jobId={row.original.id}
-          value={row.original.isActive}
-        />
-      </div>
-    ),
-  },
-  {
-    header: "JD Document",
-    accessorKey: "JD",
-    cell: ({ row }) => (
-      <Button
-        variant={"secondary"}
-        size={"xs"}
-        asChild
-        className="flex text-xs flex-col text-muted-foreground"
-      >
-        <NavLink
-          to={`${ENV.DOCUMENT_PUBLIC_URL}/${row.original.jdFilePath}`}
-          target="_blank"
-        >
-          View
-        </NavLink>
-      </Button>
     ),
     meta: {
-      filterVariant: "select",
+      filterVariant: "calendar",
     },
+  },
+  {
+    header: "End Date",
+    accessorKey: "endDate",
+    id: "endDate",
+    cell: ({ row }) => (
+      <div className="max-w-30">
+        {new Date(row.original.endDate).toLocaleDateString()}
+      </div>
+    ),
+    meta: {
+      filterVariant: "calendar",
+    },
+  },
+  {
+    header: "Location",
+    accessorKey: "location",
+    id: "location",
+    cell: ({ row }) => (
+      <div className="max-w-30 flex flex-col ga-1.5">
+        <span className="text-xs text-muted-foreground">
+          City: <span className="text-foreground">{row.original.city}</span>
+        </span>
+        <span className="text-xs text-muted-foreground">
+          State: <span className="text-foreground">{row.original.state}</span>
+        </span>
+        <span className="text-xs text-muted-foreground">
+          Country:{" "}
+          <span className="text-foreground">{row.original.country}</span>
+        </span>
+      </div>
+    ),
   },
   {
     header: "Created At",
@@ -133,7 +127,7 @@ let columns: ColumnDef<IJob>[] = [
     accessorKey: "actions",
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        {row.original.userId === row.original.createdBy.id ? (
+        {
           <>
             <DeleteJobBtn id={row.original.id} />
             <Button asChild variant={"outline"} size={"icon"}>
@@ -142,57 +136,44 @@ let columns: ColumnDef<IJob>[] = [
               </NavLink>
             </Button>
           </>
-        ) : (
-          <div className="text-xs text-muted-foreground">Not allowed</div>
-        )}
+        }
       </div>
     ),
   },
 ];
 
-export const ManageAllJobsPage = () => {
+export const ManageAllTravelsPage = () => {
   const canManageJob = useHasRole([ROLES.HR]);
   const { userProfile } = useUser();
-  const { jobs, isLoading } = useJob();
-  let data = jobs.filter(
+  const { createdTravels, isCreatedTravelsLoading } = useTravel();
+
+  let data = createdTravels.filter(
     ({ createdBy }) => createdBy.id === userProfile?.userId,
   );
 
-  if (isLoading) return <CustomLoader />;
+  if (isCreatedTravelsLoading) return <CustomLoader />;
 
-  if (!canManageJob) emitGoBack("/jobs");
+  if (!canManageJob) emitGoBack("/travels");
 
   return (
     <div className="flex flex-col items-center gap-2 relative">
-      <GoBackBtn to={"/jobs"} />
+      <GoBackBtn to={"/travels"} />
       <div className="flex flex-col gap-3 w-full mt-20">
         <div className="flex items-center justify-between">
-          <div className="text-xl font-medium">Manage Jobs</div>
+          <div className="text-xl font-medium">Manage Travels</div>
           <Button variant={"secondary"} asChild>
-            <NavLink to={"create"}>Create Job</NavLink>
+            <NavLink to={"create"}>Create Travel</NavLink>
           </Button>
         </div>
         <div className="flex items-center">
-          {/* Job table here */}
           <DataTable
             columns={columns}
             data={data || []}
-            filterColumns={["title", "createdAt"]}
+            filterColumns={["title", "startDate", "endDate"]}
           />
         </div>
         <Outlet context={{ canManageJob }} />
       </div>
     </div>
   );
-};
-
-const ToggleJobSwitch = ({
-  jobId,
-  value,
-}: {
-  jobId: number;
-  value: boolean;
-}) => {
-  const { mutate: toggleJob } = useToggleJobMutation();
-  return <Switch checked={value} onCheckedChange={() => toggleJob(jobId)} />;
 };

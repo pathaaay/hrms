@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { changeReferralStatus } from "../actions/referrals";
 import { queryClient } from "@/lib/tanstack-query/query-client";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
+import { changeReferralStatus } from "@/api/actions/referrals";
 
 export const useChangeReferralStatusMutation = () => {
   return useMutation({

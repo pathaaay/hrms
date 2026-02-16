@@ -10,12 +10,20 @@ import { cn } from "@/lib/utils";
 import { Switch } from "../ui/switch";
 import { Textarea } from "../ui/textarea";
 import { MultiSelect, type MultiSelectOption } from "../common/multi-select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export type ICustomFormField<T> = {
   key: Path<T>;
   label: string;
   placeholder?: string;
-  type?: "multi-select" | "textarea" | "switch" | "number";
+  type?: "multi-select" | "select" | "textarea" | "switch" | "number";
   className?: string;
   options?: MultiSelectOption[];
 }[];
@@ -55,6 +63,23 @@ export const CustomFormFields = <T extends FieldValues>({
                       field.onChange(value);
                     }}
                   />
+                )}
+
+                {type === "select" && (
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder={placeholder} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {options?.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 )}
 
                 {type === "textarea" && (

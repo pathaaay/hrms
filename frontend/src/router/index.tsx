@@ -7,7 +7,7 @@ import ProtectedLayout from "@/pages/protected/protected-layout.tsx";
 import { DashboardPage } from "@/pages/protected/index.tsx";
 import { AccountPage } from "@/pages/protected/account/index.tsx";
 import { GamesPage } from "@/pages/protected/games/index.tsx";
-import { TravelPage } from "@/pages/protected/travel/index.tsx";
+import { TravelPage } from "@/pages/protected/travels";
 import { JobsPage } from "@/pages/protected/jobs/index.tsx";
 import { InternalServerErrorPage } from "@/components/common/internal-server-error";
 import { GameLayout } from "@/pages/protected/games/game-layout";
@@ -19,6 +19,11 @@ import { ManageSingleJob } from "@/pages/protected/jobs/manage-single-job";
 import { JobLayout } from "@/pages/protected/jobs/job-layout";
 import { MyReferrals } from "@/pages/protected/jobs/referrals/my-referrals";
 import { AssignedReferrals } from "@/pages/protected/jobs/referrals/assigned-referrals";
+import { ManageAllTravelsPage } from "@/pages/protected/travels/manage/manage-travel";
+import { TravelsLayout } from "@/pages/protected/travels/travel-layout";
+import { TravelDocuments } from "@/pages/protected/travels/documents/travel-documents";
+import { TravelExpenses } from "@/pages/protected/travels/expenses/travel-expenses";
+import { CreateTravelPage } from "@/pages/protected/travels/manage/create-travel";
 
 export const appRouter = createBrowserRouter([
   {
@@ -61,8 +66,35 @@ export const appRouter = createBrowserRouter([
             ],
           },
           {
-            path: "travel",
-            element: <TravelPage />,
+            path: "travels",
+            element: <TravelsLayout />,
+            children: [
+              {
+                index: true,
+                element: <TravelPage />,
+              },
+              {
+                path: "manage",
+                children: [
+                  {
+                    index: true,
+                    element: <ManageAllTravelsPage />,
+                  },
+                  {
+                    path: "create",
+                    element: <CreateTravelPage />,
+                  },
+                ],
+              },
+              {
+                path: ":travelId/documents",
+                element: <TravelDocuments />,
+              },
+              {
+                path: ":travelId/expenses",
+                element: <TravelExpenses />,
+              },
+            ],
           },
           {
             path: "jobs",

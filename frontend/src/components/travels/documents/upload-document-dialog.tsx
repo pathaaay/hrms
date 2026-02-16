@@ -22,65 +22,57 @@ import {
 } from "@/components/ui/field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-  ReferFriendSchema,
-  type ReferFriendSchemaType,
-} from "@/lib/schemas/job-schema";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useDocumentMutation } from "@/api/mutations/document";
 import { useCreateJobReferralMutation } from "@/api/mutations/jobs/job";
-import { UserPlusIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { UploadIcon } from "lucide-react";
+import { cn, createMultiSelectOption } from "@/lib/utils";
+import {
+  type TravelDocumentSchemaType,
+  TravelDocumentSchema,
+} from "@/lib/schemas/travel/document-schema";
+import { useHasRole } from "@/hooks/user/use-has-role";
+import { ROLES, type IUser, type IUserProfile } from "@/lib/types/user";
+import { useCreateTravelDocumentMutation } from "@/api/mutations/travel/travel-document";
+import { queryClient } from "@/lib/tanstack-query/query-client";
 
-const formFields: ICustomFormField<ReferFriendSchemaType> = [
+const formFields: ICustomFormField<TravelDocumentSchemaType> = [
   {
-    label: "Name",
-    key: "name",
-    placeholder: "Enter name",
-  },
-  {
-    label: "Email (recommended)",
-    key: "email",
-    placeholder: "Enter email (optional)",
-  },
-  {
-    label: "Short Note",
-    key: "shortNote",
-    placeholder: "Enter short note (optional)",
+    label: "Title",
+    key: "title",
+    placeholder: "Enter title",
   },
 ];
 
-export const ReferFriendDialogForm = ({ jobId }: { jobId: number }) => {
+export const UploadDocumentDialog = ({
+  travelId,
+  users,
+}: {
+  travelId: number;
+  users?: IUserProfile[];
+}) => {
+  const canAddAddedFor = useHasRole([ROLES.HR]);
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState<FileList | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
-  const {
-    mutateAsync: referFriend,
-    isPending,
-    isSuccess,
-  } = useCreateJobReferralMutation();
+  const { mutateAsync: createTravelDocument, isPending } =
+    useCreateTravelDocumentMutation();
   const { mutateAsync: handlFileUpload, isPending: isFileUploading } =
     useDocumentMutation();
 
   const form = useForm({
-    resolver: zodResolver(ReferFriendSchema),
+    resolver: zodResolver(TravelDocumentSchema),
     defaultValues: {
-      jobId,
-      name: "",
-      email: "",
-      shortNote: "",
-      cvFileId: null,
+      travelId: Number(travelId),
+      title: "",
+      documentId: null,
+      addedFor: null,
     },
   });
 
-  useEffect(() => {
-    if (!isSuccess) return;
-    form.reset();
-    setOpen(false);
-  }, [isSuccess]);
-
-  const onFormSubmit = async (values: ReferFriendSchemaType) => {
+  const onFormSubmit = async (values: TravelDocumentSchemaType) => {
+    console.log("submitted", values);
     if (!files || files?.length < 0) {
       setFileError("CV file is required");
       return;
@@ -91,23 +83,44 @@ export const ReferFriendDialogForm = ({ jobId }: { jobId: number }) => {
 
     const newValue = {
       ...values,
-      cvFileId: data.id,
+      documentId: data.id,
     };
-    const created = await referFriend(newValue);
+    await createTravelDocument(newValue);
+    queryClient.invalidateQueries({
+      queryKey: [`travel-documents-${travelId}`],
+    });
+    setOpen(false);
     form.reset();
   };
+
+  const options = users?.map((user) =>
+    createMultiSelectOption(user.userId.toString(), user.name),
+  );
+
+  const newFields: ICustomFormField<TravelDocumentSchemaType> = canAddAddedFor
+    ? [
+        ...formFields,
+        {
+          label: "Added for",
+          key: "addedFor",
+          placeholder: "Select added for",
+          type: "select",
+          options,
+        },
+      ]
+    : formFields;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="flex-1 rounded-xl">
-          <UserPlusIcon />
-          Refer friend
+        <Button>
+          <UploadIcon />
+          Uplod Document
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Refer friend</DialogTitle>
+          <DialogTitle>Upload Document</DialogTitle>
           <DialogDescription hidden></DialogDescription>
         </DialogHeader>
         <form
@@ -116,13 +129,13 @@ export const ReferFriendDialogForm = ({ jobId }: { jobId: number }) => {
         >
           <ScrollArea className="max-h-[80vh] pr-1">
             <FieldGroup className="flex items-center flex-col gap-3 px-1.5">
-              <CustomFormFields<ReferFriendSchemaType>
+              <CustomFormFields<TravelDocumentSchemaType>
                 fieldClass="gap-1"
                 control={form.control}
-                formFields={formFields}
+                formFields={newFields}
               />
               <Field className={cn(`gap-1`, fileError && "text-destructive")}>
-                <FieldLabel htmlFor="picture">CV Document (.pdf)</FieldLabel>
+                <FieldLabel htmlFor="picture">Document</FieldLabel>
                 <Input
                   onChange={(e) => {
                     setFileError("");
@@ -131,7 +144,6 @@ export const ReferFriendDialogForm = ({ jobId }: { jobId: number }) => {
                   className={cn(fileError && "text-destructive")}
                   id="picture"
                   type="file"
-                  accept=".pdf"
                 />
                 {fileError && <FieldError>{fileError}</FieldError>}
               </Field>
@@ -152,9 +164,7 @@ export const ReferFriendDialogForm = ({ jobId }: { jobId: number }) => {
               }
               size={"sm"}
             >
-              {isFileUploading || isPending
-                ? "Please wait..."
-                : "Create Referral"}
+              {isFileUploading || isPending ? "Please wait..." : "Upload"}
             </Button>
           </DialogFooter>
         </form>

@@ -29,7 +29,7 @@ import { useDocumentMutation } from "@/api/mutations/document";
 import {
   useCreateJobMutation,
   useUpdateJobMutation,
-} from "@/api/mutations/job";
+} from "@/api/mutations/jobs/job";
 import { emitGoBack } from "@/lib/helpers/events/go-back-event";
 import { useJob } from "@/hooks/job/use-job";
 

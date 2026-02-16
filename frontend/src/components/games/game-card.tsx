@@ -20,6 +20,7 @@ import { CardContentRow } from "../shared/card-content-row";
 import { useHasRole } from "@/hooks/user/use-has-role";
 import { ConfigureGameDialog } from "./dialog/configure-game-dialog";
 import { cn } from "@/lib/utils";
+import { ROLES } from "@/lib/types/user";
 
 interface GameCardProps {
   game: IGame;
@@ -27,7 +28,7 @@ interface GameCardProps {
 }
 
 export const GameCard = ({ game, showBookBtn = true }: GameCardProps) => {
-  const canConfigureGame = useHasRole(["hr", "manager"]);
+  const canConfigureGame = useHasRole([ROLES.HR, ROLES.MANAGER]);
 
   return (
     <Card

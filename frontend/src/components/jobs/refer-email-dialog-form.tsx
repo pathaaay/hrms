@@ -1,4 +1,4 @@
-import { useReferFriendByEmailsMutation } from "@/api/mutations/job";
+import { useReferFriendByEmailsMutation } from "@/api/mutations/jobs/job";
 import {
   Dialog,
   DialogClose,
