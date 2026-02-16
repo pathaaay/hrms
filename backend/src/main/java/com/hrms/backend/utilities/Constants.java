@@ -10,6 +10,7 @@ public class Constants {
             "/api/",
             "/api/health",
             "/api/document/get/**",
+            "/api/document/download/**",
             "/api/auth/**",
             "/api/v3/api-docs/**",
             "/api/swagger-ui/**",

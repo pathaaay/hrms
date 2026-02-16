@@ -39,7 +39,6 @@ public class DocumentController {
     }
 
     @GetMapping("/get/{fileName:.+}")
-    @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String fileName) throws Exception {
         Resource file = fileService.getFile(fileName);
         Optional<MediaType> mediaTypeOptional = MediaTypeFactory.getMediaType(file.getFilename());
@@ -48,8 +47,11 @@ public class DocumentController {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, fileType).body(file);
         else
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-
-
     }
 
+    @GetMapping("/download/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) throws Exception {
+        Resource file = fileService.getFile(fileName);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
 }
