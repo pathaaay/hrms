@@ -4,10 +4,12 @@ import com.hrms.backend.dto.travel.request.TravelRequestDTO;
 import com.hrms.backend.dto.travel.response.TravelResponseDTO;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.service.travel.TravelService;
+import com.hrms.backend.service.user.UserService;
 import com.hrms.backend.utilities.ApiResponse;
 import com.hrms.backend.utilities.roles.Roles;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +19,26 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/travels")
 @RequiredArgsConstructor
 public class TravelController {
     private final TravelService travelService;
+    private final UserService userService;
 
-    @PreAuthorize("hasAnyRole('ROLE_HR')")
     @GetMapping()
     public ResponseEntity<ApiResponse<List<TravelResponseDTO>>> getAllTravels(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(new ApiResponse<>(true, "Travel created successfully", travelService.getAllTravels()));
+        if (userService.hasRole(Roles.ROLE_HR)) {
+            return ResponseEntity.ok(new ApiResponse<>(true, "Travels get successfully", travelService.getAllTravels()));
+        }
+
+        return ResponseEntity.ok(new ApiResponse<>(true, "Travels get successfully", travelService.getAllTravels(user)));
+    }
+
+    @GetMapping("/{travelId}")
+    public ResponseEntity<ApiResponse<TravelResponseDTO>> getTravelById(@PathVariable("travelId") Long travelId) throws BadRequestException {
+        return ResponseEntity.ok(new ApiResponse<>(true, "Travels get successfully", travelService.getTravelById(travelId)));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_HR')")
@@ -47,6 +59,6 @@ public class TravelController {
     @DeleteMapping("/{travelId}")
     public ResponseEntity<ApiResponse> deleteTravel(@AuthenticationPrincipal User user, @PathVariable("travelId") Long travelId) {
         travelService.deleteTravel(travelId, user);
-        return ResponseEntity.ok(new ApiResponse(true, "Travel updated successfully", null));
+        return ResponseEntity.ok(new ApiResponse(true, "Travel deleted successfully", null));
     }
 }

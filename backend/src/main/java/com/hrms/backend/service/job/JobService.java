@@ -8,6 +8,7 @@ import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.job.JobRepo;
 import com.hrms.backend.service.document.DocumentService;
 import com.hrms.backend.service.user.UserService;
+import com.hrms.backend.utilities.roles.Roles;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ public class JobService {
     public JobResponseDTO convertToDTO(Job job) {
         JobResponseDTO response = modelMapper.map(job, JobResponseDTO.class);
         response.setJdFilePath(job.getJdDocument().getFilePath());
-        if (userService.hasRole("ROLE_HR")) response.setJobReviewers(job.getJobReviewers());
+        if (userService.hasRole(Roles.ROLE_HR)) response.setJobReviewers(job.getJobReviewers());
         return response;
     }
 
@@ -44,7 +45,7 @@ public class JobService {
 
     public List<JobResponseDTO> getAllJobs() {
         List<Job> jobs;
-        if (userService.hasRole("ROLE_HR")) {
+        if (userService.hasRole(Roles.ROLE_HR)) {
             jobs = jobRepo.findAllWithReviewers();
         } else {
             jobs = jobRepo.findByIsDeletedFalse();
@@ -113,7 +114,7 @@ public class JobService {
         if (deleted == 0) throw new BadRequestException("Failed to delete job");
     }
 
-    public String[] getReviewerEmails(Long jobId){
+    public String[] getReviewerEmails(Long jobId) {
         return jobRepo.getReviewerEmails(jobId).toArray(new String[0]);
     }
 }
