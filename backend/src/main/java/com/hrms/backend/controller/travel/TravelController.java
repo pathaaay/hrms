@@ -7,6 +7,7 @@ import com.hrms.backend.service.travel.TravelService;
 import com.hrms.backend.service.user.UserService;
 import com.hrms.backend.utilities.ApiResponse;
 import com.hrms.backend.utilities.roles.Roles;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,7 @@ public class TravelController {
 
     @PreAuthorize("hasAnyRole('ROLE_HR')")
     @PostMapping()
-    public ResponseEntity<ApiResponse> createTravel(@AuthenticationPrincipal User user, @Valid @RequestBody TravelRequestDTO dto) throws BadRequestException {
+    public ResponseEntity<ApiResponse> createTravel(@AuthenticationPrincipal User user, @Valid @RequestBody TravelRequestDTO dto) throws BadRequestException, MessagingException {
         travelService.createTravel(dto, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(true, "Travel created successfully", null));
     }

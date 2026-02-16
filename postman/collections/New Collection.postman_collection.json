@@ -2387,6 +2387,30 @@
       "id": "00dcbe3e-9e06-4c5c-9517-18a75712374b"
     },
     {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "get all notifications",
+          "id": "4d69a26b-bed0-43d4-aae2-d0b770b4fff6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/notifications",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "notifications"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "f5b43e25-ba65-43f2-a2ce-40446556d7a5"
+    },
+    {
       "name": "Home",
       "id": "b49acb15-c9d6-4da1-b180-aeb41ebee4f4",
       "request": {
