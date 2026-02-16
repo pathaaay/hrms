@@ -20,6 +20,9 @@ public class TravelResponseDTO {
     private Date endDate;
     private User createdBy;
     private String city;
+    private Long cityId;
+    private Long stateId;
+    private Long countryId;
     private String state;
     private String country;
     private Set<User> travelMembers;
