@@ -1,13 +1,12 @@
 package com.hrms.backend.entities.user;
 
 import com.hrms.backend.entities.game.Game;
-import com.hrms.backend.entities.localization.City;
-import com.hrms.backend.entities.localization.TimeZone;
+import com.hrms.backend.entities.location.City;
+import com.hrms.backend.entities.location.TimeZone;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.sql.results.graph.Fetch;
 
 import java.util.Date;
 import java.util.Set;

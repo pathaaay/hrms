@@ -2536,6 +2536,71 @@
       "id": "f5b43e25-ba65-43f2-a2ce-40446556d7a5"
     },
     {
+      "name": "Location",
+      "item": [
+        {
+          "name": "get all countries",
+          "id": "c49d35a2-22da-4c68-b4d9-ebbbaba5aa29",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/locations/countries",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "locations",
+                "countries"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get states by country id",
+          "id": "ff804772-ce14-417e-9a40-2b896c31a155",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/locations/1/states",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "locations",
+                "1",
+                "states"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get cities by state id",
+          "id": "68416186-5ba4-4793-96e3-45e884124bbe",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/locations/1/cities",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "locations",
+                "1",
+                "cities"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "92f91c2c-3f89-4e33-9200-c00f702ae608"
+    },
+    {
       "name": "Home",
       "id": "b49acb15-c9d6-4da1-b180-aeb41ebee4f4",
       "request": {
