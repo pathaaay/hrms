@@ -23,15 +23,6 @@ public class TravelService {
     private final UserService userService;
     private final CityService cityService;
 
-    private TravelResponseDTO convertToDTO(Travel travel) {
-        return modelMapper.map(travel, TravelResponseDTO.class);
-    }
-
-    private List<TravelResponseDTO> convertToDTOList(List<Travel> travels) {
-        return travels.stream().map(this::convertToDTO).toList();
-    }
-
-
     private Travel convertToEntity(TravelRequestDTO dto, User user) throws BadRequestException {
         Travel travel = modelMapper.map(dto, Travel.class);
         Set<User> members = userService.findAllById(dto.getUserIds());
@@ -42,8 +33,29 @@ public class TravelService {
         return travel;
     }
 
+    private TravelResponseDTO convertToDTO(Travel travel) {
+        TravelResponseDTO dto = modelMapper.map(travel, TravelResponseDTO.class);
+        dto.setCity(travel.getCity().getName());
+        dto.setState(travel.getCity().getState().getName());
+        dto.setCountry(travel.getCity().getState().getCountry().getName());
+        if (travel.getTravelMembers() != null) dto.setTravelMembers(travel.getTravelMembers());
+        return dto;
+    }
+
+    private List<TravelResponseDTO> convertToDTOList(List<Travel> travels) {
+        return travels.stream().map(this::convertToDTO).toList();
+    }
+
+    public Travel findById(Long id) throws BadRequestException {
+        return travelRepo.findByIdAndIsDeleted(id, false).orElseThrow(() -> new BadRequestException("Travel not found"));
+    }
+
     public Travel findById(Long id, User user) throws BadRequestException {
         return travelRepo.findByIdAndCreatedBy_IdAndIsDeleted(id, user.getId(), false).orElseThrow(() -> new BadRequestException("Travel not found"));
+    }
+
+    public TravelResponseDTO getTravelById(Long id) throws BadRequestException {
+        return convertToDTO(findById(id));
     }
 
     public List<TravelResponseDTO> getAllTravels() {

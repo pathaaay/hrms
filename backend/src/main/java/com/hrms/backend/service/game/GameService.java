@@ -11,6 +11,7 @@ import com.hrms.backend.repository.game.GameRepo;
 import com.hrms.backend.service.mail.MailService;
 import com.hrms.backend.service.user.UserService;
 import com.hrms.backend.utilities.Constants;
+import com.hrms.backend.utilities.roles.Roles;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +56,7 @@ public class GameService {
 
     public List<GameResponseDTO> getAllGames() {
         List<Game> games;
-        if (userService.hasRole("hr") || userService.hasRole("manager")) {
+        if (userService.hasRole(Roles.ROLE_HR) || userService.hasRole(Roles.ROLE_MANAGER)) {
             games = gameRepo.findAll();
         } else {
             games = gameRepo.findByIsActiveTrue();

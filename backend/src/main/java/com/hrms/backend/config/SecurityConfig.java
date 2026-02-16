@@ -22,8 +22,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/travels/**").hasAnyRole(Roles.HR.toString())
-                                .requestMatchers("/auth/**").permitAll()
+                        auth.requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/health").permitAll()
                                 .requestMatchers("/document/get/**").permitAll()
                                 .anyRequest().authenticated()
                 )

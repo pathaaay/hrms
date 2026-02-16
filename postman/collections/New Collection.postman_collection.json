@@ -2313,7 +2313,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "{{base_url}}/travels",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "travels"
+              ]
             }
           },
           "response": []
@@ -2345,6 +2351,25 @@
                 }
               }
             },
+            "url": {
+              "raw": "{{base_url}}/travels/10002",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "travels",
+                "10002"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get travel by id",
+          "id": "f552ef22-f39a-48be-acfa-a0c3837c9bb2",
+          "request": {
+            "method": "GET",
+            "header": [],
             "url": {
               "raw": "{{base_url}}/travels/10002",
               "host": [

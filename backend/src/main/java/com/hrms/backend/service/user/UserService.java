@@ -2,6 +2,7 @@ package com.hrms.backend.service.user;
 
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.user.UserRepo;
+import com.hrms.backend.utilities.roles.Roles;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,8 +23,8 @@ public class UserService {
         return new HashSet<>(userRepo.findAllById(userIds));
     }
 
-    public boolean hasRole(String roleName) {
+    public boolean hasRole(Roles roleName) {
         Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        return authorities.stream().anyMatch(authority -> authority.getAuthority().equals(roleName));
+        return authorities.stream().anyMatch(authority -> authority.getAuthority().equals(roleName.toString()));
     }
 }

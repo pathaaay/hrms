@@ -12,9 +12,12 @@ import java.util.Optional;
 
 public interface TravelRepo extends JpaRepository<Travel, Long> {
     Optional<Travel> findByIdAndCreatedBy_IdAndIsDeleted(Long id, Long userId, Boolean isDeleted);
+
+    Optional<Travel> findByIdAndIsDeleted(Long id, Boolean isDeleted);
+
     List<Travel> findAllByIsDeleted(Boolean isDeleted);
 
-    List<Travel> findAllByIsDeletedAndTravelMembers_Id(Boolean isDeleted, Long id);
+    List<Travel> findAllByIsDeletedAndTravelMembers_Id(Boolean isDeleted, Long memberId);
 
     @Modifying
     @Transactional
