@@ -105,7 +105,7 @@ const columns: ColumnDef<IGameBooking>[] = [
                 className="flex flex-col gap-1 p-3 text-xs text-muted-foreground"
                 key={member.id}
               >
-                <div className="text-black">{member.name}</div>
+                <div className="text-foreground">{member.name}</div>
                 <div>{member.email}</div>
               </div>
               <Separator />

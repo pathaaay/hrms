@@ -24,6 +24,7 @@ import { TravelsLayout } from "@/pages/protected/travels/travel-layout";
 import { TravelDocuments } from "@/pages/protected/travels/documents/travel-documents";
 import { TravelExpenses } from "@/pages/protected/travels/expenses/travel-expenses";
 import { CreateTravelPage } from "@/pages/protected/travels/manage/create-travel";
+import { ManageTravelLayout } from "@/pages/protected/travels/manage/manage-travel-layout";
 
 export const appRouter = createBrowserRouter([
   {
@@ -75,6 +76,7 @@ export const appRouter = createBrowserRouter([
               },
               {
                 path: "manage",
+                element: <ManageTravelLayout />,
                 children: [
                   {
                     index: true,
