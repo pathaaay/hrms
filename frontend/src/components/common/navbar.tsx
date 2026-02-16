@@ -5,6 +5,7 @@ import { useTheme } from "./theme-provider";
 import { cn } from "@/lib/utils";
 import { navLinks } from "@/lib/constants";
 import { useLocation } from "react-router";
+import { NotificationsPopover } from "./notification-popover";
 
 export const Navbar = () => {
   const { theme, setTheme } = useTheme();
@@ -42,6 +43,7 @@ export const Navbar = () => {
             )}
           />
         </Button>
+        <NotificationsPopover />
       </div>
     </nav>
   );
