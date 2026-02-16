@@ -8,7 +8,7 @@ import {
   referFriendByEmails,
   toggleJob,
   updateJob,
-} from "../actions/job";
+} from "@/api/actions/job";
 import { queryClient } from "@/lib/tanstack-query/query-client";
 
 export const useCreateJobMutation = () => {

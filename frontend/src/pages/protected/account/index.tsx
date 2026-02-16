@@ -1,13 +1,10 @@
 import UpdateInterestedGames from "@/components/forms/user/update-interested-games";
 import { CardContentRow } from "@/components/shared/card-content-row";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useFetchGames } from "@/hooks/game/use-fetch-games";
 import { useUser } from "@/hooks/user/use-user";
-import { EditIcon } from "lucide-react";
 
 const profileContents = [
   {
@@ -34,7 +31,7 @@ const profileContents = [
 
 export const AccountPage = () => {
   useFetchGames();
-  
+
   const { userProfile } = useUser();
   if (!userProfile) return;
 

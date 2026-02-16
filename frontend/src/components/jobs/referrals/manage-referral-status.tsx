@@ -1,4 +1,4 @@
-import { useChangeReferralStatusMutation } from "@/api/mutations/referral";
+import { useChangeReferralStatusMutation } from "@/api/mutations/jobs/referral";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

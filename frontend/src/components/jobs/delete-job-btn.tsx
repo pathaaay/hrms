@@ -1,4 +1,4 @@
-import { useDeleteJobMutation } from "@/api/mutations/job";
+import { useDeleteJobMutation } from "@/api/mutations/jobs/job";
 import { DeleteDialog } from "@/components/common/delete-dialog";
 
 export function DeleteJobBtn({ id }: Readonly<{ id: number }>) {

@@ -13,9 +13,20 @@ export const navLinks = [
     icon: LayoutDashboardIcon,
   },
   {
-    url: "/travel",
-    label: "Travel",
+    url: "/travels",
+    label: "Travels",
     icon: WalletIcon,
+    items: [
+      {
+        url: "",
+        label: "All",
+      },
+      {
+        url: "/manage",
+        label: "Manage Travels",
+        requiredRoles: [ROLES.HR],
+      },
+    ],
   },
   {
     url: "/games",

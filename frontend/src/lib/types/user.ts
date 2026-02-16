@@ -7,7 +7,7 @@ export const ROLES = {
   HR: "hr",
   INTERN: "intern",
   EMPLOYEE: "employee",
-};
+} as const;
 
 export interface IUser {
   id: number;

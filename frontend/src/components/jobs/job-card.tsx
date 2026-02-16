@@ -40,8 +40,6 @@ export const JobCard = ({ job }: JobCardProps) => {
           label={"Created By"}
           value={job.createdBy.name}
         />
-      </CardContent>
-      <CardContent className="space-y-3 text-sm text-muted-foreground">
         <CardContentRow
           Icon={FileTextIcon}
           label={"JD document"}
