@@ -1,5 +1,5 @@
 import { apiService } from "@/lib/axios";
-import type { TravelDocumentSchemaType } from "@/lib/schemas/travel/document-schema";
+import type { TravelDocumentSchemaType } from "@/lib/schemas/travel/travel-documents-schema";
 
 const TRAVELS_ENDPOINT = "/travels/documents";
 

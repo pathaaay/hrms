@@ -1,6 +1,6 @@
 import { apiService } from "@/lib/axios";
 
-const LOCATIONS_ENDPOINT = "/location";
+const LOCATIONS_ENDPOINT = "/locations";
 
 export const getAllCountries = async () => {
   const res = await apiService.get(`${LOCATIONS_ENDPOINT}/countries`);

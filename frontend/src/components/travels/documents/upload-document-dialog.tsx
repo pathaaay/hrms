@@ -22,18 +22,17 @@ import {
 } from "@/components/ui/field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useDocumentMutation } from "@/api/mutations/document";
-import { useCreateJobReferralMutation } from "@/api/mutations/jobs/job";
 import { UploadIcon } from "lucide-react";
 import { cn, createMultiSelectOption } from "@/lib/utils";
 import {
   type TravelDocumentSchemaType,
   TravelDocumentSchema,
-} from "@/lib/schemas/travel/document-schema";
+} from "@/lib/schemas/travel/travel-documents-schema";
 import { useHasRole } from "@/hooks/user/use-has-role";
-import { ROLES, type IUser, type IUserProfile } from "@/lib/types/user";
+import { ROLES, type IUserProfile } from "@/lib/types/user";
 import { useCreateTravelDocumentMutation } from "@/api/mutations/travel/travel-document";
 import { queryClient } from "@/lib/tanstack-query/query-client";
 

@@ -23,7 +23,7 @@ import { ENV } from "@/lib/ENV";
 import { emitGoBack } from "@/lib/helpers/events/go-back-event";
 import { cn } from "@/lib/utils";
 import { DownloadIcon, FileExclamationPoint, FileIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router";
 
 const tabs = [
@@ -46,13 +46,16 @@ export const TravelDocuments = () => {
   const { userProfile } = useUser();
   const { travels, isTravelsLoading } = useTravel();
   const [currentTab, setCurrentTab] = useState<"all" | "you" | "hr">("all");
-  const { documents, isPending } = useFetchAllTravelDocuments(travelId);
   const singleTravel = travels.find(({ id }) => id == Number(travelId));
+  const { documents, isPending } = useFetchAllTravelDocuments(
+    singleTravel?.id.toString(),
+  );
 
-  if (!isTravelsLoading && !singleTravel) {
-    emitGoBack("/travels");
-    return;
-  }
+  useEffect(() => {
+    if (!isTravelsLoading && !singleTravel) {
+      emitGoBack("/travels");
+    }
+  }, [isTravelsLoading, singleTravel]);
 
   if (isTravelsLoading) return;
 

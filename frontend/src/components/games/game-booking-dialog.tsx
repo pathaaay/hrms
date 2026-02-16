@@ -93,23 +93,25 @@ export const GameBookingDialog = ({
           </SheetDescription>
           <Separator />
           <div className="flex items-center gap-2 text-muted-foreground">
-            Date: <span className="font-medium text-black">{date}</span>
+            Date: <span className="font-medium text-foreground">{date}</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             Start Time:{" "}
-            <span className="font-medium text-black">
+            <span className="font-medium text-foreground">
               {formatMinutesToHours(Number(startTime))}
             </span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             End Time:{" "}
-            <span className="font-medium text-black">
+            <span className="font-medium text-foreground">
               {formatMinutesToHours(Number(endTime))}
             </span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             Leader:{" "}
-            <span className="font-medium text-black">{userProfile?.name}</span>
+            <span className="font-medium text-foreground">
+              {userProfile?.name}
+            </span>
           </div>
         </SheetHeader>
         <div className="px-3 flex flex-col gap-1">

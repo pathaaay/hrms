@@ -18,14 +18,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { DatePicker } from "./date-picker";
+import type { Matcher } from "react-day-picker";
 
 export type ICustomFormField<T> = {
   key: Path<T>;
   label: string;
   placeholder?: string;
-  type?: "multi-select" | "select" | "textarea" | "switch" | "number";
+  type?: "multi-select" | "select" | "textarea" | "switch" | "number" | "date";
   className?: string;
   options?: MultiSelectOption[];
+  disable?: Matcher;
 }[];
 
 export interface IFormFieldProps<T extends FieldValues> {
@@ -42,7 +45,7 @@ export const CustomFormFields = <T extends FieldValues>({
   return (
     <>
       {formFields.map(
-        ({ label, key, placeholder, className, type, options }) => (
+        ({ label, key, placeholder, className, type, options, disable }) => (
           <Controller
             key={key}
             name={key}
@@ -80,6 +83,21 @@ export const CustomFormFields = <T extends FieldValues>({
                       </SelectGroup>
                     </SelectContent>
                   </Select>
+                )}
+
+                {type === "date" && (
+                  <DatePicker
+                    label={
+                      field.value
+                        ? new Date(field.value).toLocaleDateString()
+                        : placeholder || "Select date"
+                    }
+                    value={field.value}
+                    disable={disable || false}
+                    onChange={(date) => {
+                      field.onChange(date);
+                    }}
+                  />
                 )}
 
                 {type === "textarea" && (

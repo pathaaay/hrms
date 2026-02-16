@@ -1,14 +1,14 @@
 export interface ICountry {
-  title: string;
+  name: string;
   id: string;
 }
 
 export interface IState {
-  title: string;
+  name: string;
   id: string;
 }
 
 export interface ICity {
-  title: string;
+  name: string;
   id: string;
 }
