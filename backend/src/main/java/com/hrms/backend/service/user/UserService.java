@@ -5,6 +5,7 @@ import com.hrms.backend.repository.user.UserRepo;
 import com.hrms.backend.utilities.roles.Roles;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,10 @@ public class UserService {
 
     public Set<User> findAllById(Set<Long> userIds) {
         return new HashSet<>(userRepo.findAllById(userIds));
+    }
+
+    public User findById(Long userId) throws BadRequestException {
+        return userRepo.findById(userId).orElseThrow(() -> new BadRequestException("User not found"));
     }
 
     public boolean hasRole(Roles roleName) {

@@ -28,7 +28,7 @@ public class DocumentService {
 
     private final DocumentRepo documentRepo;
 
-    public Document getDocument(Long id) throws BadRequestException {
+    public Document findById(Long id) throws BadRequestException {
         return documentRepo.findById(id).orElseThrow(() -> new BadRequestException("Document not found"));
     }
 

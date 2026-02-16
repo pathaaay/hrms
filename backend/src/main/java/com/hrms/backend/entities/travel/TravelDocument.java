@@ -18,11 +18,13 @@ public class TravelDocument {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
+
     @ManyToOne
     @JoinColumn(name = "added_for_id")
     private User addedFor;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_id")
     private Travel travel;
 
@@ -33,4 +35,7 @@ public class TravelDocument {
     @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
+
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 }
