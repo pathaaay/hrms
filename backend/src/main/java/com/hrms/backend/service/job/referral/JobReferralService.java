@@ -94,7 +94,7 @@ public class JobReferralService {
     @Transactional
     public void createReferral(Long jobId, User user, JobReferralRequestDTO dto) throws BadRequestException, MessagingException {
         Job job = jobService.findById(jobId, true);
-        Document document = documentService.getDocument(dto.getCvFileId());
+        Document document = documentService.findById(dto.getCvFileId());
         JobReferral referral = convertToEntity(user, dto.getEmail(), job);
         referral.setCvFile(document);
         referral.setShortNote(dto.getShortNote());

@@ -77,7 +77,7 @@ public class JobService {
         Job job = convertToEntity(dto);
         job.setCreatedBy(user);
 
-        Document document = documentService.getDocument(dto.getJdFileId());
+        Document document = documentService.findById(dto.getJdFileId());
         job.setJdDocument(document);
 
         Set<User> reviewers = userService.findAllById(dto.getReviewerIds());
@@ -98,7 +98,7 @@ public class JobService {
         Set<User> reviewers = userService.findAllById(dto.getReviewerIds());
         job.setJobReviewers(reviewers);
         if (dto.getJdFileId() != null) {
-            Document document = documentService.getDocument(dto.getJdFileId());
+            Document document = documentService.findById(dto.getJdFileId());
             job.setJdDocument(document);
         }
         jobRepo.save(job);

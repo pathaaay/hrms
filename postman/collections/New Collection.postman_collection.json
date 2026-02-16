@@ -16,7 +16,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"jhar26960@gmail.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"aayush.pathak@roimaint.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2280,6 +2280,112 @@
           "id": "bb7d5717-446e-4e8e-8c74-23e2befc81f7"
         },
         {
+          "name": "Travel Documents",
+          "item": [
+            {
+              "name": "create travel document",
+              "id": "f2b17808-00c2-4f3a-8335-2d03b7c5071d",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"Boarding pass\",\r\n    \"documentId\": 25,\r\n    \"addedForId\":3\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/travels/documents/10002",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "travels",
+                    "documents",
+                    "10002"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all travel documents",
+              "id": "80be329e-bf8c-4456-972b-b03231509056",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/travels/documents/10002",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "travels",
+                    "documents",
+                    "10002"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update travel document",
+              "id": "941cac70-5de5-4f1a-8f85-55b28a04d834",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"Hello\",\r\n    \"documentId\": 25\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/travels/documents/10002/2",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "travels",
+                    "documents",
+                    "10002",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete travel document",
+              "id": "eceb2597-91be-4100-8f4f-09eecc050722",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/travels/documents/10002/2",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "travels",
+                    "documents",
+                    "10002",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "81982fe8-2874-4794-9f5d-78d09539c775"
+        },
+        {
           "name": "create travel",
           "id": "1af72205-3530-402e-952c-55c7ea32bc6b",
           "request": {
@@ -2402,6 +2508,25 @@
               ],
               "path": [
                 "notifications"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mark as read",
+          "id": "b39d7e5a-8617-454e-99e1-327aba55163f",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/notifications/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "notifications",
+                "1"
               ]
             }
           },
