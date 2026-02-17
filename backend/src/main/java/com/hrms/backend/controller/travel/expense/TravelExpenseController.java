@@ -1,6 +1,7 @@
 package com.hrms.backend.controller.travel.expense;
 
 import com.hrms.backend.dto.travel.expense.request.TravelExpenseRequestDTO;
+import com.hrms.backend.dto.travel.expense.request.TravelExpenseStatusDTO;
 import com.hrms.backend.dto.travel.expense.response.TravelExpenseResponseDTO;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.service.travel.expense.TravelExpenseService;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,5 +51,12 @@ public class TravelExpenseController {
     public ResponseEntity<ApiResponse> deleteTravelExpense(@PathVariable("travelExpenseId") Long travelExpenseId) {
         travelExpenseService.deleteTravelExpense(travelExpenseId);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(true, "Travel expense deleted successfully", null));
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_HR')")
+    @PatchMapping("/{travelExpenseId}/update-status")
+    public ResponseEntity<ApiResponse> updateTravelExpenseStatus(@AuthenticationPrincipal User user, @Valid @RequestBody TravelExpenseStatusDTO dto, @PathVariable("travelExpenseId") Long travelExpenseId) throws BadRequestException {
+        travelExpenseService.updateTravelExpenseStatus(user, travelExpenseId, dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(true, "Travel expense " + (Boolean.TRUE.equals(dto.getIsApproved()) ? "approved" : "rejected") + " successfully", null));
     }
 }
