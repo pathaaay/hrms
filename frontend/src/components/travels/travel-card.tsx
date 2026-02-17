@@ -10,12 +10,14 @@ import {
   MapPinIcon,
   PlaneIcon,
   UserIcon,
+  UsersIcon,
 } from "lucide-react";
 import { CardContentRow } from "../shared/card-content-row";
 import { cn } from "@/lib/utils";
 import type { ITravel } from "@/lib/types/travel";
 import { Button } from "../ui/button";
 import { NavLink } from "react-router";
+import { MembersListPopover } from "../shared/members-list-popover";
 
 interface TravelCardProps {
   travel: ITravel;
@@ -65,6 +67,11 @@ export const TravelCard = ({ travel }: TravelCardProps) => {
           Icon={UserIcon}
           label={"Created By"}
           value={travel.createdBy.name}
+        />
+        <CardContentRow
+          Icon={UsersIcon}
+          label={"Members"}
+          value={<MembersListPopover members={travel.travelMembers} />}
         />
       </CardContent>
       <CardFooter className="flex items-center w-full gap-1">

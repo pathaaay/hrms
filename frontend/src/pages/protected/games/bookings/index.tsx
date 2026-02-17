@@ -2,6 +2,7 @@ import { CustomLoader } from "@/components/common/custol-loader";
 import DataTable from "@/components/common/data-table";
 import { DeleteBookingBtn } from "@/components/games/delete-booking-btn";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
+import { MembersListPopover } from "@/components/shared/members-list-popover";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -88,31 +89,7 @@ const columns: ColumnDef<IGameBooking>[] = [
     header: "Members",
     accessorKey: "team.gameTeamMembers",
     cell: ({ row }) => (
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            id="date-picker-optional"
-            className="w-max justify-between font-normal"
-          >
-            {row.original.team.gameTeamMembers.length + 1}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
-          {row?.original?.team?.gameTeamMembers?.map((member) => (
-            <>
-              <div
-                className="flex flex-col gap-1 p-3 text-xs text-muted-foreground"
-                key={member.id}
-              >
-                <div className="text-foreground">{member.name}</div>
-                <div>{member.email}</div>
-              </div>
-              <Separator />
-            </>
-          ))}
-        </PopoverContent>
-      </Popover>
+      <MembersListPopover members={row.original.team.gameTeamMembers} />
     ),
     meta: {
       filterVariant: "select",

@@ -1,3 +1,5 @@
+import type { IUser } from "./user";
+
 export interface IGame {
   id: number;
   name: string;
@@ -22,13 +24,5 @@ export interface IGameBooking {
 export interface ITeam {
   id: number;
   game: IGame;
-  gameTeamMembers: {
-    id: number;
-    name: string;
-    email: string;
-    role: {
-      id: number;
-      name: string;
-    };
-  }[];
+  gameTeamMembers: IUser[];
 }
