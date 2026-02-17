@@ -21,8 +21,8 @@ public interface TravelExpenseRepo extends JpaRepository<TravelExpense, Long> {
 
     Optional<TravelExpense> findByIdAndIsDeleted(Long id, Boolean isDeleted);
 
-    @Query(value = "SELECT SUM(te.amount) from travel_expenses te WHERE te.is_deleted=0 AND DATEDIFF(d, :expenseDate,te.expense_date) = 0", nativeQuery = true)
-    Long getExpenseTotalByDate(@Param("expenseDate") Date expenseDate);
+    @Query(value = "SELECT SUM(te.amount) from travel_expenses te WHERE te.is_deleted=0 AND te.created_by_id=:userId AND DATEDIFF(d, :expenseDate,te.expense_date) = 0", nativeQuery = true)
+    Long getExpenseTotalByDate(@Param("expenseDate") Date expenseDate, @Param("userId") Long userId);
 
     @Modifying
     @Transactional

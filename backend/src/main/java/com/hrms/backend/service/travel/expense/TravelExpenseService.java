@@ -40,14 +40,12 @@ public class TravelExpenseService {
         TravelExpenseCategory expenseCategory = travelExpenseCategoryService.findById(dto.getExpenseCategoryId());
         validateExpenseDate(dto.getExpenseDate(), travel);
 
-        Long totalExpense = travelExpenseRepo.getExpenseTotalByDate(dto.getExpenseDate());
-
-        log.info("totalExpense : {}", totalExpense);
+        Long totalExpense = travelExpenseRepo.getExpenseTotalByDate(dto.getExpenseDate(), user.getId());
 
         if (dto.getAmount() > travel.getMaxAmountPerDay())
             throw new BadRequestException("Expense amount is too high for this travel");
 
-        if (totalExpense + dto.getAmount() > travel.getMaxAmountPerDay())
+        if (totalExpense != null && totalExpense + dto.getAmount() > travel.getMaxAmountPerDay())
             throw new BadRequestException("You have exceeded the limit of expenses on " + dto.getExpenseDate() + " for this travel");
 
         if (dto.getAmount() > expenseCategory.getMaxAmount())
