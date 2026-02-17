@@ -1,4 +1,7 @@
-import { getAllExpensesByTravelId } from "@/api/actions/travels/travel-expense";
+import {
+  getAllExpensesByTravelId,
+  getAllExpensesOfUserByTravelId,
+} from "@/api/actions/travels/travel-expense";
 import type { ITravelExpense } from "@/lib/types/travel";
 import { useQuery } from "@tanstack/react-query";
 
@@ -8,12 +11,15 @@ interface ReturnType {
 }
 
 export const useFetchTravelExpenses = (
-  travelId: string = "",
+  travelId: string | number = "",
+  isUser: boolean = false,
 ): ReturnType => {
   const { data: expenses, isPending } = useQuery<ITravelExpense[]>({
     queryKey: [`travel-expenses-${travelId}`],
-    queryFn: () => getAllExpensesByTravelId(travelId),
+    queryFn: () =>
+      isUser
+        ? getAllExpensesOfUserByTravelId(travelId)
+        : getAllExpensesByTravelId(travelId),
   });
-
   return { expenses, isPending };
 };

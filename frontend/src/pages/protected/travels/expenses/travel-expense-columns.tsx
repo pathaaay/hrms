@@ -1,12 +1,9 @@
-import { DeleteTravelExpenseBtn } from "@/components/travels/expenses/delete-travel-expense-btn";
-import { TravelExpenseFormDialog } from "@/components/travels/expenses/travel-expense-form-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ENV } from "@/lib/ENV";
 import type { ITravelExpense } from "@/lib/types/travel";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { PencilIcon } from "lucide-react";
 import { NavLink } from "react-router";
 
 export const travelExpenseColumns: ColumnDef<ITravelExpense>[] = [
@@ -142,26 +139,5 @@ export const travelExpenseColumns: ColumnDef<ITravelExpense>[] = [
     meta: {
       filterVariant: "select",
     },
-  },
-  {
-    header: "Actions",
-    accessorKey: "actions",
-    cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        {
-          <>
-            <DeleteTravelExpenseBtn id={row.original.id} />
-            <TravelExpenseFormDialog
-              travelExpense={row.original}
-              trigger={
-                <Button variant={"outline"} size={"icon"}>
-                  <PencilIcon />
-                </Button>
-              }
-            />
-          </>
-        }
-      </div>
-    ),
   },
 ];

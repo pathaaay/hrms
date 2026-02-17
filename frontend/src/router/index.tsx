@@ -26,6 +26,7 @@ import { TravelExpenses } from "@/pages/protected/travels/expenses/travel-expens
 import { CreateTravelPage } from "@/pages/protected/travels/manage/create-travel";
 import { ManageTravelLayout } from "@/pages/protected/travels/manage/manage-travel-layout";
 import { UpdateTravelPage } from "@/pages/protected/travels/manage/update-travel";
+import { ManageExpense } from "@/pages/protected/travels/manage/expense/manage-expense";
 
 export const appRouter = createBrowserRouter([
   {
@@ -94,6 +95,10 @@ export const appRouter = createBrowserRouter([
                   {
                     path: ":travelId/documents",
                     element: <TravelDocuments manage={true} />,
+                  },
+                  {
+                    path: ":travelId/expenses",
+                    element: <ManageExpense />,
                   },
                 ],
               },
