@@ -2236,7 +2236,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"expenseCategoryId\": 1,\r\n    \"amount\": 100,\r\n    \"description\": \"Test description\",\r\n    \"proofDocumentId\": 58,\r\n    \"expenseDate\": \"2026-02-16\"\r\n}",
+                  "raw": "{\r\n    \"expenseCategoryId\": 1,\r\n    \"amount\": 100,\r\n    \"description\": \"Test description\",\r\n    \"proofDocumentId\": 54,\r\n    \"expenseDate\": \"2026-02-17\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2395,7 +2395,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"expenseCategoryId\": 1,\r\n    \"amount\": 100,\r\n    \"description\": \"Test description\",\r\n    \"proofDocumentId\": 59,\r\n    \"expenseDate\": \"2026-02-17\"\r\n}",
+                  "raw": "{\r\n    \"expenseCategoryId\": 1,\r\n    \"amount\": 200,\r\n    \"description\": \"Test description\",\r\n    \"proofDocumentId\": 59,\r\n    \"expenseDate\": \"2026-02-17\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2415,7 +2415,190 @@
                   ]
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "id": "3815ecf2-c2b9-4c27-acc9-dde6d8d9ee4d",
+                  "name": "exceeded limit error",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"expenseCategoryId\": 1,\r\n    \"amount\": 500,\r\n    \"description\": \"Test description\",\r\n    \"proofDocumentId\": 59,\r\n    \"expenseDate\": \"2026-02-17\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/travels/expenses/10002/1",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "travels",
+                        "expenses",
+                        "10002",
+                        "1"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 17 Feb 2026 09:48:21 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": "2026-02-17T09:48:52.399Z",
+                  "body": "{\n    \"success\": false,\n    \"message\": \"You have exceeded the limit of expenses on Tue Feb 17 05:30:00 IST 2026 for this travel\",\n    \"type\": \"bad_request\"\n}"
+                },
+                {
+                  "id": "b353a474-528f-4505-9f5b-0d9a004fa0dd",
+                  "name": "update expense",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"expenseCategoryId\": 1,\r\n    \"amount\": 200,\r\n    \"description\": \"Test description\",\r\n    \"proofDocumentId\": 59,\r\n    \"expenseDate\": \"2026-02-17\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/travels/expenses/10002/1",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "travels",
+                        "expenses",
+                        "10002",
+                        "1"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 17 Feb 2026 09:49:10 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": "2026-02-17T09:49:11.463Z",
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Travel expense updated successfully\"\n}"
+                }
+              ]
             }
           ],
           "id": "bb7d5717-446e-4e8e-8c74-23e2befc81f7"

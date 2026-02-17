@@ -4,6 +4,7 @@ import com.hrms.backend.dto.travel.expense.request.TravelExpenseRequestDTO;
 import com.hrms.backend.dto.travel.expense.response.TravelExpenseResponseDTO;
 import com.hrms.backend.entities.travel.Travel;
 import com.hrms.backend.entities.travel.expense.TravelExpense;
+import com.hrms.backend.entities.travel.expense.TravelExpenseCategory;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.travel.expense.TravelExpenseRepo;
 import com.hrms.backend.service.document.DocumentService;
@@ -33,12 +34,27 @@ public class TravelExpenseService {
     private TravelExpense convertToEntity(TravelExpenseRequestDTO dto, User user, Long travelId) throws BadRequestException {
         TravelExpense expense = modelMapper.map(dto, TravelExpense.class);
         Travel travel = travelService.findById(travelId);
+        TravelExpenseCategory expenseCategory = travelExpenseCategoryService.findById(dto.getExpenseCategoryId());
         validateExpenseDate(dto.getExpenseDate(), travel);
+
+        Long totalExpense = travelExpenseRepo.getExpenseTotalByDate(dto.getExpenseDate());
+
+        log.info("totalExpense : {}",totalExpense);
+
+        if (dto.getAmount() > travel.getMaxAmountPerDay())
+            throw new BadRequestException("Expense amount is too high for this travel");
+
+        if (totalExpense + dto.getAmount() > travel.getMaxAmountPerDay())
+            throw new BadRequestException("You have exceeded the limit of expenses on " + dto.getExpenseDate() + " for this travel");
+
+        if (dto.getAmount() > expenseCategory.getMaxAmount())
+            throw new BadRequestException("Expense amount is too high for this category");
+
         expense.setCreatedBy(user);
         expense.setIsDeleted(false);
         expense.setTravel(travel);
         expense.setExpenseProofDocument(documentService.findById(dto.getProofDocumentId()));
-        expense.setExpenseCategory(travelExpenseCategoryService.findById(dto.getExpenseCategoryId()));
+        expense.setExpenseCategory(expenseCategory);
         return expense;
     }
 
