@@ -6,6 +6,7 @@ import com.hrms.backend.entities.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 import java.util.Set;
@@ -34,19 +35,16 @@ public class TravelExpense {
 
     @ManyToOne
     @JoinColumn(name = "expense_category_id")
-    private User expenseCategory;
+    private TravelExpenseCategory expenseCategory;
 
-    @ManyToMany
-    @JoinTable(
-            name = "expense_proof_documents",
-            joinColumns = @JoinColumn(name = "expense_id"),
-            inverseJoinColumns = @JoinColumn(name = "document_id")
-    )
-    private Set<Document> expenseProofDocuments;
+    @OneToOne
+    @JoinColumn(name = "proof_document_id")
+    private Document expenseProofDocument;
 
     @Column(name = "expense_date")
     private Date expenseDate;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
 

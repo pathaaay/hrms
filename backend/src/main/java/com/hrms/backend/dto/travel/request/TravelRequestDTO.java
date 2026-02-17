@@ -24,11 +24,11 @@ public class TravelRequestDTO {
     @NotNull(message = "Max amount per day is required")
     private Long maxAmountPerDay;
 
-    @NotBlank(message = "Start date is required")
-    private String startDate;
+    @NotNull(message = "Start date is required")
+    private Date startDate;
 
-    @NotBlank(message = "End date is required")
-    private String endDate;
+    @NotNull(message = "End date is required")
+    private Date endDate;
 
     @NotNull(message = "City id is required")
     private Long cityId;

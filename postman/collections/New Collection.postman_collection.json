@@ -2232,10 +2232,27 @@
               "name": "add new expense",
               "id": "356f7169-5c84-4701-82be-e7d1d0fae979",
               "request": {
-                "method": "GET",
+                "method": "POST",
                 "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"expenseCategoryId\": 1,\r\n    \"amount\": 100,\r\n    \"description\": \"Test description\",\r\n    \"proofDocumentId\": 58,\r\n    \"expenseDate\": \"2026-02-16\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
-                  "raw": ""
+                  "raw": "{{base_url}}/travels/expenses/10002",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "travels",
+                    "expenses",
+                    "10002"
+                  ]
                 }
               },
               "response": []
@@ -2265,13 +2282,137 @@
               "response": []
             },
             {
-              "name": "New Request",
+              "name": "get all expenses of user by travel id",
               "id": "b23c4007-e292-424c-a53f-73ad91793e2e",
               "request": {
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": ""
+                  "raw": "{{base_url}}/travels/expenses/10002/user",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "travels",
+                    "expenses",
+                    "10002",
+                    "user"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "c227af76-c242-4863-b0b3-adb922be141a",
+                  "name": "get all expenses of user by travel id",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{base_url}}/travels/expenses/10002/user",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "travels",
+                        "expenses",
+                        "10002",
+                        "user"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 17 Feb 2026 08:28:53 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": "2026-02-17T08:32:42.378Z",
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Travel expenses get successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"amount\": 100,\n            \"description\": \"Test description\",\n            \"remarks\": null,\n            \"expenseCategory\": {\n                \"id\": 1,\n                \"name\": \"Meal\",\n                \"maxAmount\": 500\n            },\n            \"expenseProofDocument\": {\n                \"id\": 59,\n                \"fileType\": \"application/pdf\",\n                \"fileOriginalName\": \"HRMS_Internship_Assignment.pdf\",\n                \"filePath\": \"5574b377-aeb9-4647-9ce9-f2801e62be47HRMS_Internship_Assignment.pdf\",\n                \"uploadedBy\": {\n                    \"id\": 3,\n                    \"name\": \"HR\",\n                    \"email\": \"jhar26960@gmail.com\",\n                    \"role\": {\n                        \"id\": 1,\n                        \"name\": \"hr\"\n                    }\n                }\n            },\n            \"expenseDate\": \"0022-08-18T18:30:00.000+00:00\",\n            \"createdAt\": \"2026-02-17T07:16:11.910+00:00\"\n        },\n        {\n            \"id\": 3,\n            \"amount\": 100,\n            \"description\": \"Test description\",\n            \"remarks\": null,\n            \"expenseCategory\": {\n                \"id\": 1,\n                \"name\": \"Meal\",\n                \"maxAmount\": 500\n            },\n            \"expenseProofDocument\": {\n                \"id\": 58,\n                \"fileType\": \"application/pdf\",\n                \"fileOriginalName\": \"HRMS_Internship_Assignment.pdf\",\n                \"filePath\": \"9decca35-dec5-47c8-8880-04878862843dHRMS_Internship_Assignment.pdf\",\n                \"uploadedBy\": {\n                    \"id\": 2,\n                    \"name\": \"Manager\",\n                    \"email\": \"manager@gmail.com\",\n                    \"role\": {\n                        \"id\": 2,\n                        \"name\": \"manager\"\n                    }\n                }\n            },\n            \"expenseDate\": \"2026-02-16T18:30:00.000+00:00\",\n            \"createdAt\": \"2026-02-17T08:28:46.522+00:00\"\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "update expense",
+              "id": "70647d01-0999-42c5-8e7e-de61ecaa73d0",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"expenseCategoryId\": 1,\r\n    \"amount\": 100,\r\n    \"description\": \"Test description\",\r\n    \"proofDocumentId\": 59,\r\n    \"expenseDate\": \"2026-02-17\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/travels/expenses/10002/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "travels",
+                    "expenses",
+                    "10002",
+                    "1"
+                  ]
                 }
               },
               "response": []

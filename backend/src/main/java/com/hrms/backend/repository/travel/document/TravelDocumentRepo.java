@@ -1,4 +1,4 @@
-package com.hrms.backend.repository.travel;
+package com.hrms.backend.repository.travel.document;
 
 import com.hrms.backend.entities.travel.TravelDocument;
 import jakarta.transaction.Transactional;
