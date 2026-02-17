@@ -18,4 +18,5 @@ public class TravelExpenseResponseDTO {
     private Document expenseProofDocument;
     private Date expenseDate;
     private Date createdAt;
+    private Boolean isApproved;
 }
