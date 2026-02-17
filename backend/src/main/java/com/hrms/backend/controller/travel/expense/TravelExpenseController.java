@@ -25,6 +25,7 @@ import java.util.List;
 public class TravelExpenseController {
     private final TravelExpenseService travelExpenseService;
 
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_HR')")
     @GetMapping()
     public ResponseEntity<ApiResponse<List<TravelExpenseResponseDTO>>> getAllTravelExpenses(@AuthenticationPrincipal User user, @PathVariable("travelId") Long travelId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(true, "Travel expenses get successfully", travelExpenseService.getAllTravelExpenses(travelId)));
