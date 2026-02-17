@@ -53,14 +53,16 @@ const formFields: ICustomFormField<TravelSchemaType> = [
     key: "startDate",
     placeholder: "Select start date",
     type: "date",
-    disable: (date) => date <= new Date(),
+    disable: (date) =>
+      new Date().toLocaleDateString() > date.toLocaleDateString(),
   },
   {
     label: "End Date",
     key: "endDate",
     placeholder: "Select end date",
     type: "date",
-    disable: (date) => date <= new Date(),
+    disable: (date) =>
+      new Date().toLocaleDateString() > date.toLocaleDateString(),
   },
 ];
 

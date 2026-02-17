@@ -37,8 +37,7 @@ export function DatePicker({
         <Calendar
           mode="single"
           selected={value}
-          defaultMonth={value}
-          captionLayout="dropdown"
+          captionLayout="label"
           disabled={disable}
           onSelect={(date) => {
             onChange(date);
