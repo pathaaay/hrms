@@ -1,11 +1,12 @@
-package com.hrms.backend.service.travel;
+package com.hrms.backend.service.travel.document;
 
 import com.hrms.backend.dto.travel.documents.request.TravelDocumentRequestDTO;
 import com.hrms.backend.dto.travel.documents.response.TravelDocumentResponseDTO;
 import com.hrms.backend.entities.travel.TravelDocument;
 import com.hrms.backend.entities.user.User;
-import com.hrms.backend.repository.travel.TravelDocumentRepo;
+import com.hrms.backend.repository.travel.document.TravelDocumentRepo;
 import com.hrms.backend.service.document.DocumentService;
+import com.hrms.backend.service.travel.TravelService;
 import com.hrms.backend.service.user.UserService;
 import com.hrms.backend.utilities.roles.Roles;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,9 @@
-package com.hrms.backend.controller.travel;
+package com.hrms.backend.controller.travel.document;
 
 import com.hrms.backend.dto.travel.documents.request.TravelDocumentRequestDTO;
 import com.hrms.backend.dto.travel.documents.response.TravelDocumentResponseDTO;
 import com.hrms.backend.entities.user.User;
-import com.hrms.backend.service.travel.TravelDocumentService;
+import com.hrms.backend.service.travel.document.TravelDocumentService;
 import com.hrms.backend.utilities.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
