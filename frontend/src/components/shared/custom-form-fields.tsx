@@ -69,7 +69,7 @@ export const CustomFormFields = <T extends FieldValues>({
                 )}
 
                 {type === "select" && (
-                  <Select>
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger>
                       <SelectValue placeholder={placeholder} />
                     </SelectTrigger>
