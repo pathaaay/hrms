@@ -5,7 +5,7 @@ import {
   createDocument,
   deleteDocument,
   updateDocument,
-} from "@/api/actions/travels/travel-documents";
+} from "@/api/actions/travels/travel-document";
 
 export const useCreateTravelDocumentMutation = () => {
   return useMutation({

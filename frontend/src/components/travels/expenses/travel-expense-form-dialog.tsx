@@ -25,55 +25,77 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useDocumentMutation } from "@/api/mutations/document";
-import { UploadIcon } from "lucide-react";
+import { WalletIcon } from "lucide-react";
 import { cn, createMultiSelectOption } from "@/lib/utils";
-import {
-  type TravelDocumentSchemaType,
-  TravelDocumentSchema,
-} from "@/lib/schemas/travel/travel-document-schema";
-import { type IUser } from "@/lib/types/user";
-import { useCreateTravelDocumentMutation } from "@/api/mutations/travel/travel-document";
-import { queryClient } from "@/lib/tanstack-query/query-client";
 
-const formFields: ICustomFormField<TravelDocumentSchemaType> = [
+import { queryClient } from "@/lib/tanstack-query/query-client";
+import {
+  TravelExpenseSchema,
+  type TravelExpenseSchemaType,
+} from "@/lib/schemas/travel/travel-expense-schema";
+import { useTravel } from "@/hooks/travel/use-travel";
+import {
+  useCreateTravelExpenseMutation,
+  useUpdateTravelExpenseMutation,
+} from "@/api/mutations/travel/travel-expense";
+import { useParams } from "react-router";
+import type { ITravelExpense } from "@/lib/types/travel";
+
+const formFields: ICustomFormField<TravelExpenseSchemaType> = [
   {
-    label: "Title",
-    key: "title",
-    placeholder: "Enter title",
+    label: "Amount",
+    key: "amount",
+    placeholder: "Enter amount",
+    type: "number",
+  },
+  {
+    label: "Description",
+    key: "description",
+    placeholder: "Enter description",
+  },
+  {
+    label: "Expense Date",
+    key: "expenseDate",
+    type: "date",
+    placeholder: "Select date",
   },
 ];
 
-export const UploadDocumentDialog = ({
-  showAddedFor = false,
-  travelId,
-  users,
+export const TravelExpenseFormDialog = ({
   trigger,
+  travelExpense,
 }: {
-  showAddedFor?: boolean;
-  travelId: number;
-  users?: IUser[];
   trigger?: React.ReactNode;
+  travelExpense?: ITravelExpense;
 }) => {
+  const { travelId } = useParams();
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState<FileList | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
-  const { mutateAsync: createTravelDocument, isPending } =
-    useCreateTravelDocumentMutation();
+  const { mutateAsync: createTravelExpense, isPending } =
+    useCreateTravelExpenseMutation();
+  const { mutateAsync: updateTravelExpense, isPending: isUpdating } =
+    useUpdateTravelExpenseMutation();
   const { mutateAsync: handlFileUpload, isPending: isFileUploading } =
     useDocumentMutation();
+  const { travelExpenseCategories } = useTravel();
 
   const form = useForm({
-    resolver: zodResolver(TravelDocumentSchema),
+    resolver: zodResolver(TravelExpenseSchema),
     defaultValues: {
       travelId: Number(travelId),
-      title: "",
-      documentId: null,
-      addedForId: null,
+      travelExpenseId: travelExpense?.id || undefined,
+      amount: travelExpense?.amount || 0,
+      description: travelExpense?.description || "",
+      expenseCategoryId: travelExpense?.expenseCategory?.id.toString() || "",
+      expenseDate: travelExpense?.expenseDate
+        ? new Date(travelExpense?.expenseDate)
+        : new Date(),
     },
   });
 
-  const onFormSubmit = async (values: TravelDocumentSchemaType) => {
-    if (!files || files?.length < 0) {
+  const onFormSubmit = async (values: TravelExpenseSchemaType) => {
+    if (!travelExpense && (!files || files?.length < 0)) {
       setFileError("CV file is required");
       return;
     }
@@ -83,46 +105,33 @@ export const UploadDocumentDialog = ({
 
     const newValue = {
       ...values,
-      documentId: data.id,
+      proofDocumentId: data?.id || travelExpense?.expenseProofDocument?.id,
     };
-    await createTravelDocument(newValue);
+
+    if (travelExpense) await updateTravelExpense(newValue);
+    else await createTravelExpense(newValue);
+
     queryClient.invalidateQueries({
-      queryKey: [`travel-documents-${travelId}`],
+      queryKey: [`travel-expenses-${travelId}`],
     });
+
     setOpen(false);
     form.reset();
   };
-
-  const options = users?.map((user) =>
-    createMultiSelectOption(user.id.toString(), user.name),
-  );
-
-  const newFields: ICustomFormField<TravelDocumentSchemaType> = showAddedFor
-    ? [
-        ...formFields,
-        {
-          label: "Added for",
-          key: "addedForId",
-          placeholder: "Select added for",
-          type: "select",
-          options,
-        },
-      ]
-    : formFields;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {trigger || (
           <Button>
-            <UploadIcon />
-            Uplod Document
+            <WalletIcon />
+            {travelExpense ? "Update" : "Add"} Expense
           </Button>
         )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Upload Document</DialogTitle>
+          <DialogTitle>{travelExpense ? "Update" : "Add"} expense</DialogTitle>
           <DialogDescription hidden></DialogDescription>
         </DialogHeader>
         <form
@@ -131,13 +140,27 @@ export const UploadDocumentDialog = ({
         >
           <ScrollArea className="max-h-[80vh] pr-1">
             <FieldGroup className="flex items-center flex-col gap-3 px-1.5">
-              <CustomFormFields<TravelDocumentSchemaType>
+              <CustomFormFields<TravelExpenseSchemaType>
                 fieldClass="gap-1"
                 control={form.control}
-                formFields={newFields}
+                formFields={[
+                  {
+                    label: "Expense Category",
+                    key: "expenseCategoryId",
+                    type: "select",
+                    placeholder: "Select category",
+                    options: travelExpenseCategories.map((category) =>
+                      createMultiSelectOption(
+                        category.id.toString(),
+                        category.name,
+                      ),
+                    ),
+                  },
+                  ...formFields,
+                ]}
               />
               <Field className={cn(`gap-1`, fileError && "text-destructive")}>
-                <FieldLabel htmlFor="picture">Document</FieldLabel>
+                <FieldLabel htmlFor="picture">Proof document</FieldLabel>
                 <Input
                   onChange={(e) => {
                     setFileError("");
@@ -159,14 +182,18 @@ export const UploadDocumentDialog = ({
             </DialogClose>
             <Button
               type="submit"
+              onClick={() => console.log(form)}
               disabled={
                 isFileUploading ||
                 isPending ||
+                isUpdating ||
                 (!form.formState.isDirty && !files)
               }
               size={"sm"}
             >
-              {isFileUploading || isPending ? "Please wait..." : "Upload"}
+              {isFileUploading || isPending || isUpdating
+                ? "Please wait..."
+                : "Save"}
             </Button>
           </DialogFooter>
         </form>
