@@ -18,13 +18,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useFetchTravelExpenses } from "@/hooks/travel/expense/use-fetch-travel-expenses";
 import { useTravel } from "@/hooks/travel/use-travel";
 import { emitGoBack } from "@/lib/helpers/events/go-back-event";
-import { FileExclamationPoint } from "lucide-react";
+import { FileExclamationPoint, PencilIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { travelExpenseColumns } from "./travel-expense-columns";
 import { useFetchTravelExpenseCategories } from "@/hooks/travel/expense/use-fetch-travel-expense-categories";
 import { CardContentRow } from "@/components/shared/card-content-row";
 import { Separator } from "@/components/ui/separator";
+import type { ITravelExpense } from "@/lib/types/travel";
+import type { ColumnDef } from "@tanstack/react-table";
+import { DeleteTravelExpenseBtn } from "@/components/travels/expenses/delete-travel-expense-btn";
+import { Button } from "@/components/ui/button";
 
 export const TravelExpenses = ({ manage }: { manage?: boolean }) => {
   const { travelId } = useParams();
@@ -35,11 +39,12 @@ export const TravelExpenses = ({ manage }: { manage?: boolean }) => {
     useTravel();
 
   const singleTravel = manage
-    ? createdTravels.find(({ id }) => id == Number(travelId))
-    : travels.find(({ id }) => id == Number(travelId));
+    ? createdTravels?.find(({ id }) => id == Number(travelId))
+    : travels?.find(({ id }) => id == Number(travelId));
 
   const { expenses, isPending } = useFetchTravelExpenses(
-    singleTravel?.id.toString(),
+    singleTravel?.id,
+    true,
   );
 
   useEffect(() => {
@@ -87,7 +92,7 @@ export const TravelExpenses = ({ manage }: { manage?: boolean }) => {
         <CardContent className="flex flex-col gap-2">
           <CardContentRow
             label="Approved Expense"
-            value={groupedExpenses.reduce(
+            value={groupedExpenses?.reduce(
               (acc, { totalApprovedAmount }) =>
                 acc + (totalApprovedAmount || 0),
               0,
@@ -96,7 +101,7 @@ export const TravelExpenses = ({ manage }: { manage?: boolean }) => {
           <Separator />
           <CardContentRow
             label="Total Expense"
-            value={groupedExpenses.reduce(
+            value={groupedExpenses?.reduce(
               (acc, { totalAmount }) => acc + (totalAmount || 0),
               0,
             )}
@@ -122,7 +127,7 @@ export const TravelExpenses = ({ manage }: { manage?: boolean }) => {
 
       {!isPending && (
         <Accordion type="single" collapsible className="w-full">
-          {groupedExpenses.map((group) => (
+          {groupedExpenses?.map((group) => (
             <AccordionItem
               key={group.date}
               value={group.date}
@@ -150,7 +155,7 @@ export const TravelExpenses = ({ manage }: { manage?: boolean }) => {
               </AccordionTrigger>
               <AccordionContent>
                 <DataTable
-                  columns={travelExpenseColumns}
+                  columns={[...travelExpenseColumns, ...extraColumns]}
                   data={group.expenses || []}
                   isLoading={isPending}
                   filterColumns={[
@@ -167,3 +172,27 @@ export const TravelExpenses = ({ manage }: { manage?: boolean }) => {
     </div>
   );
 };
+
+const extraColumns: ColumnDef<ITravelExpense>[] = [
+  {
+    header: "Actions",
+    accessorKey: "actions",
+    cell: ({ row }) => (
+      <div className="flex items-center gap-2">
+        {
+          <>
+            <DeleteTravelExpenseBtn id={row.original.id} />
+            <TravelExpenseFormDialog
+              travelExpense={row.original}
+              trigger={
+                <Button variant={"outline"} size={"icon"}>
+                  <PencilIcon />
+                </Button>
+              }
+            />
+          </>
+        }
+      </div>
+    ),
+  },
+];

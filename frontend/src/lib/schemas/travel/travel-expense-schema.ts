@@ -15,3 +15,14 @@ export const TravelExpenseSchema = z.object({
 });
 
 export type TravelExpenseSchemaType = z.infer<typeof TravelExpenseSchema>;
+
+export const TravelExpenseStatusSchema = z.object({
+  travelId: z.number(),
+  isApproved: z.boolean(),
+  travelExpenseId: z.number().optional(),
+  remarks: z.string().optional(),
+});
+
+export type TravelExpenseStatusSchemaType = z.infer<
+  typeof TravelExpenseStatusSchema
+>;

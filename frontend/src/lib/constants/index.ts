@@ -26,6 +26,11 @@ export const navLinks = [
         label: "Manage Travels",
         requiredRoles: [ROLES.HR],
       },
+      {
+        url: "/manage/create",
+        label: "Create Travel",
+        requiredRoles: [ROLES.HR],
+      },
     ],
   },
   {
@@ -54,7 +59,7 @@ export const navLinks = [
       },
       {
         url: "/manage",
-        label: "Manage",
+        label: "Manage jobs",
         requiredRoles: [ROLES.HR],
       },
       {

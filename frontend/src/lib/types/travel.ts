@@ -31,6 +31,7 @@ export interface ITravelExpense {
   id: number;
   amount: number;
   isApproved: boolean;
+  createdBy: IUser;
   remarks: string;
   createdAt: string;
   expenseDate: string;

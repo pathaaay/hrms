@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
 import {
+  changeTravelExpenseStatus,
   createTravelExpense,
   deleteTravelExpense,
   updateTravelExpense,
@@ -44,6 +45,20 @@ export const useDeleteTravelExpenseMutation = () => {
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(
         "Failed to delete travel expense: " + error?.response?.data.message,
+      );
+    },
+  });
+};
+
+export const useChangeTravelExpenseStatusMutation = () => {
+  return useMutation({
+    mutationFn: changeTravelExpenseStatus,
+    onSuccess: () => {
+      toast.success("Expense status changed successfully");
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(
+        "Failed to change expense status: " + error?.response?.data.message,
       );
     },
   });

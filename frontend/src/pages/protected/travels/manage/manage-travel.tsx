@@ -167,6 +167,15 @@ const columns: ColumnDef<ITravel>[] = [
     ),
   },
   {
+    header: "Expense",
+    accessorKey: "expense",
+    cell: ({ row }) => (
+      <Button asChild variant={"outline"} size={"sm"}>
+        <NavLink to={`${row.original.id}/expenses`}>Manage</NavLink>
+      </Button>
+    ),
+  },
+  {
     header: "Actions",
     accessorKey: "actions",
     cell: ({ row }) => (
