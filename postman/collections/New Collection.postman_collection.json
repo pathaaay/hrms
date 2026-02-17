@@ -16,7 +16,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"aayush.pathak@roimaint.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"jhar26960@gmail.com\",\r\n    \"password\": \"Ayush@123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2597,6 +2597,132 @@
                   "cookie": [],
                   "responseTime": "2026-02-17T09:49:11.463Z",
                   "body": "{\n    \"success\": true,\n    \"message\": \"Travel expense updated successfully\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "update travel expense status",
+              "id": "d8d22073-4cec-4b91-a822-b98b10cd4423",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"isApproved\": false,\r\n    \"remarks\":\"Testing false\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/travels/expenses/10002/1/update-status",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "travels",
+                    "expenses",
+                    "10002",
+                    "1",
+                    "update-status"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "dbf0a809-434a-4383-800a-abd5f36dda00",
+                  "name": "update travel expense status",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"isApproved\": true,\r\n    \"remarks\":\"Testing true\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/travels/expenses/10002/1/update-status",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "travels",
+                        "expenses",
+                        "10002",
+                        "1",
+                        "update-status"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 17 Feb 2026 10:26:05 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": "2026-02-17T10:26:07.868Z",
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Travel expense approvedsuccessfully\"\n}"
                 }
               ]
             }

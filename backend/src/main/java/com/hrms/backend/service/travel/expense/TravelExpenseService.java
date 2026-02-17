@@ -1,6 +1,7 @@
 package com.hrms.backend.service.travel.expense;
 
 import com.hrms.backend.dto.travel.expense.request.TravelExpenseRequestDTO;
+import com.hrms.backend.dto.travel.expense.request.TravelExpenseStatusDTO;
 import com.hrms.backend.dto.travel.expense.response.TravelExpenseResponseDTO;
 import com.hrms.backend.entities.travel.Travel;
 import com.hrms.backend.entities.travel.expense.TravelExpense;
@@ -11,6 +12,7 @@ import com.hrms.backend.service.document.DocumentService;
 import com.hrms.backend.service.mail.MailService;
 import com.hrms.backend.service.travel.TravelService;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
@@ -30,6 +32,7 @@ public class TravelExpenseService {
     private final MailService mailService;
     private final TravelExpenseRepo travelExpenseRepo;
     private final TravelExpenseCategoryService travelExpenseCategoryService;
+    private final TravelExpenseStatusLogService travelExpenseStatusLogService;
 
     private TravelExpense convertToEntity(TravelExpenseRequestDTO dto, User user, Long travelId) throws BadRequestException {
         TravelExpense expense = modelMapper.map(dto, TravelExpense.class);
@@ -39,7 +42,7 @@ public class TravelExpenseService {
 
         Long totalExpense = travelExpenseRepo.getExpenseTotalByDate(dto.getExpenseDate());
 
-        log.info("totalExpense : {}",totalExpense);
+        log.info("totalExpense : {}", totalExpense);
 
         if (dto.getAmount() > travel.getMaxAmountPerDay())
             throw new BadRequestException("Expense amount is too high for this travel");
@@ -90,6 +93,18 @@ public class TravelExpenseService {
         expense.setId(travelExpenseId);
         travelExpenseRepo.save(expense);
         notifyToHr(expense.getTravel(), expense, true);
+    }
+
+    @Transactional
+    public void updateTravelExpenseStatus(User user, Long travelExpenseId, TravelExpenseStatusDTO dto) throws BadRequestException {
+        TravelExpense expense = findById(travelExpenseId);
+
+        if (Boolean.FALSE.equals(dto.getIsApproved()) && (dto.getRemarks() == null || dto.getRemarks().isBlank()))
+            throw new BadRequestException("Remarks is required while rejecting an expense");
+
+        expense.setIsApproved(dto.getIsApproved());
+        expense.setRemarks(dto.getRemarks());
+        travelExpenseStatusLogService.createLog(expense, user);
     }
 
     public void deleteTravelExpense(Long travelExpenseId) {

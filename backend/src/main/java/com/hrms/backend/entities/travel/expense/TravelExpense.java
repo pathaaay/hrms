@@ -48,6 +48,9 @@ public class TravelExpense {
     @Column(name = "created_at")
     private Date createdAt;
 
+    @Column(name = "is_approved")
+    private Boolean isApproved;
+
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 }
