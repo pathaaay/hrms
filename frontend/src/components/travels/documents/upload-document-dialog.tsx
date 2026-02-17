@@ -31,8 +31,7 @@ import {
   type TravelDocumentSchemaType,
   TravelDocumentSchema,
 } from "@/lib/schemas/travel/travel-documents-schema";
-import { useHasRole } from "@/hooks/user/use-has-role";
-import { ROLES, type IUserProfile } from "@/lib/types/user";
+import { type IUser } from "@/lib/types/user";
 import { useCreateTravelDocumentMutation } from "@/api/mutations/travel/travel-document";
 import { queryClient } from "@/lib/tanstack-query/query-client";
 
@@ -45,13 +44,16 @@ const formFields: ICustomFormField<TravelDocumentSchemaType> = [
 ];
 
 export const UploadDocumentDialog = ({
+  showAddedFor = false,
   travelId,
   users,
+  trigger,
 }: {
+  showAddedFor?: boolean;
   travelId: number;
-  users?: IUserProfile[];
+  users?: IUser[];
+  trigger?: React.ReactNode;
 }) => {
-  const canAddAddedFor = useHasRole([ROLES.HR]);
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState<FileList | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
@@ -66,12 +68,11 @@ export const UploadDocumentDialog = ({
       travelId: Number(travelId),
       title: "",
       documentId: null,
-      addedFor: null,
+      addedForId: null,
     },
   });
 
   const onFormSubmit = async (values: TravelDocumentSchemaType) => {
-    console.log("submitted", values);
     if (!files || files?.length < 0) {
       setFileError("CV file is required");
       return;
@@ -93,15 +94,15 @@ export const UploadDocumentDialog = ({
   };
 
   const options = users?.map((user) =>
-    createMultiSelectOption(user.userId.toString(), user.name),
+    createMultiSelectOption(user.id.toString(), user.name),
   );
 
-  const newFields: ICustomFormField<TravelDocumentSchemaType> = canAddAddedFor
+  const newFields: ICustomFormField<TravelDocumentSchemaType> = showAddedFor
     ? [
         ...formFields,
         {
           label: "Added for",
-          key: "addedFor",
+          key: "addedForId",
           placeholder: "Select added for",
           type: "select",
           options,
@@ -112,10 +113,12 @@ export const UploadDocumentDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <UploadIcon />
-          Uplod Document
-        </Button>
+        {trigger || (
+          <Button>
+            <UploadIcon />
+            Uplod Document
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

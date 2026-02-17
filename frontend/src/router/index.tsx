@@ -91,6 +91,10 @@ export const appRouter = createBrowserRouter([
                     path: "update/:travelId",
                     element: <UpdateTravelPage />,
                   },
+                  {
+                    path: ":travelId/documents",
+                    element: <TravelDocuments manage={true} />,
+                  },
                 ],
               },
               {
