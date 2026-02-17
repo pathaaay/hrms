@@ -2725,6 +2725,130 @@
                   "body": "{\n    \"success\": true,\n    \"message\": \"Travel expense approvedsuccessfully\"\n}"
                 }
               ]
+            },
+            {
+              "name": "get all expenses by travel id",
+              "id": "c8099c94-a885-443e-b8e0-7a9c60728d84",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/travels/expenses/10002",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "travels",
+                    "expenses",
+                    "10002"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get expense categories",
+              "id": "332d27f4-036a-4cff-a68e-461b09f94c45",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/travels/expenses/categories",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "travels",
+                    "expenses",
+                    "categories"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "20180905-a6f1-48ad-9bad-33835db4d07e",
+                  "name": "get expense categories",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{base_url}}/travels/expenses/categories",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "travels",
+                        "expenses",
+                        "categories"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 17 Feb 2026 12:04:08 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": "2026-02-17T12:04:15.373Z",
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Categories get successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Meal\",\n            \"maxAmount\": 500\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Transportation\",\n            \"maxAmount\": 500\n        }\n    ]\n}"
+                }
+              ]
             }
           ],
           "id": "bb7d5717-446e-4e8e-8c74-23e2befc81f7"

@@ -1,4 +1,4 @@
-import { getAllDocumentsByTravelId } from "@/api/actions/travels/travel-documents";
+import { getAllDocumentsByTravelId } from "@/api/actions/travels/travel-document";
 import type { ITravelDocument } from "@/lib/types/travel";
 import { useQuery } from "@tanstack/react-query";
 

@@ -75,12 +75,22 @@ export const TravelCard = ({ travel }: TravelCardProps) => {
         />
       </CardContent>
       <CardFooter className="flex items-center w-full gap-1">
-        <Button variant={"default"} className="grow">
-          Expenses
-        </Button>
-        <Button asChild variant={"secondary"} className="grow">
-          <NavLink to={`${travel.id}/documents`}>Documents</NavLink>
-        </Button>
+        {new Date(travel.startDate) <= new Date() &&
+          new Date(travel.endDate) >=
+            new Date(Date.now() - 10 * 24 * 60 * 60 * 1000) && (
+            <Button variant={"default"} className="grow">
+              <NavLink to={`${travel.id}/expenses`}>Expenses</NavLink>
+            </Button>
+          )}
+        {new Date(travel.endDate) < new Date() ? (
+          <Button variant={"secondary"} className="grow" disabled>
+            Completed
+          </Button>
+        ) : (
+          <Button asChild variant={"secondary"} className="grow">
+            <NavLink to={`${travel.id}/documents`}>Documents</NavLink>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
