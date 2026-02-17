@@ -1,11 +1,12 @@
-import type { ITravel } from "@/lib/types/travel";
+import type { ITravel, ITravelExpenseCategory } from "@/lib/types/travel";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IInitialState {
   isCreatedTravelsLoading: boolean;
   isTravelsLoading: boolean;
-  travels: ITravel[] | [];
-  createdTravels: ITravel[] | [];
+  travels: ITravel[];
+  createdTravels: ITravel[];
+  travelExpenseCategories: ITravelExpenseCategory[];
 }
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   isTravelsLoading: true,
   travels: [],
   createdTravels: [],
+  travelExpenseCategories: [],
 } as IInitialState;
 
 export const travelSlice = createSlice({
@@ -27,8 +29,12 @@ export const travelSlice = createSlice({
       state.createdTravels = payload;
       state.isCreatedTravelsLoading = false;
     },
+    setTravelExpenseCategories(state, { payload }) {
+      state.travelExpenseCategories = payload;
+    },
   },
 });
 
-export const { setTravels, setCreatedTravels } = travelSlice.actions;
+export const { setTravels, setCreatedTravels, setTravelExpenseCategories } =
+  travelSlice.actions;
 export const travelReducer = travelSlice.reducer;

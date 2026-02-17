@@ -26,3 +26,21 @@ export interface ITravelDocument {
   document: IDocument;
   createdAt: string;
 }
+
+export interface ITravelExpense {
+  id: number;
+  amount: number;
+  isApproved: boolean;
+  remarks: string;
+  createdAt: string;
+  expenseDate: string;
+  description: string;
+  expenseProofDocument: IDocument;
+  expenseCategory: ITravelExpenseCategory;
+}
+
+export interface ITravelExpenseCategory {
+  id: number;
+  name: string;
+  maxAmount: number;
+}

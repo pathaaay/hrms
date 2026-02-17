@@ -116,6 +116,9 @@ export const CustomFormFields = <T extends FieldValues>({
                   <Input
                     {...field}
                     aria-invalid={fieldState.invalid}
+                    onChange={(e) =>
+                      field.onChange(type === "number" ? Number(e.target.value) : e.target.value)
+                    } 
                     id={key}
                     type={type}
                     placeholder={placeholder}
