@@ -20,6 +20,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { DeleteTravelBtn } from "@/components/travels/delete-travel-btn";
 import { UploadDocumentDialog } from "@/components/travels/documents/upload-document-dialog";
+import { MembersListPopover } from "@/components/shared/members-list-popover";
 
 export const ManageAllTravelsPage = () => {
   const canManageJob = useHasRole([ROLES.HR]);
@@ -88,31 +89,7 @@ const columns: ColumnDef<ITravel>[] = [
     header: "Members",
     accessorKey: "team.gameTeamMembers",
     cell: ({ row }) => (
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            id="date-picker-optional"
-            className="w-max justify-between font-normal"
-          >
-            {row.original.travelMembers.length}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
-          {row?.original?.travelMembers?.map((member) => (
-            <>
-              <div
-                className="flex flex-col gap-1 p-3 text-xs text-muted-foreground"
-                key={member.id}
-              >
-                <div className="text-foreground">{member.name}</div>
-                <div>{member.email}</div>
-              </div>
-              <Separator />
-            </>
-          ))}
-        </PopoverContent>
-      </Popover>
+      <MembersListPopover members={row.original.travelMembers} />
     ),
   },
   {
