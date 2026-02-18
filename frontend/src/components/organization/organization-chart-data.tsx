@@ -21,6 +21,8 @@ export const OrganizationChartData = ({
 }) => {
   const { managerialData, directReports } =
     useFetchOrganizationDataByUserId(userId);
+  const singleUser = managerialData?.find(({ userId }) => userId === userId);
+
   return (
     <div className="w-full">
       <div className="max-w-sm mx-auto flex flex-col-reverse">
@@ -41,8 +43,8 @@ export const OrganizationChartData = ({
       </div>
       {directReports && directReports?.length > 0 && (
         <>
-          <div className="text-center bg-secondary rounded-md w-max mx-auto p-1 px-2">
-            Direct Reports
+          <div className="text-center bg-secondary rounded-md w-max mx-auto p-1 px-2 text-sm">
+            People reporting to {singleUser?.name}
           </div>
           <Separator
             orientation={"vertical"}
