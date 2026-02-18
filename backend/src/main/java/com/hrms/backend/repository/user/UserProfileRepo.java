@@ -16,6 +16,9 @@ public interface UserProfileRepo extends JpaRepository<UserProfile, Long> {
     @Query("SELECT u FROM UserProfile u JOIN u.interestedGames ig WHERE ig.id = :gameId")
     List<UserProfile> findAllByGameId(@Param("gameId") Long gameId);
 
+    @Query("SELECT u FROM UserProfile u WHERE u.manager.id = :userId")
+    List<UserProfile> findAllDirectReportUsers(@Param("userId") Long userId);
+
     @Query("SELECT u FROM UserProfile u WHERE u.user.name like CONCAT('%',:searchText,'%') OR u.user.email like CONCAT('%',:searchText,'%') ")
     List<UserProfile> searchUsers(@Param("searchText") String searchText);
 }

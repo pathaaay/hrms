@@ -9,7 +9,7 @@ export const OrganizationChartPage = () => {
   if (!isAuthenticated || !userProfile) return;
 
   return (
-    <div className="p-5 flex flex-col gap-2 max-w-sm w-full mx-auto">
+    <div className="p-5 flex flex-col gap-2 w-full mx-auto">
       <SearchUserSelectBox />
       <OrganizationChartData userId={userId || userProfile.userId} />
     </div>

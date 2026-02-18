@@ -33,6 +33,10 @@ public class UserProfileService {
         return userProfileRepo.findByUserId(id).orElseThrow(() -> new BadRequestException("User not found"));
     }
 
+    public List<UserProfile> findAllDirectReportUsers(Long id) {
+        return userProfileRepo.findAllDirectReportUsers(id);
+    }
+
     public UserProfileResponseDTO getUserProfile(User user) throws BadRequestException {
         UserProfile profile = findByUserId(user.getId());
         UserProfileResponseDTO dto = UserProfileDTOMapper.convertToDTO(profile);
@@ -50,17 +54,6 @@ public class UserProfileService {
 
     public List<UserProfileResponseDTO> getAllUsersByGameId(Long gameId) {
         return convertToDTOList(userProfileRepo.findAllByGameId(gameId));
-    }
-
-    public List<UserProfileResponseDTO> getUserOrganizationChart(Long userId) throws BadRequestException {
-        UserProfile profile = findByUserId(userId);
-        List<UserProfile> allProfiles = new ArrayList<>();
-        allProfiles.add(profile);
-        while (profile.getManager() != null) {
-            profile = findByUserId(profile.getManager().getId());
-            allProfiles.add(profile);
-        }
-        return convertToDTOList(allProfiles);
     }
 
     @Transactional

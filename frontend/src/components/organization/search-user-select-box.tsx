@@ -41,9 +41,11 @@ export const SearchUserSelectBox = () => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline">Find User</Button>
+        <Button variant="outline" className="max-w-sm mx-auto w-full">
+          Find User
+        </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent className="w-full">
         <Input
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
