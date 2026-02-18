@@ -21,7 +21,9 @@ export const OrganizationChartData = ({
 }) => {
   const { managerialData, directReports } =
     useFetchOrganizationDataByUserId(userId);
-  const singleUser = managerialData?.find(({ userId }) => userId === userId);
+  const singleUser = managerialData?.find(
+    ({ userId }) => userId === Number(userId),
+  );
 
   return (
     <div className="w-full">
