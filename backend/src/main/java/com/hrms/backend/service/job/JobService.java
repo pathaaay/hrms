@@ -3,7 +3,7 @@ package com.hrms.backend.service.job;
 import com.hrms.backend.dto.job.request.JobRequestDTO;
 import com.hrms.backend.dto.job.response.JobResponseDTO;
 import com.hrms.backend.entities.document.Document;
-import com.hrms.backend.entities.jobs.Job;
+import com.hrms.backend.entities.job.Job;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.job.JobRepo;
 import com.hrms.backend.service.document.DocumentService;

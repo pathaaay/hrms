@@ -1,4 +1,4 @@
-package com.hrms.backend.entities.jobs.referral;
+package com.hrms.backend.entities.job.referral;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,7 +1,6 @@
-package com.hrms.backend.dto.job.response;
+package com.hrms.backend.dto.achievementpost.comment.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.hrms.backend.entities.job.referral.ReferralReviewStatus;
 import com.hrms.backend.entities.user.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,10 +10,11 @@ import java.util.Date;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class JobReferralStatusLogResponseDTO {
+public class AchievementPostCommentResponseDTO {
     private Long id;
-    private ReferralReviewStatus oldStatus;
-    private ReferralReviewStatus newStatus;
-    private User changedBy;
+    private String comment;
+    private User author;
+    private User deletedBy;
+    private String remarks;
     private Date createdAt;
 }

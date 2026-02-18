@@ -1,4 +1,4 @@
-package com.hrms.backend.entities.jobs;
+package com.hrms.backend.entities.job;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hrms.backend.entities.document.Document;

@@ -1,6 +1,6 @@
 package com.hrms.backend.dto.job.request;
 
-import com.hrms.backend.entities.jobs.referral.ReferralReviewStatus;
+import com.hrms.backend.entities.job.referral.ReferralReviewStatus;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;

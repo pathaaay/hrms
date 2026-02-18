@@ -3285,71 +3285,501 @@
       "id": "34b008b6-4ee1-4aed-97ee-42ae875f9b8c"
     },
     {
-      "name": "Home",
-      "id": "b49acb15-c9d6-4da1-b180-aeb41ebee4f4",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            ""
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Health",
-      "id": "07e87a42-fefb-443d-ac2c-53c0e126ac4b",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/health",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "health"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "upload document",
-      "id": "6bad3e57-9cc3-49ed-967c-b9460547aa1b",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "formdata",
-          "formdata": [
-            {
-              "key": "file\n",
-              "type": "file",
-              "uuid": "bed91e72-a785-4fb6-9b0e-5f401371aa37",
-              "src": [
-                "/C:/Users/pathaaay/Pictures/Screenshots/Screenshot 2026-01-22 140737.png"
+      "name": "Root",
+      "item": [
+        {
+          "name": "Home",
+          "id": "b49acb15-c9d6-4da1-b180-aeb41ebee4f4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                ""
               ]
             }
-          ]
+          },
+          "response": []
         },
-        "url": {
-          "raw": "{{base_url}}/document",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "document"
-          ]
+        {
+          "name": "Health",
+          "id": "07e87a42-fefb-443d-ac2c-53c0e126ac4b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ],
+      "id": "dd1e911a-0043-48ef-b7d4-c4222aea2663"
+    },
+    {
+      "name": "document",
+      "item": [
+        {
+          "name": "upload document",
+          "id": "6bad3e57-9cc3-49ed-967c-b9460547aa1b",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file\n",
+                  "type": "file",
+                  "uuid": "bed91e72-a785-4fb6-9b0e-5f401371aa37",
+                  "src": [
+                    "/C:/Users/pathaaay/Pictures/Screenshots/Screenshot 2026-01-22 140737.png"
+                  ]
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/document",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "document"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "26c16220-cb4c-47ee-9826-72dd4fe13ccc"
+    },
+    {
+      "name": "Achievement Posts",
+      "item": [
+        {
+          "name": "comment",
+          "item": [
+            {
+              "name": "add comment",
+              "id": "36f7e7fe-56c7-4533-930c-b03d48b511dc",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n \"comment\":\"Testing comment again\"   \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/achievement-posts/comments/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "achievement-posts",
+                    "comments",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all comments by post id",
+              "id": "a6956716-c3b2-4c98-85a1-aaa4a7a48423",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/achievement-posts/comments/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "achievement-posts",
+                    "comments",
+                    "1"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "a7061caa-3d1d-4522-ba45-423c8bc8dc46",
+                  "name": "get all comments by post id",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{base_url}}/achievement-posts/comments/1",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "achievement-posts",
+                        "comments",
+                        "1"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 18 Feb 2026 12:49:18 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": "2026-02-18T12:49:19.436Z",
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Post comments get successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"comment\": \"helo test comment\",\n            \"author\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                },\n                \"avatarFilePath\": null\n            },\n            \"createdAt\": \"2026-02-18T12:08:05.316+00:00\"\n        },\n        {\n            \"id\": 2,\n            \"comment\": \"Testing comment again\",\n            \"author\": {\n                \"id\": 3,\n                \"name\": \"HR\",\n                \"email\": \"jhar26960@gmail.com\",\n                \"role\": {\n                    \"id\": 1,\n                    \"name\": \"hr\"\n                },\n                \"avatarFilePath\": null\n            },\n            \"createdAt\": \"2026-02-18T12:09:32.533+00:00\"\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "delete comment by id",
+              "id": "bf7ebc4b-72e8-4722-b840-3088e68d9c74",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/achievement-posts/comments/2/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "achievement-posts",
+                    "comments",
+                    "2",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete inappropriate comment with remarks",
+              "id": "a32a936c-fc1c-4a9c-bda5-bb6426694ba4",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/achievement-posts/comments/2/2/inappropriate?remarks=This content is inappropriate",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "achievement-posts",
+                    "comments",
+                    "2",
+                    "2",
+                    "inappropriate"
+                  ],
+                  "query": [
+                    {
+                      "key": "remarks",
+                      "value": "This content is inappropriate",
+                      "uuid": "b25f0b9f-8d36-4b8d-bc52-8e6573749cb0"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "c1adf1ae-3f28-4c15-bb05-4d6348a76c9b"
+        },
+        {
+          "name": "like",
+          "item": [
+            {
+              "name": "get all likes by post id",
+              "id": "51a7452f-358b-4d2b-880d-0f9b9d70ea26",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/achievement-posts/likes/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "achievement-posts",
+                    "likes",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "toggle like of a post",
+              "id": "ed6e710b-53f9-4227-b681-c2de4c41beb7",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/achievement-posts/likes/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "achievement-posts",
+                    "likes",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "6fd99090-ba8e-4d7d-bc50-7954cfa944e4"
+        },
+        {
+          "name": "get all posts",
+          "id": "5685974c-621a-46e5-bea5-2121e275593a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/achievement-posts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "achievement-posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create a post",
+          "id": "ec6986a6-2e30-4b06-823c-65a708e27c6b",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"test again\",\r\n    \"description\": \"test again\",\r\n    \"isPublic\":false,\r\n    \"newTags\":[\"Social\",\"Roima\",\"Ahmedabad\"]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/achievement-posts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "achievement-posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update post",
+          "id": "7515904a-41a2-498d-ab55-ad265520c10c",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\":\"updated title\",\r\n    \"description\":\"updated desc\",\r\n    \"isPublic\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/achievement-posts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "achievement-posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get personal posts",
+          "id": "f012f359-e74e-498c-b9e9-7e04a21a4593",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/achievement-posts/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "achievement-posts",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get single user posts",
+          "id": "51de1e4c-478e-4688-a39f-2050524e152e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/achievement-posts/3",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "achievement-posts",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete post",
+          "id": "bf00bcef-b8fd-4e6d-8105-049442ef31c0",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/achievement-posts/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "achievement-posts",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete inappropriate post",
+          "id": "3eed2de8-8f35-4e04-9ac4-14f065030191",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/achievement-posts/1/inappropriate?remarks=post inappropriate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "achievement-posts",
+                "1",
+                "inappropriate"
+              ],
+              "query": [
+                {
+                  "key": "remarks",
+                  "value": "post inappropriate",
+                  "uuid": "bacb2b4c-534f-4227-8278-3cbe9f82549d"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get posts by tag id",
+          "id": "df081399-13bd-4402-8637-b2bc288ceb39",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/achievement-posts/tag/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "achievement-posts",
+                "tag",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "bed29f9c-c53a-4c69-8381-15df4dc5c073"
     }
   ]
 }

@@ -1,6 +1,6 @@
 package com.hrms.backend.repository.job;
 
-import com.hrms.backend.entities.jobs.Job;
+import com.hrms.backend.entities.job.Job;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,8 +1,8 @@
-package com.hrms.backend.entities.jobs.referral;
+package com.hrms.backend.entities.job.referral;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hrms.backend.entities.document.Document;
-import com.hrms.backend.entities.jobs.Job;
+import com.hrms.backend.entities.job.Job;
 import com.hrms.backend.entities.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
-import java.util.Set;
 
 @Setter
 @Getter

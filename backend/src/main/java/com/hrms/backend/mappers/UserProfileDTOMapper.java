@@ -24,7 +24,7 @@ public class UserProfileDTOMapper {
         dto.setCity(profile.getCity().getName());
         dto.setState(profile.getCity().getState().getName());
         dto.setCountry(profile.getCity().getState().getCountry().getName());
-        
+        dto.setAvatarFilePath(profile.getUser().getAvatarFilePath());
         return dto;
     }
 }
