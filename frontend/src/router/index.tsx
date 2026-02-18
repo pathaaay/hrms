@@ -27,6 +27,7 @@ import { CreateTravelPage } from "@/pages/protected/travels/manage/create-travel
 import { ManageTravelLayout } from "@/pages/protected/travels/manage/manage-travel-layout";
 import { UpdateTravelPage } from "@/pages/protected/travels/manage/update-travel";
 import { ManageExpense } from "@/pages/protected/travels/manage/expense/manage-expense";
+import { OrganizationChartPage } from "@/pages/protected/organization-chart";
 
 export const appRouter = createBrowserRouter([
   {
@@ -141,6 +142,19 @@ export const appRouter = createBrowserRouter([
               {
                 path: "assigned-referrals",
                 element: <AssignedReferrals />,
+              },
+            ],
+          },
+          {
+            path: "organization-chart",
+            children: [
+              {
+                index: true,
+                element: <OrganizationChartPage />,
+              },
+              {
+                path: ":userId",
+                element: <OrganizationChartPage />,
               },
             ],
           },

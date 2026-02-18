@@ -3259,6 +3259,32 @@
       "id": "92f91c2c-3f89-4e33-9200-c00f702ae608"
     },
     {
+      "name": "organization chart",
+      "item": [
+        {
+          "name": "get managerial chart",
+          "id": "9fe78b5b-0ef7-4e94-b56d-c38ff44d666a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/user/organizational-chart/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user",
+                "organizational-chart",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "34b008b6-4ee1-4aed-97ee-42ae875f9b8c"
+    },
+    {
       "name": "Home",
       "id": "b49acb15-c9d6-4da1-b180-aeb41ebee4f4",
       "request": {
