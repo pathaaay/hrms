@@ -58,6 +58,7 @@ const formFields: ICustomFormField<TravelExpenseSchemaType> = [
     key: "expenseDate",
     type: "date",
     placeholder: "Select date",
+    disable: (date) => date > new Date(),
   },
 ];
 
@@ -182,7 +183,6 @@ export const TravelExpenseFormDialog = ({
             </DialogClose>
             <Button
               type="submit"
-              onClick={() => console.log(form)}
               disabled={
                 isFileUploading ||
                 isPending ||
