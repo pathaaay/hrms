@@ -26,8 +26,8 @@ public class AchievementPostController {
     private static final String postGetSuccessfullyText = "Posts get successfully";
 
     @GetMapping()
-    public ResponseEntity<ApiResponse<List<AchievementPostResponseDTO>>> getAllPosts() {
-        return ResponseEntity.ok(new ApiResponse<>(true, postGetSuccessfullyText, achievementPostService.getAllPosts()));
+    public ResponseEntity<ApiResponse<List<AchievementPostResponseDTO>>> getAllPosts(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(new ApiResponse<>(true, postGetSuccessfullyText, achievementPostService.getAllPosts(user)));
     }
 
     @GetMapping("/me")
@@ -41,8 +41,8 @@ public class AchievementPostController {
     }
 
     @GetMapping("/tag/{tagId}")
-    public ResponseEntity<ApiResponse<List<AchievementPostResponseDTO>>> getPostsByTagId(@PathVariable("tagId") Long tagId) {
-        return ResponseEntity.ok(new ApiResponse<>(true, postGetSuccessfullyText, achievementPostService.getPostsByTagId(tagId)));
+    public ResponseEntity<ApiResponse<List<AchievementPostResponseDTO>>> getPostsByTagId(@AuthenticationPrincipal User user, @PathVariable("tagId") Long tagId) {
+        return ResponseEntity.ok(new ApiResponse<>(true, postGetSuccessfullyText, achievementPostService.getPostsByTagId(tagId, user)));
     }
 
     @PostMapping()

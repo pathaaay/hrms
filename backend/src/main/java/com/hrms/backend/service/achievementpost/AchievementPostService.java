@@ -9,6 +9,8 @@ import com.hrms.backend.entities.achievementpost.AchievementPost;
 import com.hrms.backend.entities.achievementpost.AchievementPostTag;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.achievementpost.AchievementPostRepo;
+import com.hrms.backend.service.user.UserProfileService;
+import com.hrms.backend.service.user.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -25,6 +27,7 @@ public class AchievementPostService {
     private final ModelMapper modelMapper;
     private final AchievementPostRepo achievementPostRepo;
     private final AchievementPostTagService achievementPostTagService;
+    private final UserService userService;
     private final AchievementPostLikeService achievementPostLikeService;
     private final AchievementPostCommentService achievementPostCommentService;
 
@@ -38,6 +41,11 @@ public class AchievementPostService {
     public AchievementPost convertToEntity(AchievementPostRequestDTO dto, User user) {
         AchievementPost post = modelMapper.map(dto, AchievementPost.class);
         Set<AchievementPostTag> tags = new HashSet<>();
+
+        if (!dto.getIsPublic() && dto.getVisibilityUserIds() != null) {
+            Set<User> users = userService.findAllById(dto.getVisibilityUserIds());
+            post.setVisibleToUsers(users);
+        }
 
         if (dto.getNewTags() != null) {
             Set<AchievementPostTag> newCreatedTags = achievementPostTagService.createTags(user, dto.getNewTags());
@@ -65,20 +73,20 @@ public class AchievementPostService {
         return achievementPostRepo.findByIdAndAuthor_IdAndDeletedBy_Id(postId, user.getId(), null).orElseThrow(() -> new BadRequestException("Post not found"));
     }
 
-    public List<AchievementPostResponseDTO> getAllPosts() {
-        return convertToDTOList(achievementPostRepo.findAllByDeletedByIsNullOrderByCreatedAtDesc());
+    public List<AchievementPostResponseDTO> getAllPosts(User user) {
+        return convertToDTOList(achievementPostRepo.findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullOrderByCreatedAtDesc(user.getId()));
     }
 
     public List<AchievementPostResponseDTO> getUserPosts(User user) {
-        return convertToDTOList(achievementPostRepo.findAllByDeletedBy_Id(user.getId()));
+        return convertToDTOList(achievementPostRepo.findAllByDeletedById(user.getId()));
     }
 
     public List<AchievementPostResponseDTO> getUserPostsByUserId(Long userId) {
-        return convertToDTOList(achievementPostRepo.findAllByDeletedByIsNullAndAuthor_IdOrderByCreatedAtDesc(userId));
+        return convertToDTOList(achievementPostRepo.findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullAndAuthor_IdOrderByCreatedAtDesc(userId, userId));
     }
 
-    public List<AchievementPostResponseDTO> getPostsByTagId(Long tagId) {
-        return convertToDTOList(achievementPostRepo.findAllByDeletedByIsNullAndAchievementPostTags_IdOrderByCreatedAtDesc(tagId));
+    public List<AchievementPostResponseDTO> getPostsByTagId(Long tagId, User user) {
+        return convertToDTOList(achievementPostRepo.findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullAndAchievementPostTags_IdOrderByCreatedAtDesc(user.getId(), tagId));
     }
 
     @Transactional

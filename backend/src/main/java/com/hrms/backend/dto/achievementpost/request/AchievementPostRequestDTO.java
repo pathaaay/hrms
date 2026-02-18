@@ -21,5 +21,7 @@ public class AchievementPostRequestDTO {
 
     private Set<Long> tagIds;
 
+    private Set<Long> visibilityUserIds;
+
     private Set<String> newTags;
 }

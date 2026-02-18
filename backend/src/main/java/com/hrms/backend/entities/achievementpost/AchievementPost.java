@@ -43,4 +43,11 @@ public class AchievementPost {
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<AchievementPostTag> achievementPostTags;
+
+    @ManyToMany()
+    @JoinTable(
+            name = "achievement_post_visible_to_users",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> visibleToUsers;
 }
