@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
-import { updateUser, updateUserInterestedGames } from "../actions/user";
+import { searchUser, updateUser, updateUserInterestedGames } from "../actions/user";
 import { queryClient } from "@/lib/tanstack-query/query-client";
 
 export const useEditProfileMutation = () => {
@@ -26,6 +26,17 @@ export const useUpdateInterestedGamesMutation = () => {
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(
         "Failed to update interested games: " + error?.response?.data.message,
+      );
+    },
+  });
+};
+
+export const useSearchUserMutation = () => {
+  return useMutation({
+    mutationFn: searchUser,
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(
+        "Failed to search user: " + error?.response?.data.message,
       );
     },
   });

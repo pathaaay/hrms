@@ -12,6 +12,7 @@ import React from "react";
 import { Separator } from "../ui/separator";
 import { cn } from "@/lib/utils";
 import { NavLink } from "react-router";
+import { Badge } from "../ui/badge";
 
 export const OrganizationChartData = ({
   userId,
@@ -20,7 +21,7 @@ export const OrganizationChartData = ({
 }) => {
   const { organizationData } = useFetchOrganizationDataByUserId(userId);
   return (
-    <div className="p-5 flex flex-col-reverse gap-2 max-w-sm w-full mx-auto">
+    <div className="p-5 flex flex-col-reverse gap-2 w-full">
       {organizationData?.map((user, i) => (
         <React.Fragment key={user.userId}>
           <NavLink to={`/organization-chart/${user.userId}`}>
@@ -35,8 +36,15 @@ export const OrganizationChartData = ({
                 </Avatar>
               </ItemMedia>
               <ItemContent>
-                <ItemTitle>{user.name}</ItemTitle>
-                <ItemDescription>{user.role}</ItemDescription>
+                <ItemTitle>
+                  {user.name}
+                  <Badge variant={"secondary"} className="text-xs capitalize">
+                    {user.role}
+                  </Badge>
+                </ItemTitle>
+                <ItemDescription>{user.email}</ItemDescription>
+                <ItemDescription>DOB: {new Date(user.dateOfBirth).toLocaleDateString()}</ItemDescription>
+                <ItemDescription>DOJ: {new Date(user.dateOfBirth).toLocaleDateString()}</ItemDescription>
               </ItemContent>
             </Item>
           </NavLink>

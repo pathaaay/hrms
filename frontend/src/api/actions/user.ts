@@ -33,3 +33,8 @@ export const getUserGameBookings = async () => {
   const res = await apiService.get(`${USER_ENDPOINT}/game-bookings`);
   return res.data;
 };
+
+export const searchUser = async (value: string) => {
+  const res = await apiService.get(`${USER_ENDPOINT}/search?query=${value}`);
+  return res.data;
+};
