@@ -11,5 +11,8 @@ export const useFetchNotifications = (): {
     queryFn: () => getAllNotifications(),
   });
 
-  return { isPending, notifications };
+  return {
+    isPending,
+    notifications,
+  };
 };

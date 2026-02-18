@@ -27,7 +27,7 @@ public class NotificationService {
     }
 
     public List<NotificationResponseDTO> getAllNotifications(Long userId) {
-        return convertToDTOList(notificationRepo.findAllByAddedForIdOrAddedForIdIsNull(userId));
+        return convertToDTOList(notificationRepo.findAllByAddedForIdOrAddedForIdIsNullOrderByCreatedAtDesc(userId));
     }
 
     @Transactional
