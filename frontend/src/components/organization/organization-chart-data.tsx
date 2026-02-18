@@ -75,7 +75,7 @@ const UserCard = ({
       <Item
         variant={userId === user.userId ? "outline" : "muted"}
         className={cn(
-          `hover:border-primary/30`,
+          `shadow-md hover:border-primary/30`,
           userId == user.userId && "border-primary hover:border-primary",
         )}
       >
@@ -86,9 +86,9 @@ const UserCard = ({
           </Avatar>
         </ItemMedia>
         <ItemContent>
-          <ItemTitle>
+          <ItemTitle className="w-full">
             {user.name}
-            <Badge variant={"secondary"} className="text-xs capitalize">
+            <Badge variant={"secondary"} className="text-xs capitalize ml-auto">
               {user.role}
             </Badge>
           </ItemTitle>

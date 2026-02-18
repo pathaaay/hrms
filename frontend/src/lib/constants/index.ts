@@ -1,6 +1,8 @@
 import {
   BriefcaseBusinessIcon,
   DicesIcon,
+  GitForkIcon,
+  HashIcon,
   LayoutDashboardIcon,
   WalletIcon,
 } from "lucide-react";
@@ -11,6 +13,11 @@ export const navLinks = [
     url: "/",
     label: "Dashboard",
     icon: LayoutDashboardIcon,
+  },
+  {
+    url: "/achievement-posts",
+    label: "Achievement Posts",
+    icon: HashIcon,
   },
   {
     url: "/travels",
@@ -80,8 +87,9 @@ export const navLinks = [
   {
     url: "/organization-chart",
     label: "Organization Chart",
-    icon: BriefcaseBusinessIcon
-  }
+    icon: GitForkIcon,
+    iconClass: "rotate-180",
+  },
 ];
 
 export const weekDays = [

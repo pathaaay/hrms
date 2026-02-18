@@ -16,6 +16,7 @@ import {
 } from "../ui/collapsible";
 import { ChevronRight } from "lucide-react";
 import { useUser } from "@/hooks/user/use-user";
+import { cn } from "@/lib/utils";
 
 export function SidebarLinks() {
   const { pathname } = useLocation();
@@ -35,7 +36,9 @@ export function SidebarLinks() {
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton tooltip={item.label}>
-                      {item.icon && <item.icon />}
+                      {item.icon && (
+                        <item.icon className={cn(item?.iconClass)} />
+                      )}
                       <span>{item.label}</span>
                       <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                     </SidebarMenuButton>
@@ -46,7 +49,7 @@ export function SidebarLinks() {
                         if (
                           subItem?.requiredRoles?.length &&
                           userRole &&
-                          !subItem.requiredRoles?.includes(userRole)
+                          !subItem.requiredRoles.toString()?.includes(userRole)
                         )
                           return;
                         const link = item.url + subItem.url;

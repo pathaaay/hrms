@@ -28,6 +28,7 @@ import { ManageTravelLayout } from "@/pages/protected/travels/manage/manage-trav
 import { UpdateTravelPage } from "@/pages/protected/travels/manage/update-travel";
 import { ManageExpense } from "@/pages/protected/travels/manage/expense/manage-expense";
 import { OrganizationChartPage } from "@/pages/protected/organization-chart";
+import { AchievementPostsPage } from "@/pages/protected/achievement-posts";
 
 export const appRouter = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ export const appRouter = createBrowserRouter([
           {
             path: "/account",
             element: <AccountPage />,
+          },
+          {
+            path: "/achievement-posts",
+            element: <AchievementPostsPage />,
           },
           {
             path: "games",
