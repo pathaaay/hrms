@@ -24,10 +24,13 @@ export const OrganizationChartData = ({
     <div className="p-5 flex flex-col-reverse gap-2 w-full">
       {organizationData?.map((user, i) => (
         <React.Fragment key={user.userId}>
-          <NavLink to={`/organization-chart/${user.userId}`}>
+          <NavLink to={`/organization-chart/${user.userId}`} replace>
             <Item
               variant={userId === user.userId ? "outline" : "muted"}
-              className={cn(userId == user.userId && "border-primary")}
+              className={cn(
+                `hover:border-primary/30`,
+                userId == user.userId && "border-primary hover:border-primary",
+              )}
             >
               <ItemMedia>
                 <Avatar className="size-10">
@@ -43,8 +46,12 @@ export const OrganizationChartData = ({
                   </Badge>
                 </ItemTitle>
                 <ItemDescription>{user.email}</ItemDescription>
-                <ItemDescription>DOB: {new Date(user.dateOfBirth).toLocaleDateString()}</ItemDescription>
-                <ItemDescription>DOJ: {new Date(user.dateOfBirth).toLocaleDateString()}</ItemDescription>
+                <ItemDescription>
+                  DOB: {new Date(user.dateOfBirth).toLocaleDateString()}
+                </ItemDescription>
+                <ItemDescription>
+                  DOJ: {new Date(user.dateOfBirth).toLocaleDateString()}
+                </ItemDescription>
               </ItemContent>
             </Item>
           </NavLink>
