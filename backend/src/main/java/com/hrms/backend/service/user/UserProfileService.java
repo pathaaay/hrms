@@ -40,6 +40,10 @@ public class UserProfileService {
         return dto;
     }
 
+    public List<UserProfileResponseDTO> searchUser(String searchText) {
+        return convertToDTOList(userProfileRepo.searchUsers(searchText));
+    }
+
     public List<UserProfileResponseDTO> getAllUsers() {
         return convertToDTOList(userProfileRepo.findAll());
     }

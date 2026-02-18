@@ -48,4 +48,9 @@ public class UserController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Bookings get successfully of user " + user.getId(), gameBookingService.getAllBookings(user.getId())));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<List<UserProfileResponseDTO>>> getUserBookings(@RequestParam("query") String query) {
+        return ResponseEntity.ok(new ApiResponse<>(true, "Users searched successfully", userProfileService.searchUser(query)));
+    }
+
 }
