@@ -8,7 +8,10 @@ export const TravelSchema = z.object({
   cityId: z.string({ error: "City is required" }),
   startDate: z.date({ error: "Start date is required" }),
   endDate: z.date({ error: "End date is required" }),
-  maxAmountPerDay: z.string({ error: "Max amount per day is required" }),
+  maxAmountPerDay: z
+    .number()
+    .nonnegative({ error: "Max amount per day cannot be negative" })
+    .min(1, { error: "Max amount per day should be greater than 0" }),
 });
 
 export type TravelSchemaType = z.infer<typeof TravelSchema>;
