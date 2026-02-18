@@ -77,6 +77,11 @@ export const navLinks = [
       },
     ],
   },
+  {
+    url: "/organization-chart",
+    label: "Organization Chart",
+    icon: BriefcaseBusinessIcon
+  }
 ];
 
 export const weekDays = [
