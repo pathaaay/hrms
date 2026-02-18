@@ -47,4 +47,9 @@ public class UserController {
     public ResponseEntity<ApiResponse<List<BookedGameSlotsResponseDTO>>> getUserBookings(@AuthenticationPrincipal User user) {
         return ResponseEntity.ok(new ApiResponse<>(true, "Bookings get successfully of user " + user.getId(), gameBookingService.getAllBookings(user.getId())));
     }
+
+    @GetMapping("/organizational-chart/{userId}")
+    public ResponseEntity<ApiResponse<List<UserProfileResponseDTO>>> getUserOrganizations(@AuthenticationPrincipal User user, @PathVariable("userId") Long userId) throws BadRequestException {
+        return ResponseEntity.ok(new ApiResponse<>(true, "Organizational data get successfully", userProfileService.getUserOrganizationChart(userId)));
+    }
 }

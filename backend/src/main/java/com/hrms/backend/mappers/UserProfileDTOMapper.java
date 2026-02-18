@@ -2,7 +2,6 @@ package com.hrms.backend.mappers;
 
 import com.hrms.backend.dto.user.response.UserProfileResponseDTO;
 import com.hrms.backend.entities.user.UserProfile;
-import org.springframework.stereotype.Component;
 
 public class UserProfileDTOMapper {
 
@@ -18,7 +17,6 @@ public class UserProfileDTOMapper {
         dto.setEmail(profile.getUser().getEmail());
         dto.setRole(profile.getUser().getRole().getName());
         dto.setDepartment(profile.getDepartment().getName());
-        dto.setInterestedGames(profile.getInterestedGames());
         dto.setTimezone(profile.getTimezone().getName());
         dto.setManager(profile.getManager());
         dto.setDateOfBirth(profile.getDateOfBirth());

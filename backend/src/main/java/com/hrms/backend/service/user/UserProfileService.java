@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -28,9 +29,15 @@ public class UserProfileService {
         return users.stream().map(UserProfileDTOMapper::convertToDTO).toList();
     }
 
+    public UserProfile findByUserId(Long id) throws BadRequestException {
+        return userProfileRepo.findByUserId(id).orElseThrow(() -> new BadRequestException("User not found"));
+    }
+
     public UserProfileResponseDTO getUserProfile(User user) throws BadRequestException {
-        UserProfile profile = userProfileRepo.findByUserId(user.getId()).orElseThrow(() -> new BadRequestException("User not exists"));
-        return UserProfileDTOMapper.convertToDTO(profile);
+        UserProfile profile = findByUserId(user.getId());
+        UserProfileResponseDTO dto = UserProfileDTOMapper.convertToDTO(profile);
+        dto.setInterestedGames(profile.getInterestedGames());
+        return dto;
     }
 
     public List<UserProfileResponseDTO> getAllUsers() {
@@ -41,9 +48,20 @@ public class UserProfileService {
         return convertToDTOList(userProfileRepo.findAllByGameId(gameId));
     }
 
+    public List<UserProfileResponseDTO> getUserOrganizationChart(Long userId) throws BadRequestException {
+        UserProfile profile = findByUserId(userId);
+        List<UserProfile> allProfiles = new ArrayList<>();
+        allProfiles.add(profile);
+        while (profile.getManager() != null) {
+            profile = findByUserId(profile.getManager().getId());
+            allProfiles.add(profile);
+        }
+        return convertToDTOList(allProfiles);
+    }
+
     @Transactional
     public void updateUserInterestedGames(User user, UpdateGameRequestDTO dto) throws BadRequestException {
-        UserProfile profile = userProfileRepo.findByUserId(user.getId()).orElseThrow(() -> new BadRequestException("Profile not found"));
+        UserProfile profile = findByUserId(user.getId());
         Set<Game> games = gameService.findAllbyId(dto.getGameIds());
         profile.setInterestedGames(games);
         userProfileRepo.save(profile);
