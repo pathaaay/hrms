@@ -1,5 +1,6 @@
 package com.hrms.backend.entities.achievementpost;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hrms.backend.entities.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,6 +16,7 @@ public class AchievementPostTag {
     private Long id;
     private String name;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "added_by_id")
     private User addedBy;

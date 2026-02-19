@@ -64,4 +64,11 @@ public class UserProfileService {
         userProfileRepo.save(profile);
     }
 
+    public List<UserProfile> findAllByBirthdayToday() {
+        return userProfileRepo.findAllByBirthdayToday();
+    }
+
+    public List<UserProfile> findAllByWorkAnniversaryToday() {
+        return userProfileRepo.findAllByWorkAnniversaryToday();
+    }
 }

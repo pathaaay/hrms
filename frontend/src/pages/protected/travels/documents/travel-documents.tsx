@@ -22,7 +22,7 @@ import { useTravel } from "@/hooks/travel/use-travel";
 import { useUser } from "@/hooks/user/use-user";
 import { ENV } from "@/lib/ENV";
 import { emitGoBack } from "@/lib/helpers/events/go-back-event";
-import { cn } from "@/lib/utils";
+import { cn, convertToPublicUrl } from "@/lib/utils";
 import { DownloadIcon, FileExclamationPoint, FileIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router";
@@ -176,7 +176,7 @@ export const TravelDocuments = ({ manage }: { manage?: boolean }) => {
               )}
               <Button variant={"outline"} size={"sm"}>
                 <NavLink
-                  to={`${ENV.DOCUMENT_PUBLIC_URL}/${ele.document.filePath}`}
+                  to={convertToPublicUrl(ele.document.filePath)}
                   target="_blank"
                 >
                   View

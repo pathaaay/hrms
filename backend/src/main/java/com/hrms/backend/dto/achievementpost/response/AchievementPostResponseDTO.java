@@ -23,4 +23,5 @@ public class AchievementPostResponseDTO {
     private Set<AchievementPostTag> achievementPostTags;
     private Long likesCount;
     private Long commentsCount;
+    private Boolean isLikedByUser;
 }

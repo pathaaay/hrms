@@ -37,7 +37,7 @@ public class AchievementPost {
 
     private String remarks;
 
-    @ManyToMany()
+    @ManyToMany
     @JoinTable(
             name = "achievement_post_author_tags",
             joinColumns = @JoinColumn(name = "post_id"),

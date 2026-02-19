@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useFetchGames } from "@/hooks/game/use-fetch-games";
 import { useUser } from "@/hooks/user/use-user";
+import { convertToPublicUrl } from "@/lib/utils";
 
 const profileContents = [
   {
@@ -39,9 +40,9 @@ export const AccountPage = () => {
     <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-muted w-full max-w-lg mx-auto">
       <CardHeader>
         <CardTitle className="flex justify-start gap-3 items-center">
-          <Avatar className="size-12 rounded-lg">
+          <Avatar className="rounded-lg">
             <AvatarImage
-              src={userProfile?.avatarPathSrc}
+              src={convertToPublicUrl(userProfile.avatarFilePath)}
               alt={userProfile?.name}
             />
             <AvatarFallback className="rounded-lg">

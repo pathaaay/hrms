@@ -9,7 +9,6 @@ import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.achievementpost.AchievementPostLikeRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +30,10 @@ public class AchievementPostLikeService {
 
     public Long getLikesCountByPostId(Long postId) {
         return achievementPostLikeRepo.getLikesCountByPostId(postId);
+    }
+
+    public Boolean isLikedByUser(Long postId, Long userId) {
+        return achievementPostLikeRepo.findByLikedBy_IdAndPost_id(userId, postId).isPresent();
     }
 
     @Transactional

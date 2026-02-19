@@ -60,10 +60,11 @@ public class AchievementPostCommentService {
     }
 
     @Transactional
-    public void deleteInAppropriateComment(Long commentId, User user, String remarks) throws BadRequestException {
+    public String deleteInAppropriateComment(Long commentId, User user, String remarks) throws BadRequestException {
         AchievementPostComment comment = findById(commentId);
         comment.setDeletedBy(user);
         comment.setRemarks(remarks);
         achievementPostCommentRepo.save(comment);
+        return comment.getAuthor().getEmail();
     }
 }

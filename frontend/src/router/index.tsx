@@ -4,7 +4,6 @@ import AuthLayout from "@/pages/auth/auth-layout.tsx";
 import LoginPage from "@/pages/auth/login-page.tsx";
 import NotFoundPage from "@/components/common/not-found.tsx";
 import ProtectedLayout from "@/pages/protected/protected-layout.tsx";
-import { DashboardPage } from "@/pages/protected/index.tsx";
 import { AccountPage } from "@/pages/protected/account/index.tsx";
 import { GamesPage } from "@/pages/protected/games/index.tsx";
 import { TravelPage } from "@/pages/protected/travels";
@@ -29,6 +28,7 @@ import { UpdateTravelPage } from "@/pages/protected/travels/manage/update-travel
 import { ManageExpense } from "@/pages/protected/travels/manage/expense/manage-expense";
 import { OrganizationChartPage } from "@/pages/protected/organization-chart";
 import { AchievementPostsPage } from "@/pages/protected/achievement-posts";
+import { SingleAchievementPostPage } from "@/pages/protected/achievement-posts/single-achievement-post";
 
 export const appRouter = createBrowserRouter([
   {
@@ -40,7 +40,7 @@ export const appRouter = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <DashboardPage />,
+            element: <OrganizationChartPage />,
           },
           {
             path: "/account",
@@ -48,7 +48,24 @@ export const appRouter = createBrowserRouter([
           },
           {
             path: "/achievement-posts",
-            element: <AchievementPostsPage />,
+            children: [
+              {
+                index: true,
+                element: <AchievementPostsPage />,
+              },
+              {
+                path: ":postId",
+                element: <SingleAchievementPostPage />,
+              },
+              {
+                path: "tag/:tagId",
+                element: <AchievementPostsPage />,
+              },
+              {
+                path: "user/:userId",
+                element: <AchievementPostsPage />,
+              },
+            ],
           },
           {
             path: "games",

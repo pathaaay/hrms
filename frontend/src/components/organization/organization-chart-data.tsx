@@ -9,7 +9,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import React from "react";
 import { Separator } from "../ui/separator";
-import { cn } from "@/lib/utils";
+import { cn, convertToPublicUrl } from "@/lib/utils";
 import { NavLink } from "react-router";
 import { Badge } from "../ui/badge";
 import type { IUserProfile } from "@/lib/types/user";
@@ -81,7 +81,7 @@ const UserCard = ({
       >
         <ItemMedia>
           <Avatar className="size-10">
-            <AvatarImage src={user.avatarPathSrc} />
+            <AvatarImage src={convertToPublicUrl(user.avatarFilePath)} />
             <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
           </Avatar>
         </ItemMedia>

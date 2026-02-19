@@ -7,10 +7,15 @@ import com.hrms.backend.dto.achievementpost.response.AchievementPostResponseDTO;
 import com.hrms.backend.dto.achievementpost.tag.response.AchievementPostTagResponseDTO;
 import com.hrms.backend.entities.achievementpost.AchievementPost;
 import com.hrms.backend.entities.achievementpost.AchievementPostTag;
+import com.hrms.backend.entities.job.Job;
+import com.hrms.backend.entities.job.referral.JobReferral;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.achievementpost.AchievementPostRepo;
+import com.hrms.backend.service.mail.MailService;
 import com.hrms.backend.service.user.UserProfileService;
 import com.hrms.backend.service.user.UserService;
+import com.hrms.backend.utilities.Constants;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -25,24 +30,32 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class AchievementPostService {
     private final ModelMapper modelMapper;
+    private final UserService userService;
+    private final MailService mailService;
     private final AchievementPostRepo achievementPostRepo;
     private final AchievementPostTagService achievementPostTagService;
-    private final UserService userService;
     private final AchievementPostLikeService achievementPostLikeService;
     private final AchievementPostCommentService achievementPostCommentService;
 
-    public AchievementPostResponseDTO convertToDTO(AchievementPost post) {
+    public AchievementPostResponseDTO convertToDTO(AchievementPost post, Long userId) {
         AchievementPostResponseDTO dto = modelMapper.map(post, AchievementPostResponseDTO.class);
+        if (post.getAuthor() == null) dto.setAuthor(Constants.getSystemUser());
         dto.setLikesCount(achievementPostLikeService.getLikesCountByPostId(post.getId()));
+        dto.setAchievementPostTags(post.getAchievementPostTags());
+        dto.setIsLikedByUser(achievementPostLikeService.isLikedByUser(post.getId(), userId));
         dto.setCommentsCount(achievementPostCommentService.getCommentsCountByPostId(post.getId()));
         return dto;
+    }
+
+    public List<AchievementPostResponseDTO> convertToDTOList(List<AchievementPost> posts, Long userId) {
+        return posts.stream().map(post -> convertToDTO(post, userId)).toList();
     }
 
     public AchievementPost convertToEntity(AchievementPostRequestDTO dto, User user) {
         AchievementPost post = modelMapper.map(dto, AchievementPost.class);
         Set<AchievementPostTag> tags = new HashSet<>();
 
-        if (!dto.getIsPublic() && dto.getVisibilityUserIds() != null) {
+        if (Boolean.FALSE.equals(dto.getIsPublic()) && dto.getVisibilityUserIds() != null) {
             Set<User> users = userService.findAllById(dto.getVisibilityUserIds());
             post.setVisibleToUsers(users);
         }
@@ -56,13 +69,11 @@ public class AchievementPostService {
             Set<AchievementPostTag> existingTags = achievementPostTagService.findAllById(dto.getTagIds());
             tags.addAll(existingTags);
         }
-        post.setAuthor(user);
+        if (user != null) {
+            post.setAuthor(user);
+        }
         if (!tags.isEmpty()) post.setAchievementPostTags(tags);
         return post;
-    }
-
-    public List<AchievementPostResponseDTO> convertToDTOList(List<AchievementPost> posts) {
-        return posts.stream().map(this::convertToDTO).toList();
     }
 
     public AchievementPost findById(Long postId) throws BadRequestException {
@@ -74,19 +85,19 @@ public class AchievementPostService {
     }
 
     public List<AchievementPostResponseDTO> getAllPosts(User user) {
-        return convertToDTOList(achievementPostRepo.findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullOrderByCreatedAtDesc(user.getId()));
+        return convertToDTOList(achievementPostRepo.findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullOrderByCreatedAtDesc(user.getId()), user.getId());
     }
 
     public List<AchievementPostResponseDTO> getUserPosts(User user) {
-        return convertToDTOList(achievementPostRepo.findAllByDeletedById(user.getId()));
+        return convertToDTOList(achievementPostRepo.findAllByDeletedById(user.getId()), user.getId());
     }
 
     public List<AchievementPostResponseDTO> getUserPostsByUserId(Long userId) {
-        return convertToDTOList(achievementPostRepo.findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullAndAuthor_IdOrderByCreatedAtDesc(userId, userId));
+        return convertToDTOList(achievementPostRepo.findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullAndAuthor_IdOrderByCreatedAtDesc(userId, userId), userId);
     }
 
     public List<AchievementPostResponseDTO> getPostsByTagId(Long tagId, User user) {
-        return convertToDTOList(achievementPostRepo.findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullAndAchievementPostTags_IdOrderByCreatedAtDesc(user.getId(), tagId));
+        return convertToDTOList(achievementPostRepo.findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullAndAchievementPostTags_IdOrderByCreatedAtDesc(user.getId(), tagId), user.getId());
     }
 
     @Transactional
@@ -113,11 +124,12 @@ public class AchievementPostService {
     }
 
     @Transactional
-    public void deleteInappropriatePost(Long postId, User user, String remarks) throws BadRequestException {
+    public void deleteInappropriatePost(Long postId, User user, String remarks) throws BadRequestException, MessagingException {
         AchievementPost post = findById(postId, user);
         post.setDeletedBy(user);
         post.setRemarks(remarks);
         achievementPostRepo.save(post);
+        sendMailToHR(user, remarks, true, post.getAuthor().getEmail());
     }
 
     public List<AchievementPostCommentResponseDTO> getAllComments(Long postId, User user) {
@@ -132,8 +144,10 @@ public class AchievementPostService {
         achievementPostCommentService.deleteComment(commentId, user);
     }
 
-    public void deleteInAppropriateComment(Long commentId, User user, String remarks) throws BadRequestException {
-        achievementPostCommentService.deleteInAppropriateComment(commentId, user, remarks);
+    @Transactional
+    public void deleteInAppropriateComment(Long commentId, User user, String remarks) throws BadRequestException, MessagingException {
+        String email = achievementPostCommentService.deleteInAppropriateComment(commentId, user, remarks);
+        sendMailToHR(user, remarks, true, email);
     }
 
     public void toggleLike(Long postId, User user) throws BadRequestException {
@@ -146,6 +160,17 @@ public class AchievementPostService {
 
     public List<AchievementPostTagResponseDTO> searchTags(String query) {
         return achievementPostTagService.searchTags(query);
+    }
+
+
+    public void sendMailToHR(User user, String remarks, Boolean isPost, String toEmail) throws MessagingException {
+        String[] toEmails = {toEmail};
+        String htmlBody = """
+                <div>Your %s is deleted by %s</div>
+                <div>Remarks: %s</div>
+                """.formatted(Boolean.TRUE.equals(isPost) ? "Post" : "Comment", user.getName(), remarks);
+
+        mailService.sendEmail(toEmails, (Boolean.TRUE.equals(isPost) ? "Inappropriate post " : "Inappropriate comment ") + "removed by " + user.getName(), htmlBody);
     }
 
 }

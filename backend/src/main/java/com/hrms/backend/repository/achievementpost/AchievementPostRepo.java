@@ -13,9 +13,6 @@ public interface AchievementPostRepo extends JpaRepository<AchievementPost, Long
 
     Optional<AchievementPost> findByIdAndDeletedBy_Id(Long id, Long deletedById);
 
-    @Query("SELECT ap FROM AchievementPost ap JOIN FETCH ap.visibleToUsers vtu WHERE ap.deletedBy Is NULL AND (ap.isPublic=true OR vtu.id=:userId) ORDER BY ap.createdAt DESC")
-    List<AchievementPost> findAllPosts(@Param("userId") Long userId);
-
     List<AchievementPost> findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullOrderByCreatedAtDesc(Long userId);
 
     List<AchievementPost> findAllByVisibleToUsers_IdOrIsPublicIsTrueAndDeletedByIsNullAndAuthor_IdOrderByCreatedAtDesc(Long visibleToUserId, Long userId);

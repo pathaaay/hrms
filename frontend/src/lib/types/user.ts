@@ -17,6 +17,7 @@ export interface IUser {
     id: number;
     name: string;
   };
+  avatarFilePath: string;
 }
 
 export interface IUserProfile {
@@ -29,7 +30,7 @@ export interface IUserProfile {
   department: string;
   dateOfBirth: Date;
   dateOfJoining: Date;
-  avatarPathSrc: string;
+  avatarFilePath: string;
   interestedGames: IGame[];
   city: string;
   state: string;

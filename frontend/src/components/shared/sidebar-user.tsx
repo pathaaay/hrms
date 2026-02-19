@@ -19,10 +19,13 @@ import {
 import { NavLink } from "react-router";
 import { useUser } from "@/hooks/user/use-user";
 import { logout } from "@/api/actions/auth";
+import { convertToPublicUrl } from "@/lib/utils";
 
 export function SidebarUser() {
   const { isMobile } = useSidebar();
   const { userProfile } = useUser();
+  if (!userProfile) return;
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -34,7 +37,7 @@ export function SidebarUser() {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage
-                  src={userProfile?.avatarPathSrc}
+                  src={convertToPublicUrl(userProfile.avatarFilePath)}
                   alt={userProfile?.name}
                 />
                 <AvatarFallback className="rounded-lg">
@@ -60,7 +63,7 @@ export function SidebarUser() {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    src={userProfile?.avatarPathSrc}
+                    src={convertToPublicUrl(userProfile?.avatarFilePath)}
                     alt={userProfile?.name}
                   />
                   <AvatarFallback className="rounded-lg">

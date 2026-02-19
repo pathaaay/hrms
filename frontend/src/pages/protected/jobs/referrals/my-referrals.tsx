@@ -10,6 +10,7 @@ import { ArrowUpDown } from "lucide-react";
 import { NavLink } from "react-router";
 import type { IReferral } from "@/lib/types/referral";
 import { Badge } from "@/components/ui/badge";
+import { convertToPublicUrl } from "@/lib/utils";
 
 let columns: ColumnDef<IReferral>[] = [
   {
@@ -85,7 +86,7 @@ let columns: ColumnDef<IReferral>[] = [
         className="flex text-xs flex-col text-muted-foreground"
       >
         <NavLink
-          to={`${ENV.DOCUMENT_PUBLIC_URL}/${row.original.cvFilePath}`}
+          to={convertToPublicUrl(row.original.cvFilePath)}
           target="_blank"
         >
           View

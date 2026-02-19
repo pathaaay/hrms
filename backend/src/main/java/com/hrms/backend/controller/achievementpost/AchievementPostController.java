@@ -8,6 +8,7 @@ import com.hrms.backend.dto.achievementpost.tag.response.AchievementPostTagRespo
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.service.achievementpost.AchievementPostService;
 import com.hrms.backend.utilities.ApiResponse;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -65,7 +66,7 @@ public class AchievementPostController {
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_HR')")
     @DeleteMapping("/{postId}/inappropriate")
-    public ResponseEntity<ApiResponse> deleteInappropriatePost(@AuthenticationPrincipal User user, @PathVariable("postId") Long postId, @RequestParam("remarks") String remarks) throws BadRequestException {
+    public ResponseEntity<ApiResponse> deleteInappropriatePost(@AuthenticationPrincipal User user, @PathVariable("postId") Long postId, @RequestParam("remarks") String remarks) throws BadRequestException, MessagingException {
         achievementPostService.deleteInappropriatePost(postId, user, remarks);
         return ResponseEntity.ok(new ApiResponse<>(true, "Post deleted successfully", null));
     }
@@ -89,14 +90,14 @@ public class AchievementPostController {
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_HR')")
     @DeleteMapping("/comments/{postId}/{commentId}/inappropriate")
-    public ResponseEntity<ApiResponse> deleteInAppropriateComment(@PathVariable("commentId") Long commentId, @RequestParam("remarks") String remarks, @AuthenticationPrincipal User user) throws BadRequestException {
+    public ResponseEntity<ApiResponse> deleteInAppropriateComment(@PathVariable("commentId") Long commentId, @RequestParam("remarks") String remarks, @AuthenticationPrincipal User user) throws BadRequestException, MessagingException {
         achievementPostService.deleteInAppropriateComment(commentId, user, remarks);
         return ResponseEntity.ok(new ApiResponse(true, "comment deleted successfully", null));
     }
 
     @GetMapping("/likes/{postId}")
     public ResponseEntity<ApiResponse<List<AchievementPostLikeResponseDTO>>> getPostLikes(@PathVariable("postId") Long postId) {
-        return ResponseEntity.ok(new ApiResponse(true, "Post like toggled successfully", achievementPostService.getPostLikes(postId)));
+        return ResponseEntity.ok(new ApiResponse(true, "Post like get successfully", achievementPostService.getPostLikes(postId)));
     }
 
     @PostMapping("/likes/{postId}")

@@ -3,7 +3,6 @@ import {
   DicesIcon,
   GitForkIcon,
   HashIcon,
-  LayoutDashboardIcon,
   WalletIcon,
 } from "lucide-react";
 import { ROLES } from "../types/user";
@@ -11,8 +10,9 @@ import { ROLES } from "../types/user";
 export const navLinks = [
   {
     url: "/",
-    label: "Dashboard",
-    icon: LayoutDashboardIcon,
+    label: "Organization Chart",
+    icon: GitForkIcon,
+    iconClass: "rotate-180",
   },
   {
     url: "/achievement-posts",
@@ -83,12 +83,6 @@ export const navLinks = [
         label: "Assinged Referrals",
       },
     ],
-  },
-  {
-    url: "/organization-chart",
-    label: "Organization Chart",
-    icon: GitForkIcon,
-    iconClass: "rotate-180",
   },
 ];
 

@@ -3654,7 +3654,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"title\":\"updated title\",\r\n    \"description\":\"updated desc\",\r\n    \"isPublic\": false\r\n}",
+              "raw": "{\r\n    \"title\": \"updated title\",\r\n    \"description\": \"updated desc\",\r\n    \"isPublic\": true,\r\n    \"newTags\":[\"Social\",\"Roima\",\"Ahmedabad\"]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
