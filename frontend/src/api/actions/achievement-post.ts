@@ -1,5 +1,6 @@
 import type { FetchAllPostsProps } from "@/hooks/achievement-posts/use-fetch-all-posts";
 import { apiService } from "@/lib/axios";
+import type { PostSchemaType } from "@/lib/schemas/achievement-post-schema";
 
 const ACHIEVEMENT_POST_ENDPOINT = "/achievement-posts";
 
@@ -18,6 +19,23 @@ export const getAllPosts = async ({
   return res.data;
 };
 
+export const createPost = async ({ body }: { body: any }) => {
+  const res = await apiService.post(`${ACHIEVEMENT_POST_ENDPOINT}`, {
+    ...body,
+  });
+  return res.data;
+};
+
+export const updatePost = async ({ body }: { body: any }) => {
+  const res = await apiService.post(
+    `${ACHIEVEMENT_POST_ENDPOINT}/${body.postId}`,
+    {
+      ...body,
+    },
+  );
+  return res.data;
+};
+
 export const toggleLike = async ({ postId }: { postId: number | string }) => {
   const res = await apiService.post(
     `${ACHIEVEMENT_POST_ENDPOINT}/likes/${postId}`,
@@ -25,14 +43,24 @@ export const toggleLike = async ({ postId }: { postId: number | string }) => {
   return res.data;
 };
 
-export const deletePost = async ({ postId }: { postId: number | string }) => {
-  const res = await apiService.delete(
-    `${ACHIEVEMENT_POST_ENDPOINT}/${postId}`,
-  );
+export const addComment = async ({ body }: { body: any }) => {
+  const res = await apiService.post(`${ACHIEVEMENT_POST_ENDPOINT}`, {
+    ...body,
+  });
   return res.data;
 };
 
-export const deleteInAppropriatePost = async ({ postId }: { postId: number | string }) => {
+
+export const deletePost = async ({ postId }: { postId: number | string }) => {
+  const res = await apiService.delete(`${ACHIEVEMENT_POST_ENDPOINT}/${postId}`);
+  return res.data;
+};
+
+export const deleteInAppropriatePost = async ({
+  postId,
+}: {
+  postId: number | string;
+}) => {
   const res = await apiService.delete(
     `${ACHIEVEMENT_POST_ENDPOINT}/${postId}/inappropriate`,
   );

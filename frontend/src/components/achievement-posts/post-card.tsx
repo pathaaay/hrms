@@ -18,16 +18,19 @@ import {
 import type { IAchievementPost } from "@/lib/types/achievement-post";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { NavLink } from "react-router";
-import { PostLikeBtn } from "./post-like-btn";
 import { useUser } from "@/hooks/user/use-user";
 import { useHasRole } from "@/hooks/user/use-has-role";
 import { ROLES } from "@/lib/types/user";
 import { convertToPublicUrl } from "@/lib/utils";
 import { MoreMenu } from "./post-more-menu";
+import { PostLikeBtn } from "./post-like-btn";
+import { PostCommentForm } from "./post-comment-form";
+import { useState } from "react";
 
 export const AchievementPostCard = ({ post }: { post: IAchievementPost }) => {
   const { userProfile } = useUser();
   const isHr = useHasRole([ROLES.HR]);
+  const [isCommentBoxShown, setIsCommentBoxShown] = useState(false);
 
   return (
     <Card className="w-full gap-0 py-0 shadow-none">
@@ -85,18 +88,25 @@ export const AchievementPostCard = ({ post }: { post: IAchievementPost }) => {
           </div>
         </div>
       </CardContent>
-      <CardFooter
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-        className="flex border-t px-2 py-2! pb-0"
-      >
-        <PostLikeBtn post={post} />
-        <Button className="shrink-0 grow text-muted-foreground" variant="ghost">
-          <MessageCircleIcon />
-          <span className="hidden sm:inline">{post.commentsCount}</span>
-        </Button>
+      <CardFooter className="flex border-t px-2 py-2! pb-0">
+        {isCommentBoxShown ? (
+          <PostCommentForm
+            postId={post.id}
+            setIsCommentBoxShown={setIsCommentBoxShown}
+          />
+        ) : (
+          <>
+            <PostLikeBtn post={post} />
+            <Button
+              className="shrink-0 grow text-muted-foreground"
+              variant="ghost"
+              onClick={() => setIsCommentBoxShown(true)}
+            >
+              <MessageCircleIcon />
+              <span className="hidden sm:inline">{post.commentsCount}</span>
+            </Button>
+          </>
+        )}
       </CardFooter>
     </Card>
   );

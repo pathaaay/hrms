@@ -1,5 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import {
+  addComment,
+  createPost,
   deleteInAppropriatePost,
   deletePost,
   toggleLike,
@@ -11,6 +13,39 @@ import type { AxiosError } from "axios";
 export const useToggleLikeMutation = () => {
   return useMutation({
     mutationFn: toggleLike,
+  });
+};
+
+export const useCreatePostMutation = () => {
+  return useMutation({
+    mutationFn: createPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-posts"] });
+      toast.success("Post created successfully");
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(
+        error?.response?.data.message
+          ? "Error: " + error?.response?.data.message
+          : "Failed to create Post",
+      );
+    },
+  });
+};
+
+export const useAddCommentMutation = () => {
+  return useMutation({
+    mutationFn: addComment,
+    onSuccess: () => {
+      toast.success("Comment added successfully");
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(
+        error?.response?.data.message
+          ? "Error: " + error?.response?.data.message
+          : "Failed to add comment",
+      );
+    },
   });
 };
 

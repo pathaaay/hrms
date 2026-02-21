@@ -29,7 +29,7 @@ export const PostLikeBtn = ({ post }: { post: IAchievementPost }) => {
     if (!mounted) return;
     const debounceTimer = setTimeout(() => {
       if (liked != post.isLikedByUser) toggleLike({ postId: post.id });
-    }, 1000);
+    }, 500);
 
     return () => {
       clearTimeout(debounceTimer);
