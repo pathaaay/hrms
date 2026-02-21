@@ -21,4 +21,10 @@ public interface UserProfileRepo extends JpaRepository<UserProfile, Long> {
 
     @Query("SELECT u FROM UserProfile u WHERE u.user.name like CONCAT('%',:searchText,'%') OR u.user.email like CONCAT('%',:searchText,'%') ")
     List<UserProfile> searchUsers(@Param("searchText") String searchText);
+
+    @Query("SELECT u FROM UserProfile u WHERE FUNCTION('MONTH',u.dateOfBirth) = FUNCTION('MONTH',CURRENT_TIMESTAMP) AND FUNCTION('DAY',u.dateOfBirth) = FUNCTION('DAY', CURRENT_TIMESTAMP)")
+    List<UserProfile> findAllByBirthdayToday();
+
+    @Query("SELECT u FROM UserProfile u WHERE FUNCTION('MONTH',u.dateOfJoining) = FUNCTION('MONTH',CURRENT_TIMESTAMP) AND FUNCTION('DAY',u.dateOfJoining) = FUNCTION('DAY', CURRENT_TIMESTAMP)")
+    List<UserProfile> findAllByWorkAnniversaryToday();
 }

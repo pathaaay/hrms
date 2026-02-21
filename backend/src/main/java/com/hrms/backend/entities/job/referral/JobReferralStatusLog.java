@@ -1,4 +1,4 @@
-package com.hrms.backend.entities.jobs.referral;
+package com.hrms.backend.entities.job.referral;
 
 import com.hrms.backend.entities.user.User;
 import jakarta.persistence.*;

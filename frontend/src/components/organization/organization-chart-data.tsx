@@ -9,7 +9,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import React from "react";
 import { Separator } from "../ui/separator";
-import { cn } from "@/lib/utils";
+import { cn, convertToPublicUrl } from "@/lib/utils";
 import { NavLink } from "react-router";
 import { Badge } from "../ui/badge";
 import type { IUserProfile } from "@/lib/types/user";
@@ -75,20 +75,20 @@ const UserCard = ({
       <Item
         variant={userId === user.userId ? "outline" : "muted"}
         className={cn(
-          `hover:border-primary/30`,
+          `shadow-md hover:border-primary/30`,
           userId == user.userId && "border-primary hover:border-primary",
         )}
       >
         <ItemMedia>
           <Avatar className="size-10">
-            <AvatarImage src={user.avatarPathSrc} />
+            <AvatarImage src={convertToPublicUrl(user.avatarFilePath)} />
             <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
           </Avatar>
         </ItemMedia>
         <ItemContent>
-          <ItemTitle>
+          <ItemTitle className="w-full">
             {user.name}
-            <Badge variant={"secondary"} className="text-xs capitalize">
+            <Badge variant={"secondary"} className="text-xs capitalize ml-auto">
               {user.role}
             </Badge>
           </ItemTitle>

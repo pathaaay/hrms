@@ -1,6 +1,7 @@
 import type { MultiSelectOption } from "@/components/common/multi-select";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { ENV } from "./ENV";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -49,4 +50,8 @@ export const formatMinutesToHours = (value: number) => {
   const hours = Math.floor(value / 60);
   const minutes = value % 60;
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+};
+
+export const convertToPublicUrl = (filePath: string) => {
+  return `${ENV.DOCUMENT_PUBLIC_URL}/${filePath}`;
 };

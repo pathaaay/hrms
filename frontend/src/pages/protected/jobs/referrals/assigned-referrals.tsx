@@ -9,7 +9,7 @@ import { NavLink } from "react-router";
 import { ReferralStatusTypes, type IReferral } from "@/lib/types/referral";
 import { Badge } from "@/components/ui/badge";
 import { useFetchAssignedReferrals } from "@/hooks/job/referral/use-fetch-assigned-referrals";
-import { cn } from "@/lib/utils";
+import { cn, convertToPublicUrl } from "@/lib/utils";
 import { ManageReferralStatus } from "@/components/jobs/referrals/manage-referral-status";
 import { ReferralStatusHistory } from "@/components/jobs/referrals/status-history";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -68,7 +68,7 @@ let columns: ColumnDef<IReferral>[] = [
         className="flex text-xs flex-col text-muted-foreground"
       >
         <NavLink
-          to={`${ENV.DOCUMENT_PUBLIC_URL}/${row.original.cvFilePath}`}
+          to={convertToPublicUrl(row.original.cvFilePath)}
           target="_blank"
         >
           View CV
@@ -102,7 +102,7 @@ let columns: ColumnDef<IReferral>[] = [
         className="flex text-xs text-muted-foreground"
       >
         <NavLink
-          to={`${ENV.DOCUMENT_PUBLIC_URL}/${row.original.jdFilePath}`}
+          to={convertToPublicUrl(row.original.jdFilePath)}
           target="_blank"
         >
           View JD

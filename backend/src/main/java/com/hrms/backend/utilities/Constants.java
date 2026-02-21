@@ -1,5 +1,7 @@
 package com.hrms.backend.utilities;
 
+import com.hrms.backend.entities.user.User;
+
 public class Constants {
     private Constants() {
     }
@@ -20,5 +22,14 @@ public class Constants {
     public enum GameBookingStatusType {
         PENDING,
         CONFIRMED
+    }
+
+    public static User getSystemUser() {
+        User user = new User();
+        user.setId(0L);
+        user.setName("System User");
+        user.setEmail("system@roimaint.com");
+        user.setAvatarFilePath("roima-logo.png");
+        return user;
     }
 }

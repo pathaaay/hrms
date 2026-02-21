@@ -12,6 +12,7 @@ import { ENV } from "@/lib/ENV";
 import { emitGoBack } from "@/lib/helpers/events/go-back-event";
 import type { IJob } from "@/lib/types/job";
 import { ROLES } from "@/lib/types/user";
+import { convertToPublicUrl } from "@/lib/utils";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ArrowUpDown, PencilIcon } from "lucide-react";
@@ -97,7 +98,7 @@ let columns: ColumnDef<IJob>[] = [
         className="flex text-xs flex-col text-muted-foreground"
       >
         <NavLink
-          to={`${ENV.DOCUMENT_PUBLIC_URL}/${row.original.jdFilePath}`}
+          to={convertToPublicUrl(row.original.jdFilePath)}
           target="_blank"
         >
           View

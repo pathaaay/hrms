@@ -32,4 +32,7 @@ public class User {
     //This field will be ignored from every response.
     @JsonIgnore
     private String password;
+
+    @Column(name = "avatar_file_path", columnDefinition = "TEXT")
+    private String avatarFilePath;
 }

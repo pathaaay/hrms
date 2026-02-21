@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ENV } from "@/lib/ENV";
 import type { ITravelExpense } from "@/lib/types/travel";
+import { convertToPublicUrl } from "@/lib/utils";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { NavLink } from "react-router";
@@ -56,7 +57,7 @@ export const travelExpenseColumns: ColumnDef<ITravelExpense>[] = [
     cell: ({ row }) => (
       <Button variant={"secondary"} size={"sm"}>
         <NavLink
-          to={`${ENV.DOCUMENT_PUBLIC_URL}/${row.original.expenseProofDocument.filePath}`}
+          to={convertToPublicUrl(row.original.expenseProofDocument.filePath)}
           target="_blank"
         >
           View

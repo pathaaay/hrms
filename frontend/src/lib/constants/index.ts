@@ -1,7 +1,8 @@
 import {
   BriefcaseBusinessIcon,
   DicesIcon,
-  LayoutDashboardIcon,
+  GitForkIcon,
+  HashIcon,
   WalletIcon,
 } from "lucide-react";
 import { ROLES } from "../types/user";
@@ -9,8 +10,14 @@ import { ROLES } from "../types/user";
 export const navLinks = [
   {
     url: "/",
-    label: "Dashboard",
-    icon: LayoutDashboardIcon,
+    label: "Organization Chart",
+    icon: GitForkIcon,
+    iconClass: "rotate-180",
+  },
+  {
+    url: "/achievement-posts",
+    label: "Achievement Posts",
+    icon: HashIcon,
   },
   {
     url: "/travels",
@@ -77,11 +84,6 @@ export const navLinks = [
       },
     ],
   },
-  {
-    url: "/organization-chart",
-    label: "Organization Chart",
-    icon: BriefcaseBusinessIcon
-  }
 ];
 
 export const weekDays = [

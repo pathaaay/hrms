@@ -1,9 +1,9 @@
 package com.hrms.backend.service.job.referral;
 
 import com.hrms.backend.dto.job.response.JobReferralStatusLogResponseDTO;
-import com.hrms.backend.entities.jobs.referral.JobReferral;
-import com.hrms.backend.entities.jobs.referral.JobReferralReviewStatus;
-import com.hrms.backend.entities.jobs.referral.JobReferralStatusLog;
+import com.hrms.backend.entities.job.referral.JobReferral;
+import com.hrms.backend.entities.job.referral.JobReferralReviewStatus;
+import com.hrms.backend.entities.job.referral.JobReferralStatusLog;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.repository.job.referral.JobReferralStatusLogRepo;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package com.hrms.backend.controller.job;
 
 import com.hrms.backend.dto.job.response.JobReferralResponseDTO;
 import com.hrms.backend.dto.job.response.JobReferralStatusLogResponseDTO;
-import com.hrms.backend.entities.jobs.referral.ReferralReviewStatus;
+import com.hrms.backend.entities.job.referral.ReferralReviewStatus;
 import com.hrms.backend.entities.user.User;
 import com.hrms.backend.service.job.referral.JobReferralService;
 import com.hrms.backend.service.job.referral.JobReferralStatusLogService;

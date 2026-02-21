@@ -1,6 +1,6 @@
 package com.hrms.backend.repository.job;
 
-import com.hrms.backend.entities.jobs.referral.JobReferral;
+import com.hrms.backend.entities.job.referral.JobReferral;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
