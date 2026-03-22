@@ -42,7 +42,6 @@ import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
 import { Skeleton } from "../ui/skeleton";
-import { CustomLoader } from "./custol-loader";
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {

@@ -8,18 +8,11 @@ import { GoBackBtn } from "@/components/shared/go-back-btn";
 import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { PencilIcon, UploadIcon } from "lucide-react";
+import { PencilIcon} from "lucide-react";
 import { NavLink, Outlet } from "react-router";
 import type { ITravel } from "@/lib/types/travel";
 import { useTravel } from "@/hooks/travel/use-travel";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
 import { DeleteTravelBtn } from "@/components/travels/delete-travel-btn";
-import { UploadDocumentDialog } from "@/components/travels/documents/upload-document-dialog";
 import { MembersListPopover } from "@/components/shared/members-list-popover";
 
 export const ManageAllTravelsPage = () => {
@@ -27,7 +20,7 @@ export const ManageAllTravelsPage = () => {
   const { userProfile } = useUser();
   const { createdTravels, isCreatedTravelsLoading } = useTravel();
 
-  let data = createdTravels.filter(
+  const data = createdTravels.filter(
     ({ createdBy }) => createdBy.id === userProfile?.userId,
   );
 

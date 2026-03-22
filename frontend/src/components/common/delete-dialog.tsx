@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Trash2Icon } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
-import { Button } from "../ui/button";
 import { DropdownMenuItem } from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
 
 interface DeleteDialogProps {
   trigger?: ReactNode;
@@ -42,13 +42,9 @@ export const DeleteDialog = ({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         {trigger || (
-          <DropdownMenuItem
-            variant="destructive"
-            className="w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Trash2Icon /> Delete
-          </DropdownMenuItem>
+          <Button variant="destructive">
+            <Trash2Icon />
+          </Button>
         )}
       </AlertDialogTrigger>
       <AlertDialogContent size="sm">

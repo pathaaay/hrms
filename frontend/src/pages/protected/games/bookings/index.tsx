@@ -4,13 +4,6 @@ import { DeleteBookingBtn } from "@/components/games/delete-booking-btn";
 import { GoBackBtn } from "@/components/shared/go-back-btn";
 import { MembersListPopover } from "@/components/shared/members-list-popover";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
 import { useFetchUserGameBookings } from "@/hooks/user/use-user-game-bookings";
 import type { IGameBooking } from "@/lib/types/game";
 import { formatMinutesToHours } from "@/lib/utils";

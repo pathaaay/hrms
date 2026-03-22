@@ -7,10 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreVerticalIcon, PencilIcon } from "lucide-react";
 import { DeletePostBtn } from "./delete-post-btn";
-import { useState } from "react";
-
 export const MoreMenu = ({ id }: { id: number }) => {
-  const [open, setOpen] = useState(false);
 
   return (
     <DropdownMenu>
